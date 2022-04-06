@@ -1,0 +1,269 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <title>Ecommerce</title>
+
+    @* <meta name="author" content="themesflat.com"> *@
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" type="text/css" href="~/Home/stylesheets/bootstrap.css">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" type="text/css" href="~/Home/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Home/stylesheets/responsive.css">
+
+    <!-- Colors -->
+    <link rel="stylesheet" type="text/css" href="~/Home/stylesheets/colors/color1.css" id="colors">
+
+    <!-- Animation Style -->
+    <link rel="stylesheet" type="text/css" href="~/Home/stylesheets/animate.css">
+    <!-- Font Awesome-->
+    <link href="~/Home/stylesheets/font-awesome.css" rel="stylesheet" />
+
+    <!-- Favicon and touch icons  -->
+    <link href="~/Home/icon/favicon.png" rel="shortcut icon">
+    @RenderSection("Styles", false)
+
+    <script src="~/Home/javascript/jquery.min.js"></script>
+    <script src="~/Home/javascript/jquery-ui.js"></script>
+
+
+</head>
+<body class="header_sticky header-style-2 has-menu-extra">
+    <!-- Preloader -->
+    <div id="loading-overlay">
+        <div class="loader"></div>
+    </div>
+    <!-- Boxed -->
+    <div class="boxed">
+        <div id="site-header-wrap">
+            <!-- Header -->
+            <header id="header" class="header clearfix">
+                <div class="container-fluid clearfix container-width-93" id="site-header-inner">
+                    <div id="logo" class="logo float-left">
+                        <a href="#" title="logo" style="color:red; font-size:20px;">
+                            Ecommerce
+                        </a>
+                    </div><!-- /.logo -->
+                    <div class="mobile-button"><span></span></div>
+                    <ul class="menu-extra">
+                      
+
+
+                        <li class="box-cart nav-top-cart-wrapper">
+                            @* <a class="icon_cart nav-cart-trigger active" asp-action="EditShoppingCart" asp-controller="ShoppingCart"> *@
+                            @*     <span id="cartProductsCount">0</span> *@
+                            @* </a> *@
+                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="box-login box-cart nav-top-cart-wrapper">
+                                <a class="icon_login nav-cart-trigger active" href="/Identity/Account/Manage/Index"></a>
+                                <div class="nav-shop-cart">
+                                    <div @*class="widget_shopping_cart_content"*@>
+                                        <div class="woocommerce-min-cart-wrap">
+                                            <ul class="menu">
+                                                <li>
+                                                    <a href="/Identity/Account/Manage/Index">Profile</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Identity/Account/Register">Register</a>
+                                                </li>
+                                                <li>
+                                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                        <button type="submit" class="nav-link btn btn-link text-dark btn-block">Logout</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div><!-- /.widget_shopping_cart_content -->
+                                    </div>
+                                </div><!-- /.nav-shop-cart -->
+                            </li>
+                        }
+                        else
+                        {
+
+                            <li class="box-login box-cart nav-top-cart-wrapper">
+                                <a class="icon_login nav-cart-trigger active" href="/Identity/Account/login"></a>
+                                <div class="nav-shop-cart">
+                                    <div>
+                                        <div class="woocommerce-min-cart-wrap">
+                                            <ul class="menu">
+                                                <li>
+                                                    <a href="/Identity/Account/login">login</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Identity/Account/Register">Register</a>
+                                                </li>
+                                                @*<li>
+                                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                        <button type="submit" class="nav-link btn btn-link text-dark btn-block">Logout</button>
+                                                    </form>
+                                                </li>*@
+                                            </ul>
+                                        </div><!-- /.widget_shopping_cart_content -->
+                                    </div>
+                                </div><!-- /.nav-shop-cart -->
+                            </li>
+                        }
+
+                    </ul><!-- /.menu-extra -->
+                    <div class="nav-wrap">
+                        <nav id="mainnav" class="mainnav">
+                            <ul class="menu">
+                                <li>
+                                    <a href="/Home/index">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="/Home/Shop">SHOP</a>
+                                </li>
+                                <li>
+                                    <a href="/ContactAbout/About">About Us</a>
+                                </li>
+                                <li>
+                                    <a href="/ContactAbout/Contact">Contact Us</a>
+                                </li>
+                            </ul>
+                        </nav><!-- /.mainnav -->
+                    </div><!-- /.nav-wrap -->
+                </div><!-- /.container-fluid -->
+            </header><!-- /header -->
+        </div><!-- /.site-header-wrap -->
+
+        @RenderBody()
+
+      
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container" >
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="widget widget-link">
+                            <ul>
+                                @* <li><a href="/ContactAbout/About">About Us</a></li> *@
+                                @* <li><a href="/ContactAbout/Contact">Contact Us</a></li> *@
+                            </ul>
+                        </div><!-- /.widget -->
+                    </div><!-- /.col-md-3 -->
+                    <div class="col-md-3">
+                        <div class="widget widget-link link-login">
+                            <ul>
+                                @if (!SignInManager.IsSignedIn(User))
+                                {
+                                    <li><a href="/Identity/Account/login">Login </a></li>
+                                    <li><a href="/Identity/Account/Register">Register</a></li>
+                                    <li><a href="/ShoppingCart/EditShoppingCart">Your Cart</a></li>
+                                }
+                                @*<li><a href="#">Wishlist items</a></li>*@
+                            </ul>
+                        </div><!-- /.widget -->
+                    </div><!-- /.col-md-3 -->
+                   
+                    <div class="col-md-5">
+                        <div class="widget widget-brand">
+                            <div class="logo logo-footer">
+                                <a asp-action="Index" asp-controller="Home"><h3 class="text-danger">Ecommerce</h3></a>
+                            </div>
+
+                            <ul class="flat-contact">
+                                <li class="address">address : Helwan Street</li>
+                                <li class="phone">phone : +02 124356789</li>
+                                <li class="email">gmail : mohamed@gmali.com</li>
+                            </ul><!-- /.flat-contact -->
+                        </div><!-- /.widget -->
+                    </div><!-- /.col-md-3 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </footer><!-- /.footer -->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="copyright text-center">Copyright 2020 <a href="#">Ecommerce</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Go Top -->
+        <a class="go-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+
+    </div>
+    <!-- Javascript -->
+    <!-- Javascript -->
+    <script src="~/Home/javascript/tether.min.js"></script>
+    <script src="~/Home/javascript/bootstrap.min.js"></script>
+    <script src="~/Home/javascript/jquery.easing.js"></script>
+    <script src="~/Home/javascript/parallax.js"></script>
+    <script src="~/Home/javascript/jquery-waypoints.js"></script>
+    <script src="~/Home/javascript/jquery-countTo.js"></script>
+    <script src="~/Home/javascript/jquery.countdown.js"></script>
+    <script src="~/Home/javascript/jquery.flexslider-min.js"></script>
+    <script src="~/Home/javascript/images-loaded.js"></script>
+    <script src="~/Home/javascript/jquery.isotope.min.js"></script>
+    <script src="~/Home/javascript/magnific.popup.min.js"></script>
+    <script src="~/Home/javascript/jquery.hoverdir.js"></script>
+    <script src="~/Home/javascript/owl.carousel.min.js"></script>
+    <script src="~/Home/javascript/equalize.min.js"></script>
+    <script src="~/Home/javascript/gmap3.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIEU6OT3xqCksCetQeNLIPps6-AYrhq-s&region=GB"></script>
+    <script src="~/Home/javascript/jquery-ui.js"></script>
+
+    <script src="~/Home/javascript/jquery.cookie.js"></script>
+    <script src="~/Home/javascript/main.js"></script>
+
+    <!-- Revolution Slider -->
+    <script src="~/Home/rev-slider/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Home/rev-slider/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/Home/javascript/rev-slider.js"></script>
+    <!-- Load Extensions only on Local File Systems ! The following part can be removed on Server for On Demand Loading -->
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.migration.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="~/Home/rev-slider/js/extensions/revolution.extension.video.min.js"></script>
+
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        $(document).ready(function () {
+            function updateCartProducts() {
+                var cartProducts;
+                var existingCookieData = $.cookie('CartProducts');
+                if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+                    cartProducts = existingCookieData.split('-');
+                } else {
+                    cartProducts = [];
+                }
+                $('#cartProductsCount').html(cartProducts.length);
+
+            }
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,87 @@
+﻿@model WebApplication3.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<hr />
+<div class="grid grid-cols-12 gap-6 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-6">
+        <div class="intro-y box p-5">
+            <form id="CreateProduct" class="validate-form" asp-action="Create" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div>
+                    <label class="flex flex-col sm:flex-row" asp-for="ProductName">@Html.DisplayNameFor(e => e.ProductName) <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters</span> </label>
+                    <input type="text" asp-for="ProductName" class="input w-full border mt-2" minlength="2" required>
+                    <span asp-validation-for="ProductName" class="text-theme-6"></span>
+                </div>
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row" asp-for="ProductDescription">
+                        @Html.DisplayNameFor(e => e.ProductDescription)
+                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 10 characters</span>
+                    </label>
+                    <textarea class="input w-full border mt-2" asp-for="ProductDescription" minlength="10" required>  </textarea>
+                    <span asp-validation-for="ProductDescription" class="text-theme-6"></span>
+                </div>
+
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row" asp-for="ProductUnitInStock">
+                        @Html.DisplayNameFor(e => e.ProductUnitInStock)
+                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, numbers only</span>
+                    </label>
+                    <input type="number" asp-for="ProductUnitInStock" class="input w-full border mt-2" required>
+                    <span asp-validation-for="ProductUnitInStock" class="text-theme-6"></span>
+                </div>
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row" asp-for="ProductUnitPrice">
+                        @Html.DisplayNameFor(e => e.ProductUnitPrice)
+                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, numbers only</span>
+                    </label>
+                    <input type="number" step="0.01" asp-for="ProductUnitPrice" class="input w-full border mt-2" required>
+                    <span asp-validation-for="ProductUnitPrice" class="text-theme-6"></span>
+                </div>
+
+                <div class="mt-3">
+                    <label>Product Image
+                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required</span>
+                    </label>
+                    <div class="border-2 border-dashed rounded-md mt-3 pt-4" >
+                        <div class="flex flex-wrap px-4" >
+                            <div id="imgViewer" class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in" hidden>
+                                <img id="previewHolder" class="rounded-md" alt="Midone Tailwind HTML Admin Template" src="">
+                                <div onclick="removeImg()" title="Remove this image?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-theme-6 right-0 top-0 -mr-2 -mt-2"> <i data-feather="x" class="w-4 h-4"></i> </div>
+                            </div>
+                        </div>
+                        <div class="px-4 pb-4 flex items-center cursor-pointer relative">
+                            <i data-feather="image" class="w-4 h-4 mr-2"></i> <span class="text-theme-1 mr-1">Upload a file</span> or drag and drop
+                            <input id="filePhoto" type="file" name="file" class="w-full h-full top-0 left-0 absolute opacity-0" multiple="multiple" required >
+                            <input type="hidden" name="ProductImgUrl" value="abc" />
+                            <span asp-validation-for="ProductUnitPrice" class="text-theme-6"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row" asp-for="CategoryId">
+                        @Html.DisplayNameFor(e => e.Category.CategoryName)
+                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, numbers only</span>
+                    </label>
+                    <select asp-for="CategoryId" class="input input--sm border mr-2" asp-items="ViewBag.CategoryId"></select>
+                    <span asp-validation-for="CategoryId" class="text-theme-6"></span>
+                </div>
+                <div class="text-right mt-5">
+                    <a asp-action="Index" class="button w-24 border text-gray-700 mr-1" onclick="ajaxRender(event)">Back to List</a>
+                    <button type="submit" class="button w-24 bg-theme-1 text-white">Create</button>
+
+                </div>
+            </form>
+
+        </div>
+
+</div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
