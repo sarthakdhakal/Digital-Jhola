@@ -64,9 +64,9 @@
 
 
                         <li class="box-cart nav-top-cart-wrapper">
-                            @* <a class="icon_cart nav-cart-trigger active" asp-action="EditShoppingCart" asp-controller="ShoppingCart"> *@
-                            @*     <span id="cartProductsCount">0</span> *@
-                            @* </a> *@
+                            <a class="icon_cart nav-cart-trigger active" asp-action="EditShoppingCart" asp-controller="ShoppingCart">
+                                <span id="cartProductsCount">0</span>
+                            </a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {

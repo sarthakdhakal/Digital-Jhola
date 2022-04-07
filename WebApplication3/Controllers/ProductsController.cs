@@ -107,7 +107,7 @@ namespace WebApplication3.Controllers
                                     product.UserId = productUserId;
                                 _context.Products.Add(product);
                                  await _context.SaveChangesAsync();
-                                 imageData.ImagePath = product.ProductImgUrl;
+                                imageData.ImagePath = product.ProductImgUrl;
                                 imageData.ProductId = product.ProductId;
                                 var filePath = Path.Combine(environment.WebRootPath, "Product/images",
                                     product.ProductImgUrl);

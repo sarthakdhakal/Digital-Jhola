@@ -11,10 +11,12 @@ namespace WebApplication3.Controllers
     public class RoleController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _context;
         
-        public RoleController(UserManager<User> userManager,ApplicationDbContext context)
+        public RoleController(UserManager<User> userManager,ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
+            _roleManager = roleManager;
             _userManager = userManager;
             _context = context ;
         }
@@ -33,9 +35,9 @@ namespace WebApplication3.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> AssignUserToRoleAsync(string Id, string Name)
+        public async Task<ActionResult> AssignUserToRole(string Id, string Name)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.FindByIdAsync(Id);
             await _userManager.AddToRoleAsync(user, Name);
             ViewBag.Users = new SelectList(_context.Users, "Id", "UserName");
             ViewBag.Roles = new SelectList(_context.Roles, "Name", "Name");
@@ -51,18 +53,20 @@ namespace WebApplication3.Controllers
 
         // POST: Roles/Create
         [HttpPost]
-        public ActionResult Create(string firstName)
+        public async Task<ActionResult> Create(string firstName)
         {
 
             // TODO: Add insert logic here
             if (ModelState.IsValid)
             {
-                _context.Roles.Add(new IdentityRole() { Name = firstName });
-                _context.SaveChanges();
-                return Json(new { status = 1 });
+                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(firstName));
+                
+                    return RedirectToAction("Index");
+                
             }
-            return Json(new { status = 0 });
-
+            return View(firstName);
+            
+                
         }
 
         public ActionResult Edit(string Id)
@@ -77,7 +81,7 @@ namespace WebApplication3.Controllers
                 string.Equals(c.Id.ToLower(), Id.ToLower(), StringComparison.Ordinal));
             role.Name = firstName;
             _context.SaveChanges();
-            return Json(new { status = 1 });
+            return RedirectToAction(nameof(Index));
            
            // return Json(new { status = 0 });
 

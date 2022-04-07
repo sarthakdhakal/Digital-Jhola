@@ -1,0 +1,407 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@model WebApplication3.Models.CheckoutViewModel
+@{
+    decimal sum = 0m;
+}
+<div class="container-fluid my-cart-container">
+<div class="container">
+
+    @if (Model != null)
+    {
+        if (Model.CartProducts != null && Model.CartProductIDs.Count() > 0)
+        {
+            <!-- Start Cart Header-->
+            <div class="row d-flex justify-content-center mt-5 mb-2">
+                <div class="col-md-10">
+                    <div class="row header">
+                        <div class="col-md-2 d-flex first-header-rborder justify-content-center justify-content-md-start ">
+                            <p class="header-style">ITEM</p>
+                        </div>
+                        <div class="col-md-4 "> </div>
+                        <div class="col-md-2 d-flex justify-content-center align-items-center">
+                            <p class="header-style">QUANTITY</p>
+                        </div>
+                        <div class="col-md-2 d-flex justify-content-center align-items-center">
+                            <p class="header-style">UNIT PRICE</p>
+                        </div>
+                        <div class="col-md-2 d-flex justify-content-center align-items-center">
+                            <p class="header-style">SUBTOTAL</p>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Cart Header-->
+            <!-- Start loop items in cart-->
+            foreach (var item in Model.CartProducts)
+            {
+                //product quantity that user asked
+                var quantity = Model.CartProductIDs.Count(x => x == item.ProductId);
+                <!-- Start item in cart-->
+                <div class="row d-flex justify-content-center mb-4 mb-md-2">
+                    <div class="col-md-10">
+                        <div class="row product-details">
+                            <div class="col-md-2 p-2 first-col-rborder">
+                                <img src="~/Home/images/@item.ProductImgUrl" class="img-col"/>
+                            </div>
+                            <div class="col-md-4 p-2">
+                                <p class="product-name-header">@item.ProductName</p>
+                                <p class="desc-overflow">@item.ProductDescription</p>
+                                <div>
+                                    <div class="remove-from-cart ml-2" onclick="deleteCK(this)" data-id="@item.ProductId">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                        <span>Remove</span>
+                                    </div>
+                                    @* <a class="remove-from-cart cart-product-details ml-2 ml-sm-5" *@
+                                    @*    asp-action="PrdDetails" asp-controller="Product" asp-route-id="@item.ProductId"> *@
+                                    @*     <i class="fa fa-info-circle" aria-hidden="true"></i> *@
+                                    @*     <span>Details</span> *@
+                                    @* </a> *@
+                                </div>
+                            </div>
+                            @***************************************************************************************************************@
+                            @if (item.ProductUnitInStock >= 5)
+                            {
+                                <div class="col-md-2 p-4">
+                                    <select class="select-quantity" onchange="changeQuantity(this)" data-id="@item.ProductId">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (quantity == i)
+                                            {
+                                                <option value="@i" selected>@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                    <p class="price-col-style">
+                                        <span>NRs. </span>@Math.Round(item.ProductUnitPrice, 2)
+                                    </p>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                    <p class="price-col-style">
+                                        @*<span>EGP </span>*@
+                                        @*@(Convert.ToInt32(item.ProductUnitPrice*quantity))*@
+                                        @if (item.OfferId == null)
+                                        {
+                                            var priceInt = Math.Round(item.ProductUnitPrice, 2);
+                                            <span>EGP @(priceInt * quantity)</span>
+                                            sum += (priceInt * quantity);
+                                        }
+                                        else
+                                        {
+                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100m);
+                                            <span>EGP @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity)</span>
+                                            sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
+                                        }
+                                    </p>
+                                </div>
+                            }
+
+                            else if (item.ProductUnitInStock < 5 && item.ProductUnitInStock > 0)
+                            {
+                                var swap = quantity;
+                                <div class="col-md-2 p-4">
+                                    <select class="select-quantity" onchange="changeQuantity(this)" data-id="@item.ProductId">
+                                        @for (int i = 1; i <= item.ProductUnitInStock; i++)
+                                        {
+                                            if (quantity == i)
+                                            {
+                                                <option value="@i" selected>@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+                                    </select>
+                                    <p class="paraChangeQuantity" data-id="@item.ProductId" data-dbq="@item.ProductUnitInStock" data-crtq="@swap">
+                                    <p/>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                    <p class="price-col-style">
+                                        <span>EGP </span>@Math.Round(item.ProductUnitPrice, 2)
+                                    </p>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                    <p class="price-col-style">
+                                        @*<span>EGP </span>*@
+                                        @*@(Convert.ToInt32(item.ProductUnitPrice*quantity))*@
+                                        @if (item.OfferId == null)
+                                        {
+                                            var priceInt = Math.Round(item.ProductUnitPrice, 2);
+                                            <span>EGP @(priceInt * quantity)</span>
+                                            sum += (priceInt * quantity);
+                                        }
+                                        else
+                                        {
+                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100m);
+                                            <span>EGP @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity)</span>
+                                            sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
+                                        }
+                                    </p>
+                                </div>
+                            }
+
+                            else if (item.ProductUnitInStock <= 0)
+                            {
+                                quantity = item.ProductUnitInStock;
+                                <div class="col-md-2 p-4">
+                                    <select class="select-quantity" onchange="changeQuantity(this)" data-id="@item.ProductId">
+                                        <option>0</option>
+                                    </select>
+                                    <p class="paraZeroQuantity" data-id="@item.ProductId" data-dbq="@item.ProductUnitInStock">
+                                    <p/>
+                                </div>
+                                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                    <p class="price-col-style" style="color:#f63440;">
+                                        Sorry! The product became out of stock
+                                        as another customer purchased it. Remove it from shopping cart now or it will be romoved automatically.
+                                    </p>
+                                </div>
+                            }
+                            @***************************************************************************************************************@
+                        </div>
+                    </div>
+                </div>
+                <!-- End item in cart-->
+            }
+            <!-- End loop items in cart-->
+            <!-- Start Total Price-->
+            <div class="row d-flex mt-5 mb-3">
+                <div class="col-xs-1 offset-2">
+                    <p class="total-word">Total : </p>
+                </div>
+                <div class="col-xs-3 offset-sm-1">
+                    <p class="total-price">
+                        <span> NRs. </span>
+                        @*@Convert.ToInt32(Model.CartProducts.Sum(x => x.ProductUnitPrice * Model.CartProductIDs.Count(p => x.ProductId == p)))*@
+                        @Math.Round(sum, 2)
+                    </p>
+                </div>
+            </div><!-- End Total Price-->
+        }
+    }
+
+</div>
+@if (Model != null)
+{
+    if (Model.CartProducts != null && Model.CartProductIDs.Count() > 0)
+    {
+        <!-- Start Continue Buttons-->
+        <div class="container-fluid">
+            <div class="row my-5 continue-btns p-4">
+                <div class="col-lg-3 ml-lg-5 mb-3 mb-lg-0">
+                    <a asp-action="Index" asp-controller="Home">
+                        <button type="button" class="btn  btn-outline-danger btn-block continue-shopping-btn">CONTINUE SHOPPING</button></a>
+                    </div>
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Buyer"))
+                    {
+                        <div class="col-lg-3 ml-lg-5"> 
+                            <a asp-action="CheckoutOrderDetails" asp-controller="Checkout"> 
+                                <button class="btn continue-checkout-btn btn-block" asp-action="CheckoutOrderDetails" asp-controller="Checkout">CONTINUE TO CHECKOUT</button> </a> 
+                        </div> 
+                    
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login">
+                            <button type="button" class="btn  btn-outline-danger btn-block continue-shopping-btn">Login for check out</button></a>
+                         
+                    }                    
+                </div>
+        </div>
+        <!-- End Continue Buttons-->
+    }
+    else
+    {
+        <!--Start empty cart-->
+        <div class="container d-flex justify-content-around my-5">
+            <div class="row my-5">
+                <div class="col">
+                    <div class="cart-img-div">
+                        <img src="~/Home/icon/shopping-cart.png" class="cart-img"/>
+                        @*<i class="fa fa-cart-plus" aria-hidden="true" style="font-size:135px;"></i>*@
+                    </div>
+                    <div class="my-5">
+                        <p class="d-flex justify-content-center empty-cart">Your cart is empty!</p>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-center">
+                        <a asp-action="Index" asp-controller="Home">
+                            <button>Start Shopping</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--End empty cart-->
+    }
+}
+else
+{
+    <!--Start empty cart-->
+    <div class="container d-flex justify-content-around my-5">
+        <div class="row my-5">
+            <div class="col">
+                <div class="cart-img-div">
+                    <img src="~/Home/icon/shopping-cart.png" class="cart-img"/>
+                </div>
+                <div class="my-5">
+                    <p class="d-flex justify-content-center empty-cart">Your cart is empty!</p>
+                </div>
+                <div class="mt-3 d-flex justify-content-center">
+                    <a asp-action="Index" asp-controller="Home">
+                        <button>Start Shopping</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--End empty cart-->
+}
+
+</div>
+@* </div> *@
+<script>
+    var products;
+    function deleteCK(e) {
+
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+            products = existingCookieData.split('-');
+        } else {
+            products = [];
+        }
+        var productID = $(e).attr('data-id');
+        //products.push(productID);
+        //////new
+        products = $.grep(products, function (value) {
+            return value != productID;
+        });
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+        updateCartProducts();
+        alert("Product Deleted");
+        $('#cartProducts').load("/ShoppingCart/UpdateCart");
+
+       // location.reload();
+
+    };
+</script>
+<script>
+    var products;
+    function changeQuantity(e) {
+
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+            products = existingCookieData.split('-');
+        } else {
+            products = [];
+        }
+        var productID = $(e).attr('data-id');
+        var size = $(e).val();
+        //$('body').css('opacity', 0.5)
+        //document.querySelector('.container').style.filter = 'blur(1px)';
+        var cartContainer = document.querySelector('.my-cart-container');
+        cartContainer.classList.add('cart-Container-effect');
+        var el = document.createElement("div");
+        el.className += "loader";
+        cartContainer.appendChild(el);
+        //////*************************************************
+        var handler = setTimeout(function () {
+
+            products = $.grep(products, function (value) {
+                return value != productID;
+            });
+            for (var i = 0; i < size; i++) {
+                products.push(productID);
+            }
+            $.cookie('CartProducts', products.join('-'), { path: '/', expires: 100 });
+            //alert(size);
+
+            updateCartProducts();
+
+            $('#cartProducts').load("/ShoppingCart/UpdateCart");
+
+        }, 800)
+    };
+</script>
+
+<script>
+    //document.DOMContentLoaded, after document loaded
+    document.addEventListener('DOMContentLoaded', function () {
+        var products;
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+            products = existingCookieData.split('-');
+        } else {
+            products = [];
+        }
+
+        var paraChangeQuantity = document.querySelectorAll(".paraChangeQuantity");
+        paraChangeQuantity.forEach(item => {
+
+            var productID = $(item).attr('data-id');
+            var dbQ = $(item).attr('data-dbq');
+            var crtQ = $(item).attr('data-crtq');
+            var difference = crtQ - dbQ;
+            //remove from cookies
+            //alert(dbQ + ","+crtQ)
+            if (crtQ > dbQ) {
+                //console.log(productID)
+                products = $.grep(products, function (value) {
+                    return value != productID;
+                });
+                //add duplication to cookies
+                for (var i = 0; i < dbQ; i++) {
+                    products.push(productID);
+                }
+                $.cookie('CartProducts', products.join('-'), { path: '/', expires: 100 });
+                updateCartProducts();
+            }
+        })
+    });
+</script>
+
+<script>
+    //document.DOMContentLoaded, after document loaded
+    document.addEventListener('DOMContentLoaded', function () {
+        var products;
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+            products = existingCookieData.split('-');
+        } else {
+            products = [];
+        }
+
+        var paraZeroQuantity = document.querySelectorAll(".paraZeroQuantity");
+        paraZeroQuantity.forEach(item => {
+
+            var productID = $(item).attr('data-id');
+            var dbQ = $(item).attr('data-dbq');
+
+            if (dbQ <= 0) {
+                //console.log(productID)
+                products = $.grep(products, function (value) {
+                    return value != productID;
+                });
+
+                $.cookie('CartProducts', products.join('-'), { path: '/', expires: 100 });
+                updateCartProducts();
+            }
+        })
+    });
+</script>
