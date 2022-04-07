@@ -11,7 +11,7 @@
     <!-- Basic Page Needs -->
     <meta charset="utf-8">
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-    <title>Ecommerce</title>
+    <title>Digital Jhola</title>
 
     @* <meta name="author" content="themesflat.com"> *@
 
@@ -97,13 +97,13 @@
                         {
 
                             <li class="box-login box-cart nav-top-cart-wrapper">
-                                <a class="icon_login nav-cart-trigger active" href="/Identity/Account/login"></a>
+                                <a class="icon_login nav-cart-trigger active" href="/Identity/Account/Login"></a>
                                 <div class="nav-shop-cart">
                                     <div>
                                         <div class="woocommerce-min-cart-wrap">
                                             <ul class="menu">
                                                 <li>
-                                                    <a href="/Identity/Account/login">login</a>
+                                                    <a href="/Identity/Account/Login">login</a>
                                                 </li>
                                                 <li>
                                                     <a href="/Identity/Account/Register">Register</a>
@@ -125,7 +125,7 @@
                         <nav id="mainnav" class="mainnav">
                             <ul class="menu">
                                 <li>
-                                    <a href="/Home/index">HOME</a>
+                                    <a href="/Home/Index">HOME</a>
                                 </li>
                                 <li>
                                     <a href="/Home/Shop">SHOP</a>
@@ -193,7 +193,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="copyright text-center">Copyright 2020 <a href="#">Ecommerce</a></p>
+                        <p class="copyright text-center">Copyright @DateTime.Now.Year copy&<a href="#">Ecommerce</a></p>
                     </div>
                 </div>
             </div>
@@ -253,12 +253,15 @@
             function updateCartProducts() {
                 var cartProducts;
                 var existingCookieData = $.cookie('CartProducts');
+                console.log(existingCookieData);
                 if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
 
                     cartProducts = existingCookieData.split('-');
+                    
                 } else {
                     cartProducts = [];
                 }
+                console.log(cartProducts);
                 $('#cartProductsCount').html(cartProducts.length);
 
             }

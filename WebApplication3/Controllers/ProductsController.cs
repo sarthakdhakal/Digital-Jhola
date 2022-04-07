@@ -220,7 +220,35 @@ namespace WebApplication3.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        
+        public IActionResult ProductDetails(int id)
+        {
+            if (id == null)
+                return RedirectToAction("Error", "Home");
 
+            // var product = db.Products.Find(id);
+            var product = _context.Products.Include(p => p.Category).Include(ww => ww.Offer).FirstOrDefault(p => p.ProductId == id);
+            const int numOfRelated = 4;
+            if (product is null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                var relatedProducts = _context.Products.Include(ww => ww.Offer).OrderByDescending(p => p.ProductId).Take(4)
+                    .Where(p => p.CategoryId == product.CategoryId);
+                ViewBag.product = product;
+                int size = relatedProducts.Count();
+                if (size < numOfRelated)
+                {
+                    for (int i = 0; i < numOfRelated - size; i++)
+                    {
+                        relatedProducts.ToList().Add(product);
+                    }
+                }
+                return View(relatedProducts);
+            }
+        }
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.ProductId == id);

@@ -17,6 +17,7 @@ namespace WebApplication3.Models
         public DbSet<Offer> Offers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItems> OrderItems { get; set; }
+        public virtual DbSet<ImageSellerVerify> ImageSellerVerifies { get; set; }
 
     }
    

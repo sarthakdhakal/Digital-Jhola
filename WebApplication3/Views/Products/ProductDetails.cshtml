@@ -1,0 +1,217 @@
+﻿@model IEnumerable<Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var pro = ViewBag.product as Product;
+    ViewData["Title"] = "Product Details";
+}
+
+@section Styles{
+    <style>
+        .product-thumb a img {
+            height: 250px;
+            width: 100%;
+        }
+
+        .flexslider .slides img {
+            display: inline-block;
+            height: 400px;
+        }
+    </style>
+
+}
+
+<!-- Page title -->
+<div class="page-title parallax parallax1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-title-heading">
+                    <h1 class="title">@pro.ProductName</h1>
+                </div><!-- /.page-title-heading -->
+                <div class="breadcrumbs">
+                    <ul>
+                        <li>
+                            <a asp-action="Index" asp-controller="Home">Home</a>
+                        </li>
+                        @* <li> *@
+                        @*     <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId">Shop</a> *@
+                        @* </li> *@
+                        <li>
+                            <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@pro.ProductId">Product Details</a>
+                        </li>
+                    </ul>
+                </div><!-- /.breadcrumbs -->
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.page-title -->
+
+<section class="flat-row main-shop shop-detail">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="wrap-flexslider">
+                <div class="inner">
+                    <div class="flexslider style-1 has-relative">
+                        <ul class="slides">
+                            <li data-thumb="~/images/luis-quintero-3qqiMT2LdR8-unsplash.jpg"> 
+                                <img src="~/Product/images/@pro.ProductImgUrl" alt="@pro.ProductName" class="main-img">
+                                <div class="flat-icon style-1">
+                                    <a href="~/Product/images/@pro.ProductImgUrl" class="zoom-popup">
+                                        <span class="fa fa-search-plus"></span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div><!-- /.flexslider -->
+                </div>
+            </div>
+        </div><!-- /.col-md-6 -->
+
+        <div class="col-md-6">
+            <div class="product-detail">
+                <div class="inner">
+                    <div class="content-detail mt-5">
+                        <h2 class="product-title">@pro.ProductName</h2>
+
+                        <p>@pro.ProductDescription</p>
+                        <div class="price">
+                            @if (pro.OfferId == null)
+                            {
+                                var priceInt = Math.Round(pro.ProductUnitPrice, 0);
+                                <ins>
+                                    <span class="amount">NRs. @priceInt</span>
+                                </ins>
+                            }
+                            else
+                            {
+                                var sale = pro.ProductUnitPrice * (pro.Offer.Sale / 100m);
+                                <del>
+                                    <span class="regular">NRs. @Html.DisplayFor(p => pro.ProductUnitPrice)</span>
+                                </del>
+                                <ins>
+                                    <span class="amount">NRs. @(Math.Round(pro.ProductUnitPrice - sale, 2))</span>
+                                </ins>
+                            }
+                        </div>
+
+                        <div class="product-quantity">
+
+                            <div class="add-to-cart">
+
+                                <a class="ProductAddToCart" data-id="@pro.ProductId" data-name="@pro.ProductName">ADD TO CART</a>
+
+                            </div>
+
+                        </div>
+                        <div class="product-categories">
+                            <span>Categories: </span>
+                            @* <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId"> *@
+                            @*     @pro.Category.CategoryName *@
+                            @* </a> *@
+                        </div>
+
+                    </div>
+                </div><!-- /.product-detail -->
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+    </div>
+</section><!-- /.flat-row -->
+
+
+<section class="flat-row shop-related">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section margin-bottom-55">
+                    <h2 class="title">Related Products</h2>
+                </div>
+
+                <div class="product-content product-fourcolumn clearfix">
+                    <ul class="product style2">
+                        @foreach (var item in Model)
+                        {
+                            <li class="product-item">
+                                <div class="product-thumb clearfix">
+                                    <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@item.ProductId">
+                                        <img src="~/Product/images/@item.ProductImgUrl" alt="image">
+                                    </a>
+                                    @if (item.OfferId == null)
+                                    {
+                                        <span class="new">New</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="new sale">Sale</span>
+                                    }
+                                </div>
+                                <br/>
+                                <div class="product-info clearfix">
+                                    <span class="product-title">@item.ProductName</span>
+                                    <div class="price">
+
+                                        @if (item.OfferId == null)
+                                        {
+                                            var priceInt2 = Math.Round(item.ProductUnitPrice, 0);
+                                            <ins>
+                                                <span class="amount">EGP @priceInt2</span>
+                                            </ins>
+                                        }
+                                        else
+                                        {
+                                            if (item != null)
+                                            {
+                                                var sale2 = item.ProductUnitPrice * (item.Offer.Sale / 100m);
+                                                <del>
+                                                    <span class="regular">NRs. @Html.DisplayFor(p => item.ProductUnitPrice)</span>
+                                                </del>
+                                                <ins>
+                                                    <span class="amount">NRs. @(Math.Round(item.ProductUnitPrice - sale2, 2))</span>
+                                                </ins>
+                                            }
+                                        }
+                                    </div>
+
+                                </div>
+                                <div class="add-to-cart text-center">
+                                    <a class="ProductAddToCart" data-id="@item.ProductId" data-name="@item.ProductName">ADD TO CART</a>
+                                </div>
+                            </li>
+                        }
+                    </ul><!-- /.product -->
+
+                </div><!-- /.product-content -->
+            </div>
+
+        </div><!-- /.row -->
+    </div>
+</section>
+
+<script>
+    var products;
+    $(".ProductAddToCart").click(function () {
+
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+            products = existingCookieData.split('-');
+        } else {
+            products = [];
+        }
+        var productID = $(this).attr('data-id');
+        var productName = $(this).attr('data-name');
+        var numOccurences = $.grep(products, function (elem) {
+            return elem === productID;
+        }).length; // Returns 2
+        if (numOccurences < 5) {
+            products.push(productID);
+            $.cookie('CartProducts', products.join('-'), { path: '/', expires: 100 });
+            updateCartProducts();
+            swal("Success!",  productName+" added to cart", "success");
+        } else {
+            swal("Out of Stock!", "This product does not have more available stock.")
+
+        }
+    })
+</script>

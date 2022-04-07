@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rdDXCvhWykwj04rGqRW7XtY8R1BUQLnYkBkR1ibhLQM=",
+  "Hash": "Jcur1QxVdobgaluBEkOaMqGYmEd5EelQPSdcDgAvNdg=",
   "Source": "WebApplication3",
   "BasePath": "_content/WebApplication3",
   "Mode": "Default",
@@ -7667,6 +7667,23 @@
       "OriginalItemSpec": "wwwroot\\img\\1310e66a-3916-4e7f-9306-0f5458079b39_1_qWC3h9xlvy6MpjSGSeNt4Q.jpeg"
     },
     {
+      "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\img\\3a200c41-593b-4080-bcdb-40db8979d9b6_Screenshot_(3).png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "img/3a200c41-593b-4080-bcdb-40db8979d9b6_Screenshot_(3).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\3a200c41-593b-4080-bcdb-40db8979d9b6_Screenshot_(3).png"
+    },
+    {
       "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\img\\defaultimg.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
@@ -7682,6 +7699,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\defaultimg.png"
+    },
+    {
+      "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\img\\e70786fd-3fb8-4756-ad89-a0dae384c155_Screenshot_(39).png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "img/e70786fd-3fb8-4756-ad89-a0dae384c155_Screenshot_(39).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\e70786fd-3fb8-4756-ad89-a0dae384c155_Screenshot_(39).png"
     },
     {
       "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\img\\fb7bfd40-4f08-4f13-8caa-83167c26b077_9893978.jpg",
@@ -8855,6 +8889,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Product\\images\\f1a54c57bb894d9e8eb47c97e8ddefee.png"
+    },
+    {
+      "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\UserDocument\\images\\c18fe7f2-3856-465f-afe1-4a33655aec3c_Screenshot_(22).png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "UserDocument/images/c18fe7f2-3856-465f-afe1-4a33655aec3c_Screenshot_(22).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UserDocument\\images\\c18fe7f2-3856-465f-afe1-4a33655aec3c_Screenshot_(22).png"
+    },
+    {
+      "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\UserDocument\\images\\d3839d66-b3cd-47b2-a479-87216ad23e48_Screenshot_(27).png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "UserDocument/images/d3839d66-b3cd-47b2-a479-87216ad23e48_Screenshot_(27).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UserDocument\\images\\d3839d66-b3cd-47b2-a479-87216ad23e48_Screenshot_(27).png"
     }
   ]
 }

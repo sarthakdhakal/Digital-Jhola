@@ -164,6 +164,7 @@ namespace WebApplication3.Areas.Identity.Pages.Account
                     PhoneNumber = Input.PhoneNumber, City = Input.City, Province = Input.Province,
                     Firstname = Input.Firstname, Lastname = Input.Lastname
                 };
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
