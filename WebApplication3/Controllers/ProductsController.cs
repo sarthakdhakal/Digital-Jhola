@@ -11,7 +11,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QRCoder;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Http.Extensions;
 using WebApplication3.Models;
+using ZXing.QrCode;
+using Image = WebApplication3.Models.Image;
 
 namespace WebApplication3.Controllers
 {
@@ -220,15 +227,34 @@ namespace WebApplication3.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        
-        public IActionResult ProductDetails(int id)
-        {
-            if (id == null)
-                return RedirectToAction("Error", "Home");
 
-            // var product = db.Products.Find(id);
+        public IActionResult ProductDetails(int? id)
+        {
+            if (id == null){
+                return RedirectToAction("Error", "Home");
+        }
+
+            var url = HttpContext.Request.GetEncodedUrl().ToString();
+
+            QRCodeGenerator QrGenerator = new QRCodeGenerator();
+            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+            QRCode QrCode = new QRCode(QrCodeInfo);
+            Bitmap QrBitmap = QrCode.GetGraphic(60);  
+            byte[] BitmapArray = QrBitmap.BitmapToByteArray();
+            string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
+            ViewBag.QrCodeUri = QrUri;
             var product = _context.Products.Include(p => p.Category).Include(ww => ww.Offer).FirstOrDefault(p => p.ProductId == id);
-            const int numOfRelated = 4;
+           ViewBag.Comments = _context.Comments.Where(c=>c.ProductId==id).Include(u => u.User).Include(u=>u.Replies).ThenInclude(r=>r.User).ToList();
+           ViewBag.Reviews = _context.StarRatings.Where(c=>c.ProductId==id).Include(u => u.User).ToList();
+           if (_context.StarRatings.Any(c => c.ProductId == id))
+           {
+
+
+               ViewBag.Stars = Math.Round(_context.StarRatings.Where(c => c.ProductId == id).Average(s => s.Rating));
+               ViewBag.CountStars = _context.StarRatings.Count(c => c.ProductId == id);
+           }
+
+           const int numOfRelated = 4;
             if (product is null)
             {
                 return RedirectToAction("Error", "Home");

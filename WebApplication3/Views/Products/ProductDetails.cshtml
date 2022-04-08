@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pro = ViewBag.product as Product;
     ViewData["Title"] = "Product Details";
+
+
+
 }
 
 @section Styles{
@@ -15,6 +20,77 @@
         .flexslider .slides img {
             display: inline-block;
             height: 400px;
+        }
+        
+        .card {
+            position: relative;
+            display: flex;
+            padding: 20px;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #d2d2dc;
+            border-radius: 11px;
+            -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250);
+            -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1);
+            box-shadow: 0px 0px 5px 0px rgb(161, 163, 164)
+        }
+        
+        .media img {
+            width: 60px;
+            height: 60px
+        }
+        
+        .reply a {
+            text-decoration: none
+        }
+        
+        fieldset, label {
+            margin: 0;
+            padding: 0;
+        }
+        .rating {
+            border: none;
+            float: left;
+        }
+        
+        .rating > input {
+            display: none;
+        }
+        
+        .rating > label:before {
+            margin: 5px;
+            font-size: 1.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+        
+        .rating > .half:before {
+            content: "\f089";
+            position: absolute;
+        }
+        
+        .rating > label {
+            color: #ddd;
+            float: right;
+        }
+        
+        
+        .rating > input:checked ~ label, /* show gold star when clicked */
+        .rating:not(:checked) > label:hover, /* hover current star */
+        .rating:not(:checked) > label:hover ~ label {
+            color: #FFD700;
+        }
+        
+        
+        .rating > input:checked + label:hover, /* hover current star when changing rating */
+        .rating > input:checked ~ label:hover,
+        .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+        .rating > input:checked ~ label:hover ~ label {
+            color: #FFED85;
         }
     </style>
 
@@ -48,83 +124,278 @@
 
 <section class="flat-row main-shop shop-detail">
     <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="wrap-flexslider">
-                <div class="inner">
-                    <div class="flexslider style-1 has-relative">
-                        <ul class="slides">
-                            <li data-thumb="~/images/luis-quintero-3qqiMT2LdR8-unsplash.jpg"> 
-                                <img src="~/Product/images/@pro.ProductImgUrl" alt="@pro.ProductName" class="main-img">
-                                <div class="flat-icon style-1">
-                                    <a href="~/Product/images/@pro.ProductImgUrl" class="zoom-popup">
-                                        <span class="fa fa-search-plus"></span>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div><!-- /.flexslider -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="wrap-flexslider">
+                    <div class="inner">
+                        <div class="flexslider style-1 has-relative">
+                            <ul class="slides">
+                                <li data-thumb="~/images/luis-quintero-3qqiMT2LdR8-unsplash.jpg">
+                                    <img src="~/Product/images/@pro.ProductImgUrl" alt="@pro.ProductName" class="main-img">
+                                    <div class="flat-icon style-1">
+                                        <a href="~/Product/images/@pro.ProductImgUrl" class="zoom-popup">
+                                            <span class="fa fa-search-plus"></span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!-- /.flexslider -->
+                    </div>
                 </div>
-            </div>
-        </div><!-- /.col-md-6 -->
+            </div><!-- /.col-md-6 -->
 
-        <div class="col-md-6">
-            <div class="product-detail">
-                <div class="inner">
-                    <div class="content-detail mt-5">
-                        <h2 class="product-title">@pro.ProductName</h2>
+            <div class="col-md-6">
+                <div class="product-detail">
+                    <div class="inner">
+                        <div class="content-detail mt-5">
+                            <h2 class="product-title">@pro.ProductName</h2>
+                            <div>
+                                @for (int i = 0; i < ViewBag.Stars; i++)
+                                {
+                                   
+                                        <a style="color: #FFD700">
+                                            <i class="fa fa-star"></i>
+                                        </a>
 
-                        <p>@pro.ProductDescription</p>
-                        <div class="price">
-                            @if (pro.OfferId == null)
-                            {
-                                var priceInt = Math.Round(pro.ProductUnitPrice, 0);
-                                <ins>
-                                    <span class="amount">NRs. @priceInt</span>
-                                </ins>
-                            }
-                            else
-                            {
-                                var sale = pro.ProductUnitPrice * (pro.Offer.Sale / 100m);
-                                <del>
-                                    <span class="regular">NRs. @Html.DisplayFor(p => pro.ProductUnitPrice)</span>
-                                </del>
-                                <ins>
-                                    <span class="amount">NRs. @(Math.Round(pro.ProductUnitPrice - sale, 2))</span>
-                                </ins>
-                            }
-                        </div>
+                                
+                                    
+                                }
+                                 @if (ViewBag.Stars > 0)
+                                                                    {
 
-                        <div class="product-quantity">
-
-                            <div class="add-to-cart">
-
-                                <a class="ProductAddToCart" data-id="@pro.ProductId" data-name="@pro.ProductName">ADD TO CART</a>
-
+                                <span>&nbsp; @ViewBag.Stars rating from @ViewBag.CountStars reviews</span>
+                                                                    }
+                                
+                            </div>
+                            <p>@pro.ProductDescription</p>
+                            
+                            <div class="price">
+                                @if (pro.OfferId == null)
+                                {
+                                    var priceInt = Math.Round(pro.ProductUnitPrice, 0);
+                                    <ins>
+                                        <span class="amount">NRs. @priceInt</span>
+                                    </ins>
+                                }
+                                else
+                                {
+                                    var sale = pro.ProductUnitPrice * (pro.Offer.Sale / 100m);
+                                    <del>
+                                        <span class="regular">NRs. @Html.DisplayFor(p => pro.ProductUnitPrice)</span>
+                                    </del>
+                                    <ins>
+                                        <span class="amount">NRs. @(Math.Round(pro.ProductUnitPrice - sale, 2))</span>
+                                    </ins>
+                                }
                             </div>
 
-                        </div>
-                        <div class="product-categories">
-                            <span>Categories: </span>
-                            @* <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId"> *@
-                            @*     @pro.Category.CategoryName *@
-                            @* </a> *@
-                        </div>
+                            <div class="product-quantity">
 
-                    </div>
-                </div><!-- /.product-detail -->
-            </div>
-        </div><!-- /.row -->
-    </div><!-- /.container -->
+                                <div class="add-to-cart">
+
+                                    <a class="ProductAddToCart" data-id="@pro.ProductId" data-name="@pro.ProductName">ADD TO CART</a>
+
+                                </div>
+
+                            </div>
+                            <div class="product-categories">
+                                <span>Categories: </span>
+                                <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId">
+                                    @if (pro.Category != null)
+                                    {
+                                        @pro.Category.CategoryName
+                                    }
+                                </a>
+                            </div>
+                            <div class="qrcode">
+@if (ViewBag.QrCodeUri != null)
+    {
+        <img src="@ViewBag.QrCodeUri" class="img-thumbnail" width="200px" height="200px" />
+    }
+
+</div>
+                            </div>
+                    </div><!-- /.product-detail -->
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
     </div>
 </section><!-- /.flat-row -->
 
+<section class="flat-row comments-area">
+    <div class="container mb-5 mt-5">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center mb-5"> Comment section </h3>
+                    <div class="row">
 
+                        <div class="col-md-12">
+
+                            @foreach (var comment in ViewBag.Comments)
+                            {
+                                var count = 0;
+
+                                <div class="media">
+                                    <img class="mr-3 rounded-circle" alt="Display picture user" src="~/img/@comment.User.image"/>
+                                    <div class="media-body">
+                                        <div class="row">
+                                            <div class="col-8 d-flex">
+                                                <h5>@comment.User.Firstname @comment.User.Lastname</h5> <span>- @comment.CreatedOn.ToString("MM/dd/yyyy")</span>
+                                            </div>
+                                        </div> @comment.Content
+
+                                        @foreach (var reply in comment.Replies)
+                                        {
+                                            count++;
+                                            <div class="media mt-4">
+
+                                                <a class="pr-3">
+                                                    <img class="rounded-circle" alt="UserImage" src="~/img/@reply.User.image"/>
+                                                </a>
+                                                <div class="media-body">
+                                                    <div class="row">
+                                                        <div class="col-12 d-flex">
+                                                            <h5>@reply.User.Firstname @reply.User.Lastname </h5><span>&nbsp;the seller.</span>  <span>- @reply.CreatedOn.ToString("MM/dd/yyyy")</span>
+                                                        </div>
+                                                    </div> @reply.Content
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (SignInManager.IsSignedIn(User) && SignInManager.UserManager.GetUserId(User) == @pro.UserId && count == 0)
+                                        {
+                                            <form id="CreateReply" class="validate-form" asp-action="Create" asp-controller="Reply" enctype="multipart/form-data" method="post">
+                                                <input type="hidden" name="commentId" value="@comment.CommentId"/>
+                                                <input type="hidden" name="productId" value="@pro.ProductId"/>
+                                                <div class="card p-3">
+                                                    <h5>Add Reply</h5> <textarea id="textarea" name="content" class="form-control"> </textarea>
+                                                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                                                        <button type="submit" name="submit" class="btn btn-sm btn-danger">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Buyer"))
+                            {
+                                <form id="CreateComment" class="validate-form padding-top-5" asp-action="Create" asp-controller="Comments" enctype="multipart/form-data" method="post">
+
+                                    <input type="hidden" name="productId" value="@pro.ProductId"/>
+                                    <div class="card p-3">
+                                        <h5>Add Comment</h5> <textarea id="textarea" name="content" class="form-control"> </textarea>
+                                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                                            <button type="submit" name="submit" class="btn btn-sm btn-danger">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="card pt-3 mt-3">
+                                <h5>Please <a href="/Identity/Account/Register">Register</a> or   <a href="/Identity/Account/Login">Login</a> to add a comment.</h5>
+                                   </div> 
+                                    }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="flat-row reviews-area">
+    <div class="container mb-5 ">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center mb-5"> Review section </h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @foreach (var review in ViewBag.Reviews)
+                            {
+                                <div class="media mt-4">
+
+                                    <a class="pr-3">
+                                        <img class="rounded-circle" alt="UserImage" src="~/img/@review.User.image"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <div class="row">
+                                            <div class="col-12 d-flex">
+                                                <h5>@review.User.Firstname @review.User.Lastname</h5> <span>- @review.CreatedOn.ToString("MM/dd/yyyy")</span>
+                                            </div>
+                                               <div class="col-12 d-flex">
+                                            @for (int i = 0; i < review.Rating; i++)
+                                            {
+                                                @if (review.Rating > 0)
+                                                {
+                                                 
+                                            <a style="color: #FFD700">
+                                                <i class="fa fa-star"></i>
+                                            </a>
+                                       
+                                                }
+                                            }
+                                            </div>
+                                        </div> @review.Review
+                                    </div>
+                                </div>
+                            }
+                            <form id="CreateReview" class="validate-form mt-5" asp-action="Create" asp-controller="Review" enctype="multipart/form-data" method="post">
+                                <div class="card p-3">
+                                    <input type="hidden" name="productId" value="@pro.ProductId"/>
+                                    <h5>Add Review</h5>
+                                    <div style="rating">
+                                        <fieldset class="rating" style="float: left">
+                                            <input type="radio" id="star5" name="rating" value="5"/>
+                                            <label class="full" for="star5"
+                                                   title="Awesome - 5 stars">
+                                            </label>
+
+                                            <input type="radio" id="star4" name="rating" value="4"/>
+                                            <label class="full" for="star4"
+                                                   title="Pretty good - 4 stars">
+                                            </label>
+
+                                            <input type="radio" id="star3" name="rating" value="3"/>
+                                            <label class="full" for="star3"
+                                                   title="Satisfactory - 3 stars">
+                                            </label>
+
+                                            <input type="radio" id="star2" name="rating" value="2"/>
+                                            <label class="full" for="star2"
+                                                   title="Pretty bad- 2 stars">
+                                            </label>
+
+                                            <input type="radio" id="star1" name="rating" value="1" checked/>
+                                            <label class="full" for="star1"
+                                                   title="Very bad - 1 star">
+                                            </label>
+
+                                        </fieldset>
+
+                                         <textarea id="textarea" name="content" class="form-control"> </textarea>
+                                    </div>
+                                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                                        <button type="submit" name="submit" class="btn btn-sm btn-danger">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
 <section class="flat-row shop-related">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="title-section margin-bottom-55">
+                <div class="title-section margin-bottom-20">
                     <h2 class="title">Related Products</h2>
                 </div>
 
@@ -139,7 +410,7 @@
                                     </a>
                                     @if (item.OfferId == null)
                                     {
-                                        <span class="new">New</span>
+                                        <span class="new"></span>
                                     }
                                     else
                                     {
@@ -155,7 +426,7 @@
                                         {
                                             var priceInt2 = Math.Round(item.ProductUnitPrice, 0);
                                             <ins>
-                                                <span class="amount">EGP @priceInt2</span>
+                                                <span class="amount">NRs. @priceInt2</span>
                                             </ins>
                                         }
                                         else

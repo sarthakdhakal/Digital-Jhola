@@ -42,9 +42,6 @@ D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win-arm\
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
-D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
-D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
@@ -278,3 +275,10 @@ D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Microsoft.AspNetC
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\QRCoder.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\AngleSharp.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\AngleSharp.Css.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\HtmlSanitizer.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\zxing.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll

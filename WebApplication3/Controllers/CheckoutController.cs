@@ -20,18 +20,18 @@ namespace WebApplication3.Controllers
         }
         public IActionResult CheckoutOrderDetails()
         {
-            // start new
+            
             string flag="";
             if (TempData.ContainsKey("name"))
                 flag = TempData["name"].ToString();
             if (flag == "from shopping cart")
             {
-                //////// end new
+                
                 var cartProductCookie = Request.Cookies["CartProducts"];
                 int quantity = 0;
                 if (cartProductCookie != null && cartProductCookie != "")
                 {
-
+                    
                     model.CartProductIDs = cartProductCookie.Split('-').Select(x => int.Parse(x)).ToList();
                     model.CartProducts = db.Products.Include(w=>w.Offer).Where(p => model.CartProductIDs.Contains(p.ProductId)).ToList();
                     foreach (var product in model.CartProducts)

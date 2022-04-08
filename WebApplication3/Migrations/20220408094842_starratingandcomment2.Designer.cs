@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication3.Models;
 
@@ -11,9 +12,10 @@ using WebApplication3.Models;
 namespace WebApplication3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220408094842_starratingandcomment2")]
+    partial class starratingandcomment2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -495,19 +497,16 @@ namespace WebApplication3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StarRatingId"), 1L, 1);
 
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Rating")
-                        .HasColumnType("real");
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.Property<string>("Review")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("ReviewerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -515,7 +514,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ReviewerId");
 
                     b.ToTable("StarRatings");
                 });
@@ -767,7 +766,7 @@ namespace WebApplication3.Migrations
             modelBuilder.Entity("WebApplication3.Models.Reply", b =>
                 {
                     b.HasOne("WebApplication3.Models.Comment", "Comment")
-                        .WithMany("Replies")
+                        .WithMany()
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -799,25 +798,20 @@ namespace WebApplication3.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApplication3.Models.User", "User")
+                    b.HasOne("WebApplication3.Models.User", "Reviewer")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("User");
+                    b.Navigation("Reviewer");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("WebApplication3.Models.Comment", b =>
-                {
-                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Offer", b =>
