@@ -14,7 +14,7 @@ namespace WebApplication3.Controllers
 
         public IActionResult UpdateCart()
         {
-            return ViewComponent("ShoppingCart");
+            return ViewComponent("ViewCart");
         }
     }
 }

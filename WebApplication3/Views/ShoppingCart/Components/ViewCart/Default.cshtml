@@ -3,6 +3,7 @@
 *@
 
 @using Microsoft.AspNetCore.Identity
+@using WebApplication3.Models
 @inject SignInManager<User> SignInManager
 @model WebApplication3.Models.CheckoutViewModel
 @{
@@ -45,21 +46,21 @@
                     <div class="col-md-10">
                         <div class="row product-details">
                             <div class="col-md-2 p-2 first-col-rborder">
-                                <img src="~/Home/images/@item.ProductImgUrl" class="img-col"/>
+                                <img src="~/Product/images/@item.ProductImgUrl" class="img-col"/>
                             </div>
                             <div class="col-md-4 p-2">
                                 <p class="product-name-header">@item.ProductName</p>
                                 <p class="desc-overflow">@item.ProductDescription</p>
                                 <div>
                                     <div class="remove-from-cart ml-2" onclick="deleteCK(this)" data-id="@item.ProductId">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                        <span>Remove</span>
+                                        <i class="fa fa-trash" style="color:#2e5090;" aria-hidden="true"></i>
+                                        <span style="color:#2e5090;">Remove</span>
                                     </div>
-                                    @* <a class="remove-from-cart cart-product-details ml-2 ml-sm-5" *@
-                                    @*    asp-action="PrdDetails" asp-controller="Product" asp-route-id="@item.ProductId"> *@
-                                    @*     <i class="fa fa-info-circle" aria-hidden="true"></i> *@
-                                    @*     <span>Details</span> *@
-                                    @* </a> *@
+                                    <a class="remove-from-cart cart-product-details ml-2 ml-sm-5"
+                                       asp-action="ProductDetails" asp-controller="Products" asp-route-id="@item.ProductId">
+                                        <i class="fa fa-info-circle" style="color:#2e5090;" aria-hidden="true"></i>
+                                        <span style="color:#2e5090;">Details</span>
+                                    </a>
                                 </div>
                             </div>
                             @***************************************************************************************************************@
@@ -137,7 +138,7 @@
                                         @if (item.OfferId == null)
                                         {
                                             var priceInt = Math.Round(item.ProductUnitPrice, 2);
-                                            <span>EGP @(priceInt * quantity)</span>
+                                            <span>NRs. @(priceInt * quantity)</span>
                                             sum += (priceInt * quantity);
                                         }
                                         else
@@ -180,9 +181,8 @@
                     <p class="total-word">Total : </p>
                 </div>
                 <div class="col-xs-3 offset-sm-1">
-                    <p class="total-price">
+                    <p class="total-price" style="color:#2e5090;">
                         <span> NRs. </span>
-                        @*@Convert.ToInt32(Model.CartProducts.Sum(x => x.ProductUnitPrice * Model.CartProductIDs.Count(p => x.ProductId == p)))*@
                         @Math.Round(sum, 2)
                     </p>
                 </div>
@@ -200,20 +200,20 @@
             <div class="row my-5 continue-btns p-4">
                 <div class="col-lg-3 ml-lg-5 mb-3 mb-lg-0">
                     <a asp-action="Index" asp-controller="Home">
-                        <button type="button" class="btn  btn-outline-danger btn-block continue-shopping-btn">CONTINUE SHOPPING</button></a>
+                        <button type="button" style="color:#2e5090;" class="btn btn-block continue-shopping-btn">CONTINUE SHOPPING</button></a>
                     </div>
                     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Buyer"))
                     {
                         <div class="col-lg-3 ml-lg-5"> 
                             <a asp-action="CheckoutOrderDetails" asp-controller="Checkout"> 
-                                <button class="btn continue-checkout-btn btn-block" asp-action="CheckoutOrderDetails" asp-controller="Checkout">CONTINUE TO CHECKOUT</button> </a> 
+                                <button class="btn btn-block continue-shopping-btn" style="color:#2e5090;" asp-action="CheckoutOrderDetails" asp-controller="Checkout">CONTINUE TO CHECKOUT</button> </a> 
                         </div> 
                     
                     }
                     else
                     {
                         <a asp-area="Identity" asp-page="/Account/Login">
-                            <button type="button" class="btn  btn-outline-danger btn-block continue-shopping-btn">Login for check out</button></a>
+                            <button type="button" style="color:#2e5090;"  class="btn btn-block continue-shopping-btn">Login for check out</button></a>
                          
                     }                    
                 </div>
@@ -334,7 +334,7 @@ else
 
             $('#cartProducts').load("/ShoppingCart/UpdateCart");
 
-        }, 800)
+        }, 20)
     };
 </script>
 

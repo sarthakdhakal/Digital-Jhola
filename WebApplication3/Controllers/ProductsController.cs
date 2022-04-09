@@ -262,7 +262,7 @@ namespace WebApplication3.Controllers
             else
             {
                 var relatedProducts = _context.Products.Include(ww => ww.Offer).OrderByDescending(p => p.ProductId).Take(4)
-                    .Where(p => p.CategoryId == product.CategoryId);
+                    .Where(p => p.CategoryId == product.CategoryId && p.ProductId!= id ) ;
                 ViewBag.product = product;
                 int size = relatedProducts.Count();
                 if (size < numOfRelated)

@@ -1,0 +1,55 @@
+﻿@model List<Product>
+
+
+@{
+    ViewData["Title"] = "Shop";
+    var Allproducts = ViewBag.Allproducts as List<Product>;
+    var pagesCounter = Math.Ceiling(Allproducts.Count / 6d);
+    var categoryId = ViewBag.categoryId;
+    var categories = ViewBag.categories as List<Category>;
+    var search = ViewBag.search;
+    var order = ViewBag.order;
+    var pageNumber = ViewBag.pageNumber;
+    var pageNumberNext = pageNumber + 1;
+    var pageNumberPrev = pageNumber - 1;
+
+}
+
+
+
+<!-- Page title -->
+<div class="page-title parallax parallax1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-title-heading">
+                    <h1 class="title">Shop</h1>
+                </div><!-- /.page-title-heading -->
+                <div class="breadcrumbs">
+                    <ul>
+                        <li><a href="/home/index">Home</a></li>
+                        <li><a href="/Home/shop">Shop</a></li>
+                        
+                    </ul>
+                </div><!-- /.breadcrumbs -->
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.page-title -->
+
+
+
+<div id="updated">
+
+    @await Html.PartialAsync("getAllProducts")
+</div>
+
+
+
+@section scripts{
+    <script>
+
+
+    </script>
+
+}

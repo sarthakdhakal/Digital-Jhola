@@ -844,5 +844,17 @@ function updateCartProducts() {
     } else {
         cartProducts = [];
     }
-    $('#cartProductsCount').html(cartProducts.length);
+    const countUniqueArr=[];
+    let count =0;
+    for(let i=0;i<cartProducts.length;i++){
+        console.log(!countUniqueArr.includes(cartProducts[i]));
+        if(!countUniqueArr.includes(cartProducts[i])){
+            count++;
+            countUniqueArr.push(cartProducts[i]);
+            
+        }
+    }
+    console.log(countUniqueArr);
+    // console.log(cartProducts);
+    $('#cartProductsCount').html(count);
 };

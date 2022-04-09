@@ -1,8 +1,417 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
+    var categories = ViewBag.categories as List<Category>;
+    var products = ViewBag.products as List<Product>;
+    var sliders = ViewBag.sliders as List<Image>;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<!-- SLIDER -->
+<div class="rev_slider_wrapper fullwidthbanner-container">
+    <div id="rev-slider1" class="rev_slider fullwidthabanner">
+        <ul>
+
+            @if (sliders.Count == 0)
+            {
+                <!-- Slide 1 -->
+                <li data-transition="random">
+                    <!-- Main Image -->
+
+                    <img src="~/Home/images/men.jpg" alt="" data-bgposition="center center" data-no-retina>
+
+
+
+                    <!-- Layers -->
+                    <div class="tp-caption tp-resizeme text-white font-weight-300"
+                         data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']"
+                         data-y="['middle','middle','middle','middle']" data-voffset="['-93','-93','-93','-93']"
+                         data-fontsize="['24','24','24','18']"
+                         data-lineheight="['72','72','72','36']"
+                         data-width="full"
+                         data-height="none"
+                         data-whitespace="normal"
+                         data-transform_idle="o:1;"
+                         data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                         data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                         data-mask_in="x:0px;y:[100%];"
+                         data-mask_out="x:inherit;y:inherit;"
+                         data-start="700"
+                         data-splitin="none"
+                         data-splitout="none"
+                         data-responsive_offset="on">
+                        All products at a single place
+                    </div>
+
+                    <div class="tp-caption tp-resizeme text-white font-weight-500"
+                         data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']"
+                         data-y="['middle','middle','middle','middle']" data-voffset="['-42','-42','-42','-42']"
+                         data-fontsize="['52','52','52','40']"
+                         data-lineheight="['60','60','60','40']"
+                         data-width="full"
+                         data-height="none"
+                         data-whitespace="normal"
+                         data-transform_idle="o:1;"
+                         data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                         data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                         data-mask_in="x:0px;y:[100%];"
+                         data-mask_out="x:inherit;y:inherit;"
+                         data-start="1000"
+                         data-splitin="none"
+                         data-splitout="none"
+                         data-responsive_offset="on">
+                        One Stop Shopping
+                    </div>
+
+                
+
+                    <div class="tp-caption"
+                         data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']"
+                         data-y="['middle','middle','middle','middle']" data-voffset="['80','80','80','80']"
+                         data-width="full"
+                         data-height="none"
+                         data-whitespace="normal"
+                         data-transform_idle="o:1;"
+                         data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                         data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                         data-mask_in="x:0px;y:[100%];"
+                         data-mask_out="x:inherit;y:inherit;"
+                         data-start="1000"
+                         data-splitin="none"
+                         data-splitout="none"
+                         data-responsive_offset="on">
+                        <a asp-action="shop" asp-route-pageNumber="1" class="themesflat-button has-padding-36 bg-accent has-shadow"><span>SHOP NOW</span></a>
+                    </div>
+                </li>
+            }
+            @foreach (var slider in sliders)
+            {
+
+                <!-- Slide 1 -->
+                <li data-transition="random">
+                    <!-- Main Image -->
+                    
+                        <img src="~/Home/images/men.jpg" alt="" data-bgposition="center center" data-no-retina>
+                    }
+
+                    <!-- Layers -->
+                    <div class="tp-caption tp-resizeme text-white font-weight-300"
+                         data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']"
+                         data-y="['middle','middle','middle','middle']" data-voffset="['-93','-93','-93','-93']"
+                         data-fontsize="['24','24','24','18']"
+                         data-lineheight="['72','72','72','36']"
+                         data-width="full"
+                         data-height="none"
+                         data-whitespace="normal"
+                         data-transform_idle="o:1;"
+                         data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                         data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                         data-mask_in="x:0px;y:[100%];"
+                         data-mask_out="x:inherit;y:inherit;"
+                         data-start="700"
+                         data-splitin="none"
+                         data-splitout="none"
+                         data-responsive_offset="on">
+                        All products at a single place
+                    </div>
+
+                    <div class="tp-caption tp-resizeme text-white font-weight-500"
+                         data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']"
+                         data-y="['middle','middle','middle','middle']" data-voffset="['-42','-42','-42','-42']"
+                         data-fontsize="['52','52','52','40']"
+                         data-lineheight="['60','60','60','40']"
+                         data-width="full"
+                         data-height="none"
+                         data-whitespace="normal"
+                         data-transform_idle="o:1;"
+                         data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                         data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                         data-mask_in="x:0px;y:[100%];"
+                         data-mask_out="x:inherit;y:inherit;"
+                         data-start="1000"
+                         data-splitin="none"
+                         data-splitout="none"
+                         data-responsive_offset="on">
+                         One Stop Shopping
+                    </div>
+                    
+
+                    <div class="tp-caption"
+                         data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']"
+                         data-y="['middle','middle','middle','middle']" data-voffset="['80','80','80','80']"
+                         data-width="full"
+                         data-height="none"
+                         data-whitespace="normal"
+                         data-transform_idle="o:1;"
+                         data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                         data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                         data-mask_in="x:0px;y:[100%];"
+                         data-mask_out="x:inherit;y:inherit;"
+                         data-start="1000"
+                         data-splitin="none"
+                         data-splitout="none"
+                         data-responsive_offset="on">
+                        <a asp-action="shop" asp-route-pageNumber="1" class="themesflat-button has-padding-36 bg-accent has-shadow"><span>SHOP NOW</span></a>
+                    </div>
+                </li>
+            }
+            <!-- /End Slide 1 -->
+            <!-- Slide 2 -->
+            <!-- /End Slide 2 -->
+        </ul>
+    </div>
 </div>
+<!-- END SLIDER -->
+
+@if (categories.Count != 0)
+{
+
+    <!-- IMAGE BOX -->
+    <section class="flat-row row-image-box">
+
+        <div class="container">
+
+            <div class="row gutter-10">
+
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="flat-image-box style-1 data-effect div-h22 clearfix">
+                        <div class="item data-effect-item">
+                            <div class="inner">
+                                <div class="thumb">
+                                    @if (@categories[0].ImageUrl != null)
+                                    {
+
+                                        <img src="~/Category/images/@categories[0].ImageUrl" alt="Image">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Home/images/imgbox-2-375x240.jpg" alt="Image">
+                                    }
+                                    <div class="elm-btn">
+                                        <a asp-action="shop" asp-route-_categoryId="@categories[0].CategoryId" asp-route-pageNumber="1" class="themesflat-button bg-white width-150">@categories[0].CategoryName</a>
+                                    </div>
+                                    <div class="overlay-effect bg-color-1" style="display: block; left: 100%; top: 0px; transition: all 300ms ease 0s;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-4 -->
+
+
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="flat-image-box style-1 row2 data-effect clearfix">
+
+                        @if (categories.Count >= 2)
+                        {
+
+                            <div class="item data-effect-item">
+                                <div class="inner">
+                                    <div class="thumb">
+
+                                        @if (@categories[1].ImageUrl != null)
+                                        {
+
+                                            <img src="~/Category/images/@categories[1].ImageUrl" alt="Image">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Home/images/imgbox-2-375x240.jpg" alt="Image">
+                                        }
+                                        <div class="elm-btn">
+                                            <a asp-action="shop" asp-route-_categoryId="@categories[1].CategoryId" class="themesflat-button bg-white width-150">@categories[1].CategoryName</a>
+                                        </div>
+                                        <div class="overlay-effect bg-color-1" style="display: block; left: 0px; top: 100%; transition: all 300ms ease 0s;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (categories.Count >= 3)
+                        {
+
+                            <div class="item data-effect-item">
+                                <div class="inner">
+                                    <div class="thumb">
+                                        @if (@categories[2].ImageUrl != null)
+                                        {
+                                            <img src="~/Category/images/@categories[2].ImageUrl" alt="Image">
+
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Home/images/imgbox-2-375x240.jpg" alt="Image">
+                                        }
+
+                                        <div class="elm-btn">
+                                            <a asp-action="shop" asp-route-_categoryId="@categories[2].CategoryId" class="themesflat-button bg-white width-150">@categories[2].CategoryName</a>
+                                        </div>
+                                        <div class="overlay-effect bg-color-1" style="display: block; left: 0px; top: -100%; transition: all 300ms ease 0s;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+                @if (categories.Count >= 4)
+                {
+                    <!-- /.col-md-4 -->
+                    <div class="col-sm-6 col-md-4">
+                        <div class="flat-image-box style-1 data-effect div-h20 clearfix">
+                            <div class="item data-effect-item">
+                                <div class="inner">
+                                    <div class="thumb">
+                                        @if (@categories[3].ImageUrl != null)
+                                        {
+                                            <img src="~/Category/images/@categories[3].ImageUrl" alt="Image">
+
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Home/images/imgbox-2-375x240.jpg" alt="Image">
+                                        }
+
+                                        <div class="elm-btn">
+                                            <a asp-action="shop" asp-route-_categoryId="@categories[3].CategoryId" class="themesflat-button bg-white width-150">@categories[3].CategoryName</a>
+                                        </div>
+                                        <div class="overlay-effect bg-color-1" style="display: block; left: -100%; top: 0px; transition: all 300ms ease 0s;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.col-md-4 -->
+
+                }
+
+
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
+}
+
+
+<!-- END IMAGE BOX -->
+<!-- PRODUCT NEW -->
+<section class="flat-row row-product-new">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section margin-bottom-52">
+                    <h2 class="title">
+                        New Product
+                    </h2>
+                </div>
+                <div class="product-content product-fourcolumn clearfix">
+                    <ul class="product style2 clearfix">
+                        @foreach (var product in products)
+                        {
+                            @if (product.OfferId != null)
+                            {
+                                <li class="product-item">
+                                    <div class="product-thumb clearfix">
+                                        <a  asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.ProductId" class="product-thumb">
+                                            <img src="~/Home/images/@product.ProductImgUrl" style="height:300px;width:200px" alt="image">
+                                        </a>
+                                        <span class="new sale">Sale</span>
+                                    </div>
+                                    <div class="product-info clearfix mt-4">
+                                        <span class="product-title">@product.ProductName</span>
+                                        <div class="price">
+                                            <del>
+                                                <span class="regular">$@Math.Round(product.ProductUnitPrice, 2)</span>
+                                            </del>
+                                            <ins>
+                                                @{var price = Math.Round(product.ProductUnitPrice - (product.ProductUnitPrice * product.Offer.Sale / 100), 2);}
+                                                <span class="amount">$@price</span>
+
+                                            </ins>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="add-to-cart text-center">
+                                        <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
+
+                                    </div>
+                                    
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="product-item">
+                                    <div class="product-thumb clearfix ">
+                                        <a  asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.ProductId" class="product-thumb">
+                                            <img src="~/Product/images/@product.ProductImgUrl" style="height:300px;width:200px" alt="image">
+                                        </a>
+                                        <span class="new">New</span>
+                                    </div>
+                                    <div class="product-info clearfix mt-4">
+                                        <span class="product-title">@product.ProductName</span>
+                                        <div class="price">
+                                            <ins>
+                                                <span class="amount">$@Math.Round(product.ProductUnitPrice, 2)</span>
+                                            </ins>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="add-to-cart text-center">
+                                        <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
+                                    </div>
+                                   
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section>
+<!-- END PRODUCT NEW -->
+<!-- ANIMATION BOX -->
+
+<!-- PRODUCT -->
+<!-- ICON BOX -->
+
+<!-- END ICON BOX -->
+<script>
+    var products;
+    $(".ProductAddToCart").click(function () {
+
+        var existingCookieData = $.cookie('CartProducts');
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+
+            products = existingCookieData.split('-');
+        } else {
+            products = [];
+        }
+        var productID = $(this).attr('data-id');
+        var productName = $(this).attr('data-name');
+        var numOccurences = $.grep(products, function (elem) {
+            return elem === productID;
+        }).length; // Returns 2
+        if (numOccurences < 5) {
+            products.push(productID);
+            $.cookie('CartProducts', products.join('-'), { path: '/', expires: 100 });
+            updateCartProducts();
+            swal("Success!", productName + " added to cart", "success");
+        } else {
+            swal("Out of Stock!", "This product does not have more available stock.")
+
+        }
+    })
+    $(window).on('load', function () {
+       
+        if ($.cookie('Checkout') == "true") {
+            $.cookie('CartProducts', null, { path: '/' });
+            swal("Checkout is Done!", "Order is Preparing Now... We will Ship it ASAP")
+        }
+        
+
+    });
+   
+</script>

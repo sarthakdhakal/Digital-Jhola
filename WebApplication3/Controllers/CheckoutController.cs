@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,17 +11,21 @@ using WebApplication3.Models;
 namespace WebApplication3.Controllers
 {
     public class CheckoutController : Controller
-    {
-            ApplicationDbContext db;
+    { 
+        ApplicationDbContext db;
         CheckoutViewModel model;
-        public CheckoutController(ApplicationDbContext _db)
+        private  UserManager<User> _userManager;
+
+        public CheckoutController(ApplicationDbContext _db, UserManager<User> userManager)
         {
             db = _db;
             model = new CheckoutViewModel();
+            _userManager = userManager;
         }
         public IActionResult CheckoutOrderDetails()
         {
-            
+            string userId = _userManager.GetUserId(HttpContext.User);
+            ViewBag.userData = _userManager.FindByIdAsync(userId).Result;
             string flag="";
             if (TempData.ContainsKey("name"))
                 flag = TempData["name"].ToString();
@@ -42,6 +47,7 @@ namespace WebApplication3.Controllers
                 }
                 TempData["name"] = "";
                 TempData["name2"] = "from order details";
+                
                 return View(model);
             }
             else
@@ -78,7 +84,7 @@ namespace WebApplication3.Controllers
                             _totalPrice += Convert.ToDecimal((item.ProductUnitPrice-sale)* quantity);
                         }
                     }
-                    Order newOrder = new Order
+                    Order newOrder = new Order()
                     {
                         FirstName = PersonalInfo.OrderData.FirstName,
                         LastName = PersonalInfo.OrderData.LastName,
@@ -87,6 +93,7 @@ namespace WebApplication3.Controllers
                         Street = PersonalInfo.OrderData.Street,
                         City = PersonalInfo.OrderData.City,
                         Province = PersonalInfo.OrderData.Province,
+                        BuyerId = _userManager.GetUserId(User),
                         OrderDate = DateTime.Now,
                         Status = Status.Preparing,
                         Discount = 0.0m,

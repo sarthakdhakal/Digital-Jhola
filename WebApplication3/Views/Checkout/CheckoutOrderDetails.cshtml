@@ -5,9 +5,10 @@
     var sum = 0m;
 }
 
-<script src="https://www.paypal.com/sdk/js?client-id=AYvL1k4HsMGwtnvxrAXyT3H8mI-hJyCw25RCBTy4eMOOY5YwuVVutsKITikRAoyD1IoQsbYGuydoNefv">
+  <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
-</script>
+
+
 <div class="checkout-area mt-5 mb-2">
     <div class="container">
 
@@ -20,38 +21,38 @@
                     </div>
                     <div class="form_group col-12 ">
                         <label asp-for="@Model.OrderData.FirstName" class="form-label"> </label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.FirstName" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.FirstName" value="@ViewBag.userData.Firstname" />
                         <span asp-validation-for="@Model.OrderData.FirstName" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12 ">
                         <label asp-for="@Model.OrderData.LastName" class="form-label"> </label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.LastName" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.LastName"  value="@ViewBag.userData.Lastname"/>
                         <span asp-validation-for="@Model.OrderData.LastName" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Telephone" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Telephone" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Telephone" value="@ViewBag.userData.PhoneNumber"/>
                         <span asp-validation-for="@Model.OrderData.Telephone" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.UserEmail" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.UserEmail" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.UserEmail" value="@ViewBag.userData.Email"/>
                         <span asp-validation-for="@Model.OrderData.UserEmail" class="text-danger"></span>
                     </div>
 
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Street" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Street" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Street" value="@ViewBag.userData.Street" />
                         <span asp-validation-for="@Model.OrderData.Street" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.City" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.City" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.City"  value="@ViewBag.userData.City"/>
                         <span asp-validation-for="@Model.OrderData.City" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Province" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Province" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Province" value="@ViewBag.userData.Province" />
                         <span asp-validation-for="@Model.OrderData.Province" class="text-danger"></span>
                     </div>
 
@@ -72,16 +73,16 @@
                         <div class="order_table table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Total</th>
-                                    </tr>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Total</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.CartProducts)
-                                    {
+                                @foreach (var item in Model.CartProducts)
+                                {
 
-                                        var quantity = Model.CartProductIDs.Count(x => x == item.ProductId);
+                                    var quantity = Model.CartProductIDs.Count(x => x == item.ProductId);
                                     <tr>
                                         <td>@item.ProductName<strong>× @quantity</strong></td>
                                         @if (item.OfferId == null)
@@ -92,29 +93,32 @@
                                         else
                                         {
                                             var sale = item.ProductUnitPrice * (item.Offer.Sale / 100m);
-                                    <td>@(Math.Round(item.ProductUnitPrice - sale, 2) * quantity) L.E</td>
+                                            <td>@(Math.Round(item.ProductUnitPrice - sale, 2) * quantity) L.E</td>
                                             sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
 
                                         }
                                     </tr>
-                                    }
+                                }
                                 </tbody>
                                 <tfoot>
 
-                                    <tr class="order_total">
-                                        <th><strong>Order Total</strong></th>
-                                        <td><strong id="Total">  @Math.Round(sum,2)</strong></td>
-                                    </tr>
+                                <tr class="order_total">
+                                    <th><strong>Order Total</strong></th>
+                                    <td><strong id="Total">  @Math.Round(sum,2)</strong></td>
+                                </tr>
                                 </tfoot>
                             </table>
 
                         </div>
                     </div>
+        
                     <div class="col-lg-6 mx-auto">
                         <button type="submit" form="OrderForm" class="btn btn-success form-control">Cash On Delivery</button>
                     </div>
-                    <div class="col-lg-6 mt-2 mx-auto" id="btnCheckout">
-                    </div>
+                        <div class="col-lg-6  mx-auto">
+                            <button type="submit"  id="payment-button" class="btn btn-secondary form-control">Pay with Khalti</button>
+                        </div>
+                       
                 </div>
 
 
@@ -129,35 +133,49 @@
         window.history.pushState(null, "", window.location.href);
         var ans = confirm('Are you sure to cancel your order?')
         if (ans == true)
-            window.location.href = "/shoppingcart/editshoppingcart";
+            window.location.href = "/Shoppingcart/Editshoppingcart";
         console.log(';l;j;')
     };
 </script>
+
+
+
+
+
+
 <script>
-    paypal.Buttons({
-        createOrder: function (data, actions) {
-            // This function sets up the details of the transaction, including the amount and line item details.
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: document.querySelector('#Total').innerText,
-                    }
-                }]
-            });
-        },
-        onApprove: function (data, actions) {
-            // This function captures the funds from the transaction.
-            return actions.order.capture().then(function (details) {
-                // This function shows a transaction success message to your buyer.
-                alert('Transaction completed by ' + details.payer.name.given_name);
-                window.location.href = "/Checkout/Checkout";
-            });
+
+ var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_2cc8422cbabb47598dfaf8ee6b81a7ab",
+            "productIdentity": "1",
+            "productName": "OrderDigitalJhola",
+            "productUrl": "https://localhost:7191/ShoppingCart/EditShoppingCart",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    console.log(payload);
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
+
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            // minimum transaction amount must be 10, i.e 1000 in paisa.
+            checkout.show({amount: document.querySelector('#Total').innerText *100});
         }
-    }).render('#btnCheckout');
-    //This function displays Smart Payment Buttons on your web page.
-
-
-
-
-</script>
-
+    </script>

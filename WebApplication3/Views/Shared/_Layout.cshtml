@@ -55,7 +55,7 @@
             <header id="header" class="header clearfix">
                 <div class="container-fluid clearfix container-width-93" id="site-header-inner">
                     <div id="logo" class="logo float-left">
-                        <a href="#" title="logo" style="color:red; font-size:20px;">
+                        <a href="#" title="logo" style="color:#722F37; font-size:20px;">
                             Ecommerce
                         </a>
                     </div><!-- /.logo -->
@@ -176,7 +176,7 @@
                     <div class="col-md-5">
                         <div class="widget widget-brand">
                             <div class="logo logo-footer">
-                                <a asp-action="Index" asp-controller="Home"><h3 class="text-danger">Ecommerce</h3></a>
+                                <a asp-action="Index" asp-controller="Home"><h3 style="color:#722F37;">Ecommerce</h3></a>
                             </div>
 
                             <ul class="flat-contact">
@@ -194,7 +194,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="copyright text-center">Copyright @DateTime.Now.Year copy&<a href="#">Ecommerce</a></p>
+                        <p class="copyright text-center">Copyright @DateTime.Now.Year &copy;<a asp-action="Index" asp-controller="Home" >Digital Jhola</a></p>
                     </div>
                 </div>
             </div>
@@ -262,8 +262,19 @@
                 } else {
                     cartProducts = [];
                 }
-                console.log(cartProducts);
-                $('#cartProductsCount').html(cartProducts.length);
+                const countUniqueArr=[];
+                  let count =0;
+                    for(let i=0;i<cartProducts.length-1;i++){
+                        console.log(countUniqueArr.contains(cartProducts[i]));
+                        if(!countUniqueArr.contains(cartProducts[i])){
+                            count++;
+                            countUniqueArr.push(cartProducts[i]);
+                            console.log(countUniqueArr);
+                        }
+                    }
+                    console.log(countUniqueArr);
+                    // console.log(cartProducts);
+                    $('#cartProductsCount').html(countUniqueArr.length);
 
             }
         });
