@@ -3,10 +3,10 @@
 @model WebApplication3.Models.Offer
 @{
     ViewData["Title"] = "Create";
-    Layout = null;
+    Layout = "_LayoutDashboard";
 }
 
-
+  
 
 <hr />
 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -49,14 +49,14 @@
                     <label class="flex flex-col sm:flex-row" asp-for="Products">
                         Products
                     </label>
-                    <select data-placeholder="Select Products in Offer" name="MyProducts" class="select2 w-full" multiple>
+                    <select data-placeholder="Select Products in Offer" name="MyProducts"  class="form-control" id="simpleSelect2" multiple>
                         @foreach (var product in ViewBag.Products as ICollection<Product>)
                         {
                             if (product.UserId==ViewBag.UserId || ViewBag.UserRoleAdmin==true)
                             {
                                 <option value="@product.ProductId">@product.ProductName</option>
                             }
-                         
+                        
                         }
 
                     </select>
@@ -77,5 +77,9 @@
 </div>
 
 
-
+<script>
+      $(document).ready(function () {
+               $("#simpleSelect2").select2();
+           });
+   </script>
 

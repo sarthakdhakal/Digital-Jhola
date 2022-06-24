@@ -1,0 +1,16 @@
+.sibg {
+    background-color: #29abe2;
+}
+
+.card h5.term {
+    color:#29abe2;
+    padding: 1rem 1.25rem 0.3rem 1.25rem;
+    margin-bottom: 0;
+}
+
+.card-text{
+
+}
+.card .btn-lg {
+    border-radius: 0;
+}

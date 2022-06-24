@@ -25,11 +25,12 @@ namespace WebApplication3.Controllers
         public IActionResult Index()
         {
 
-            return PartialView(_context.Roles.ToList());
+            return View(_context.Roles.ToList());
         }
 
         public ActionResult AssignUserToRole()
         {
+            
             ViewBag.Users = new SelectList(_context.Users, "Id", "UserName");
             ViewBag.Roles = new SelectList(_context.Roles, "Name", "Name");
             return View();
@@ -42,7 +43,7 @@ namespace WebApplication3.Controllers
             ViewBag.Users = new SelectList(_context.Users, "Id", "UserName");
             ViewBag.Roles = new SelectList(_context.Roles, "Name", "Name");
 
-            return Json(new { status =1});
+            return RedirectToAction(nameof(Index));
         }
 
 

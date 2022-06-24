@@ -55,11 +55,19 @@ namespace WebApplication3.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, string s = "")
         {
-            return View(await _context.Products.ToListAsync());
+            page--;
+            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Offer).Where(e => e.ProductName.ToLower().Contains(s.ToLower()) || e.ProductDescription.ToLower().Contains(s.ToLower()));
+            ViewBag.count = applicationDbContext.Count();
+            ViewBag.countPerPage = CountPerPage;
+            var result = applicationDbContext.Skip(page * CountPerPage).Take(CountPerPage);
+            ViewBag.pagecount = result.Count();
+            ViewBag.page = page + 1;
+            ViewBag.search = s;
+            ViewBag.pagination = pagination(applicationDbContext.Count(), page + 1, CountPerPage, s);
+            return View(await result.ToListAsync());
         }
-
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -169,6 +177,7 @@ namespace WebApplication3.Controllers
 
    
         [ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductDescrition,ProductUnitInStock,ProductUnitPrice,ProductImgUrl,SellerId")] Product product)
         {   
             if (id != product.ProductId)

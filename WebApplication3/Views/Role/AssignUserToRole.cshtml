@@ -1,33 +1,42 @@
 ﻿@{
-    Layout = "_Layout";
+    Layout = "_LayoutDashboard";
 }
 <h2>Assign User To Role</h2>
 
-
-  <form id="AssignRole" class="validate-form" asp-action="AssignUserToRole" enctype="multipart/form-data" method="post">
-    <div class="p-5" id="select-options">
-      
-            <div class="preview">
-
-                <div class="flex flex-col sm:flex-row items-center">
-                    <div class="sm:mt-2">
-
-                        @Html.DropDownList("Name", ViewBag.Roles as SelectList, new { @class = "input input--sm border mr-2",id= "SelectRole" })
-                    </div>
-                    <div class="mt-2">
-
-                        @Html.DropDownList("Id", ViewBag.Users as SelectList, new { @class = "input border mr-2" , id= "SelectUser" })
-                    </div>
-                    <div class="mt-2">
-
-                         <button type="submit" name="submit" class="button w-24 bg-theme-1 text-white">Save</button>
-                    </div>
-                </div>
-            </div>
-     
-
+<div class="row vh-100">
+  <div class="d-table-cell align-middle">
+    <div class="text-left mt-4">
+      <h1 class="h2">Assign roles </h1>
+        
     </div>
 
+    <div class="card">
+      <div class="card-body">
+        <div class="m-sm-4">
+          <form id="AssignRole" class="validate-form" asp-action="AssignUserToRole" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label class="form-label">Role Select</label>
+              @Html.DropDownList("Name", ViewBag.Roles as SelectList, new { @class = "form-control form-control-lg select-add-placeholder",id= "SelectRole" ,data_placeholder="Please select a product"})
+           
+              </div>
 
-</form>
+             
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              @Html.DropDownList("Id", ViewBag.Users as SelectList, new { @class = "form-control form-control-lg" , id= "SelectUser" })
+            </div>
+
+               
+            <div class="text-left mt-3">
+              <button type="submit" name="submit" class="btn btn-success text-white">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(".select-add-placeholder").prepend("<option value='' disabled selected>Select an option...</option>");
+</script>
 

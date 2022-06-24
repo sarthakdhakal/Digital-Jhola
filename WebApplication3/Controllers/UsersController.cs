@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -73,7 +74,7 @@ namespace WebApplication3.Controllers
                     Street = addSellerViewModel.Street,
                     PhoneNumber = addSellerViewModel.PhoneNumber, City = addSellerViewModel.City,
                     Province = addSellerViewModel.Province,
-                    Firstname = addSellerViewModel.Firstname, Lastname = addSellerViewModel.Lastname
+                    Firstname = addSellerViewModel.Firstname, Lastname = addSellerViewModel.Lastname, ApprovalStatus = 0
                 };
                 var result = await _userManager.CreateAsync(user, addSellerViewModel.Password);
                 
@@ -131,5 +132,11 @@ namespace WebApplication3.Controllers
             }
             return View(addSellerViewModel);
         }
+        // public IActionResult UsersView()
+        // {
+        //     var users = _userManager.GetUsersInRoleAsync("Admin");
+        //     var user
+        //     return View(users);
+        // }
     }
 }

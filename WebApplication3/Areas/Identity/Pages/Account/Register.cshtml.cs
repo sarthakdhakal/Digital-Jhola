@@ -162,7 +162,7 @@ namespace WebApplication3.Areas.Identity.Pages.Account
                 {
                     UserName = Input.Email, Email = Input.Email, image = uniqueFileName, Street = Input.Street,
                     PhoneNumber = Input.PhoneNumber, City = Input.City, Province = Input.Province,
-                    Firstname = Input.Firstname, Lastname = Input.Lastname
+                    Firstname = Input.Firstname, Lastname = Input.Lastname, ApprovalStatus = 1
                 };
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);

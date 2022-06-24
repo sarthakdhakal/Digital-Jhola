@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebApplication3.Models.OrderItems>
+@{
+    ViewBag.Title = "title";
+    Layout = "_LayoutDashboard";
+}
+
+<h2>title</h2>
+
+<div class="grid grid-cols-12 gap-6 mt-5">
+
+ 
+
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <table class="table table-report -mt-2">
+            <thead>
+                <tr>
+                    <th  style="background:#4578d4;color:#fff;" >IMAGES</th>
+                    <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.Product.ProductName)</th>
+                    <th  style="background:#4578d4;color:#fff;"> Total units bought</th>
+                    <th  style="background:#4578d4;color:#fff;" > Price</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    
+                    
+                    
+                    <tr class="intro-x">
+                          @{
+                              var total =decimal.ToDouble(item.Product.ProductUnitPrice * item.Quantity) ;
+                                  
+                          }
+                        <td class="w-40">
+                            <div class="flex">
+                                <div class="w-20 h-20 image-fit zoom-in -ml-5">
+                                    <img alt="@item.Product.ProductName" class="tooltip rounded-full" width="50px" height="30px" src="~/Product/images/@item.Product.ProductImgUrl" title="Uploaded at 9 August 2021">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="#" class="font-medium whitespace-no-wrap">@Html.DisplayFor(modelItem => item.Product.ProductName)</a>
+                            <div class="text-gray-600 text-xs whitespace-no-wrap"> @Html.DisplayFor(modelItem => item.Product.ProductDescription)</div>
+                        </td>
+                          <td class="w-40">
+                              <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.Quantity) </div>
+                          </td>
+                          <td class="w-40">
+                            <div class="flex items-center justify-center text-theme-9">Rs. @total</div>
+                        </td>
+                       
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-no-wrap items-center">
+        <ul id="PaginationContainer" class="pagination">
+            Pages:
+            @Html.Raw(ViewBag.pagination)
+        </ul>
+        <select class="w-20 input box mt-3 sm:mt-0">
+            <option>10</option>
+            <option>25</option>
+            <option>35</option>
+            <option>50</option>
+        </select>
+    </div>
+</div>

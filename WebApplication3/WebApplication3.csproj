@@ -32,6 +32,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Brand\images" />
     <Folder Include="wwwroot\Category\images" />
+    <Folder Include="wwwroot\dashboard" />
     <Folder Include="wwwroot\Product\images\" />
     <Folder Include="wwwroot\UserDocument\images" />
   </ItemGroup>

@@ -3,6 +3,6 @@
     public enum Status
     {
         
-        Pending,Delivered,Shipping,Preparing
+        Preparing,Pending,Shipping,Delivered
     }
 }

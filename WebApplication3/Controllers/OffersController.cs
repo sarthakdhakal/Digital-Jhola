@@ -41,10 +41,12 @@ namespace WebApplication3.Controllers
             return p;
         }
 
-        public OffersController(ApplicationDbContext context, IWebHostEnvironment environment)
+        public OffersController(ApplicationDbContext context, IWebHostEnvironment environment, UserManager<User> userManager)
         {
             _context = context;
             _environment = environment;
+            _userManager = userManager;
+            
         }
 
         // GET: Offers
@@ -110,8 +112,8 @@ namespace WebApplication3.Controllers
             return View(offer);
         }
 
-        // GET: Offers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         // GET: Offers/Edit/5
+         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {

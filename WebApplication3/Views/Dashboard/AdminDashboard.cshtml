@@ -4,66 +4,116 @@
     Layout = "_LayoutDashboard";
 }
 
- <div class="col-span-12 mt-8">
-        <div class="intro-y flex items-center h-10">
-            <h2 class="text-lg font-medium truncate mr-5">
-                General Report
-            </h2>
-            <a href="#" class="ml-auto flex text-theme-1"> <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Reload Data </a>
-        </div>
-        <div class="grid grid-cols-12 gap-6 mt-5">
-            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                <div class="report-box zoom-in">
-                    <div class="box p-5">
-                        <div class="flex">
-                            <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i>
-                            <div class="ml-auto">
-                            </div>
-                        </div>
-                        <div class="text-3xl font-bold leading-8 mt-6">@ViewBag.ItemSales</div>
-                        <div class="text-base text-gray-600 mt-1">Item Sales</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                <div class="report-box zoom-in">
-                    <div class="box p-5">
-                        <div class="flex">
-                            <i data-feather="credit-card" class="report-box__icon text-theme-11"></i>
-                            <div class="ml-auto">
-                            </div>
-                        </div>
-                        <div class="text-3xl font-bold leading-8 mt-6">@ViewBag.NewOrders</div>
-                        <div class="text-base text-gray-600 mt-1">New Orders</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                <div class="report-box zoom-in">
-                    <div class="box p-5">
-                        <div class="flex">
-                            <i data-feather="monitor" class="report-box__icon text-theme-12"></i>
-                            <div class="ml-auto">
-                            </div>
-                        </div>
-                        <div class="text-3xl font-bold leading-8 mt-6">@ViewBag.TotalProducts</div>
-                        <div class="text-base text-gray-600 mt-1">Total Products</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                <div class="report-box zoom-in">
-                    <div class="box p-5">
-                        <div class="flex">
-                            <i data-feather="user" class="report-box__icon text-theme-9"></i>
-                            <div class="ml-auto">
-                                
-                            </div>
-                        </div>
-                        <div class="text-3xl font-bold leading-8 mt-6">@ViewBag.Users</div>
-                        <div class="text-base text-gray-600 mt-1">Users</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+ 		<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3"><strong>Admin</strong> Dashboard</h1>
+
+					<div class="row">
+						<div class="col-xl-12 col-xxl-12 d-flex">
+							<div class="w-100">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Total Products</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<i class="align-middle" data-feather="shopping-bag"></i>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3">@ViewBag.TotalProducts</h1>
+												
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">New Orders</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<i class="align-middle" data-feather="credit-card"></i>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3">@ViewBag.NewOrders</h1>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Total Items Sold</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<i class="align-middle" data-feather="shopping-cart"></i>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3">@ViewBag.TotalOrdersSold</h1>
+											
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Users</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<i class="align-middle" data-feather="users"></i>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3">@ViewBag.Users</h1>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+                                    										<div class="card">
+                                    											<div class="card-body">
+                                    												<div class="row">
+                                    													<div class="col mt-0">
+                                    														<h5 class="card-title">Total Sales Amount</h5>
+                                    													</div>
+                                    
+                                    													<div class="col-auto">
+                                    														<div class="stat text-primary">
+                                    															<i class="align-middle" data-feather="dollar-sign"></i>
+                                    														</div>
+                                    													</div>
+                                    												</div>
+                                    												<h1 class="mt-1 mb-3">Rs. @ViewBag.TotalSales</h1>
+                                    											
+                                    											</div>
+                                    										</div>
+                                    										
+                                    										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						
+					</div>
+
+					
+				
+			</main>
+	

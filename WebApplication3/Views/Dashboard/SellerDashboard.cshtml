@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WebApplication3.Models.OrderItems>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_LayoutDashboard";
+}
+
+<h2>title</h2>
+
+<div class="grid grid-cols-12 gap-6 mt-5">
+
+
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <table class="table table-report -mt-2">
+            <thead>
+            <tr>
+
+                <th style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.OrderId)</th>
+                <th style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.Order.Buyer.Firstname)</th>
+                <th style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.Product.ProductName)</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="intro-x">
+                    <td class="w-40">
+                        <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.OrderId) </div>
+                    </td>
+
+                    <td class="w-40">
+                        <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.Order.Buyer.Firstname) </div>
+                    </td>
+                    <td class="w-40">
+                        <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.Product.ProductName) </div>
+                    </td>
+
+
+                </tr>
+            }
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-no-wrap items-center">
+        <ul id="PaginationContainer" class="pagination">
+            Pages:
+            @Html.Raw(ViewBag.pagination)
+        </ul>
+        <select class="w-20 input box mt-3 sm:mt-0">
+            <option>10</option>
+            <option>25</option>
+            <option>35</option>
+            <option>50</option>
+        </select>
+    </div>
+
+</div>

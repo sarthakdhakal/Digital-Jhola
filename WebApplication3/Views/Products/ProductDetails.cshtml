@@ -199,15 +199,16 @@
 
                             </div>
                             <div class="product-categories">
-                                <span>Categories: </span>
-                                @* <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId"> *@
-                                @*     @if (pro.Category != null) *@
-                                @*     { *@
-                                @*         @pro.Category.CategoryName *@
-                                @*     } *@
-                                @* </a> *@
+                                <span>Category: </span>
+                                <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId">
+                                    @if (pro.Category != null)
+                                    {
+                                        @pro.Category.CategoryName
+                                    }
+                                </a>
                             </div>
-                            <div class="qrcode">
+                             <button id="toggle">QR Code to share</button>
+                            <div class="qrcode" id="qrcode" style="display: none">
 @if (ViewBag.QrCodeUri != null)
     {
         <img src="@ViewBag.QrCodeUri" class="img-thumbnail" width="200px" height="200px" />
@@ -490,3 +491,14 @@
         }
     })
 </script>
+<script>
+    const targetDiv = document.getElementById("qrcode");
+    const btn = document.getElementById("toggle");
+    btn.onclick = function () {
+      if (targetDiv.style.display !== "block") {
+        targetDiv.style.display = "block";
+      } else {
+        targetDiv.style.display = "none";
+      }
+    };
+  </script>
