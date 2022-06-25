@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "OrderDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var sum = 0m;
+    double sum = 0;
 }
 
   <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
@@ -14,19 +14,19 @@
 
         <div class="row">
             <div class="col-lg-6 col-md-6">
-                @using (Html.BeginForm("Checkout", "Checkout", FormMethod.Post, new { id = "OrderForm" }))
+                @using (Html.BeginForm("Checkout", "Checkout", FormMethod.Post, new {id = "OrderForm"}))
                 {
                     <div class="col-lg-12">
                         <h5 class="form-head">Personal Details</h5>
                     </div>
                     <div class="form_group col-12 ">
                         <label asp-for="@Model.OrderData.FirstName" class="form-label"> </label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.FirstName" value="@ViewBag.userData.Firstname" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.FirstName" value="@ViewBag.userData.Firstname"/>
                         <span asp-validation-for="@Model.OrderData.FirstName" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12 ">
                         <label asp-for="@Model.OrderData.LastName" class="form-label"> </label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.LastName"  value="@ViewBag.userData.Lastname"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.LastName" value="@ViewBag.userData.Lastname"/>
                         <span asp-validation-for="@Model.OrderData.LastName" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
@@ -42,25 +42,20 @@
 
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Street" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Street" value="@ViewBag.userData.Street" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Street" value="@ViewBag.userData.Street"/>
                         <span asp-validation-for="@Model.OrderData.Street" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.City" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.City"  value="@ViewBag.userData.City"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.City" value="@ViewBag.userData.City"/>
                         <span asp-validation-for="@Model.OrderData.City" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Province" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Province" value="@ViewBag.userData.Province" />
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Province" value="@ViewBag.userData.Province"/>
                         <span asp-validation-for="@Model.OrderData.Province" class="text-danger"></span>
                     </div>
-
-                    <div class="form_group mb-0 col-12">
-                        <label class="form-label" for="order-note">Order Notes</label>
-                        <textarea class="form-textarea form-control" id="order-note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                    </div>
-
+                    
                 }
             </div>
 
@@ -87,13 +82,13 @@
                                         <td>@item.ProductName<strong>× @quantity</strong></td>
                                         @if (item.OfferId == null)
                                         {
-                                            <td>@(Convert.ToDouble(item.ProductUnitPrice*quantity)) L.E</td>
+                                            <td>NPR @(Convert.ToDouble(item.ProductUnitPrice*quantity))</td>
                                             sum += (item.ProductUnitPrice * quantity);
                                         }
                                         else
                                         {
-                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100m);
-                                            <td>@(Math.Round(item.ProductUnitPrice - sale, 2) * quantity) L.E</td>
+                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100);
+                                            <td>NPR @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity) </td>
                                             sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
 
                                         }
@@ -104,7 +99,7 @@
 
                                 <tr class="order_total">
                                     <th><strong>Order Total</strong></th>
-                                    <td><strong id="Total">  @Math.Round(sum,2)</strong></td>
+                                    <td><strong id="Total"> NPR @Math.Round(sum,2)</strong></td>
                                 </tr>
                                 </tfoot>
                             </table>

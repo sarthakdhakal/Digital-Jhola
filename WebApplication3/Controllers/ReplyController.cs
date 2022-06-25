@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication3.Models;
@@ -12,6 +14,7 @@ namespace WebApplication3.Controllers
 
         private UserManager<User> _userManager;
         // GET
+        
         public ReplyController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
@@ -32,6 +35,9 @@ namespace WebApplication3.Controllers
                     };
                     _context.Replies.Add(reply);
                     await _context.SaveChangesAsync();
+                    CookieOptions option = new CookieOptions();
+                    option.Expires = DateTime.Now.AddSeconds(10);
+                    Response.Cookies.Append("ReplyAdded", "true", option);
                     return RedirectToAction("ProductDetails", "Products", new {id = productId});
                 }
                 TempData["Message"] = "The reply could not be added";

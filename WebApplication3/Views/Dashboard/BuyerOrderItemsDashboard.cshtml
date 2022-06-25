@@ -4,7 +4,6 @@
     Layout = "_LayoutDashboard";
 }
 
-<h2>title</h2>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
 
@@ -29,7 +28,7 @@
                     
                     <tr class="intro-x">
                           @{
-                              var total =decimal.ToDouble(item.Product.ProductUnitPrice * item.Quantity) ;
+                              var total =item.Product.ProductUnitPrice * item.Quantity ;
                                   
                           }
                         <td class="w-40">

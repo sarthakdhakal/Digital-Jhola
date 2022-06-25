@@ -1,90 +1,167 @@
 ﻿@model IEnumerable<WebApplication3.Models.Product>
-
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
 @{
     ViewData["Title"] = "Index";
     Layout = "_LayoutDashboard";
 }
-
-<h1>Index</h1>
-
+<div class="row min-vh-100">
 <div class="grid grid-cols-12 gap-6 mt-5">
+<div class="row mb-2 mb-xl-3">
+    
+        <div class="col-auto d-none d-sm-block">
+            <h3><strong>Products</strong> Available</h3>
 
-    <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-        <a asp-action="Create" class="button text-white bg-theme-1 shadow-md mr-2" onclick="ajaxRender(event)">
-            Add New Product
-        </a>
+        </div>
+        
+            <div class="col-auto ms-auto text-end mt-n1">
 
-        <div class="hidden md:block mx-auto text-gray-600">Showing @((ViewBag.page-1) * ViewBag.countPerPage+1) to @(((ViewBag.page - 1) * ViewBag.countPerPage)+ViewBag.pagecount) of @(ViewBag.count) entries</div>
-        <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-            <div class="w-56 relative text-gray-700">
-                <input type="text" class="input w-56 box pr-10 placeholder-theme-13" onchange="searchProducts(this.value)" placeholder="Search...">
-                <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+
+                        <li class="breadcrumb-item"><a asp-action="Create"> Add New <p data-feather="plus-circle"></p> </a></li>
+                    </ol>
+                </nav>
             </div>
+    </div>
+    @if( SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+  
+    
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
+        <div class="hidden md:block mx-auto text-gray-600 align-content-center">Showing @((ViewBag.page-1) * ViewBag.countPerPage+1) to @(((ViewBag.page - 1) * ViewBag.countPerPage)+ViewBag.pagecount) of @(ViewBag.count) entries</div>
+        <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+         
         </div>
     </div>
-
+    }
     <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
         <table class="table table-report -mt-2">
             <thead>
-                <tr>
-                    <th  style="background:#4578d4;color:#fff;" >IMAGES</th>
-                    <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.ProductName)</th>
-                    <th  style="background:#4578d4;color:#fff;">@Html.DisplayNameFor(model => model.ProductUnitInStock)</th>
-                    <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.ProductUnitPrice)</th>
-                    <th  style="background:#4578d4;color:#fff;" > @Html.DisplayNameFor(model => model.Category)</th>
-                    <th  style="background:#4578d4;color:#fff;">Has Offer</th>
-                    <th style="background:#4578d4;color:#fff;">ACTIONS</th>
-                </tr>
+            <tr>
+                <th  style="background:#4578d4;color:#fff;" >IMAGES</th>
+                <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.ProductName)</th>
+                <th  style="background:#4578d4;color:#fff;">@Html.DisplayNameFor(model => model.ProductUnitInStock)</th>
+                <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.ProductUnitPrice)</th>
+                <th  style="background:#4578d4;color:#fff;" > @Html.DisplayNameFor(model => model.Category)</th>
+                <th  style="background:#4578d4;color:#fff;">Has Offer</th>
+                <th style="background:#4578d4;color:#fff;">ACTIONS</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+            @foreach (var item in Model)
+            {
+                @if (User.IsInRole("Admin") ||(SignInManager.IsSignedIn(User) && SignInManager.UserManager.GetUserId(User) == @item.UserId)  )
                 {
-
                     <tr class="intro-x">
                         <td class="w-40">
                             <div class="flex">
                                 <div class="w-20 h-20 image-fit zoom-in -ml-5">
-                                    <img alt="@item.ProductName" class="tooltip rounded-full" src="~/Home/images/@item.ProductImgUrl" title="Uploaded at 9 August 2021">
+                                    <img alt="@item.ProductName" class="tooltip rounded-full" src="~/Product/images/@item.ProductImgUrl" width="50px" height="30px" title="Uploaded at 9 August 2021">
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <a href="#" class="font-medium whitespace-no-wrap">@Html.DisplayFor(modelItem => item.ProductName)</a>
+                            <a asp-action="ProductDetails" asp-route-id="@item.ProductId" class="font-medium whitespace-no-wrap">@Html.DisplayFor(modelItem => item.ProductName)</a>
                             <div class="text-gray-600 text-xs whitespace-no-wrap"> @Html.DisplayFor(modelItem => item.ProductDescription)</div>
                         </td>
-                        <td class= "flex items-center justify-center text-theme-9" class="w-40"> @Html.DisplayFor(modelItem => item.ProductUnitInStock)</td>
+                        <td class="flex items-center justify-center text-theme-9" class="w-40"> @Html.DisplayFor(modelItem => item.ProductUnitInStock)</td>
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9">  @Html.DisplayFor(modelItem => item.ProductUnitPrice) </div>
+                            <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.ProductUnitPrice) </div>
                         </td>
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9">   @Html.DisplayFor(modelItem => item.Category.CategoryName) </div>
+                            <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.Category.CategoryName) </div>
                         </td>
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9">  @((item.Offer==null)?"No":$"Yes {item.Offer.OfferName}") </div>
+                            <div class="flex items-center justify-center text-theme-9"> @((item.Offer == null) ? "No" : $"Yes {item.Offer.OfferName}") </div>
                         </td>
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
                                 <a class="flex items-center mr-3" asp-action="Edit" asp-route-id="@item.ProductId" onclick="ajaxRender(event)"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" asp-action="Delete" onclick="return confirm('are you Sure??') ? ajaxRender(event):false" asp-route-id="@item.ProductId"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                <a class="flex items-center text-theme-6"  asp-action="Delete" onclick="return confirm('Are you sure?') ? ajaxRender(event):false" asp-route-id="@item.ProductId"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                             </div>
                         </td>
                     </tr>
                 }
-
+            }
             </tbody>
         </table>
 
     </div>
-    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-no-wrap items-center">
-        <ul id="PaginationContainer" class="pagination">
-            Pages:
-            @Html.Raw(ViewBag.pagination)
-        </ul>
-        <select class="w-20 input box mt-3 sm:mt-0">
-            <option>10</option>
-            <option>25</option>
-            <option>35</option>
-            <option>50</option>
-        </select>
-    </div>
+    
+    <div class="row mb-2 mb-xl-3">
+        
+            <div class="col-auto d-none d-sm-block" >
+                 <nav aria-label="...">
+                   <ul class="pagination" style="display: -ms-flexbox;
+                                                       display: flex;
+                                                       padding-left: 0;
+                                                       list-style: none;
+                                                       border-radius: 0.25rem;">
+                     
+                      Page:&nbsp; @Html.Raw(ViewBag.pagination)
+                     
+                   
+                   </ul>
+                 </nav>
+                
+               
+                       
+            </div>
+            
+                <div class="col-auto ms-auto text-end mt-n1">
+    
+                   <select class="w-20 input box mt-3 sm:mt-0">
+                               <option>10</option>
+                               <option>25</option>
+                               <option>35</option>
+                               <option>50</option>
+                           </select>
+                </div>
+        </div>
+ 
 </div>
+</div>
+<script>
+
+    $(window).on('load', function () {
+       
+        if ($.cookie('DeletionFail') === "true") {
+        
+            swal("Product can't be deleted as it has multiple relations");
+        }
+        
+
+    });
+    $(window).on('load', function () {
+           
+    if ($.cookie('ProductAdd') === "true") {
+            
+    swal("A product has been added.");
+    }
+            
+            
+    
+    });
+    $(window).on('load', function () {
+           
+    if ($.cookie('ProductEdit') === "true") {
+            
+    swal("The product has been edited.");
+    }
+            
+            
+    
+    });
+      $(window).on('load', function () {
+               
+        if ($.cookie('ProductDelete') === "true") {
+                
+        swal("The product has been deleted.");
+        }
+                
+                
+        
+        });
+    
+</script>

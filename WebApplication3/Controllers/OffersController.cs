@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +14,7 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
+    [Authorize(Roles = "Admin, Seller")]
     public class OffersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -106,6 +109,9 @@ namespace WebApplication3.Controllers
                 var prods = _context.Products.Where(p => MyProducts.Contains(p.ProductId)).ToList();
                 prods.ForEach(p => p.Offer = offer);
                 await _context.SaveChangesAsync();
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("OfferAdd", "true", option);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -171,7 +177,9 @@ namespace WebApplication3.Controllers
                         throw;
                     }
                 }
-
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("OfferEdit", "true", option);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -179,34 +187,27 @@ namespace WebApplication3.Controllers
         }
 
         // GET: Offers/Delete/5
+       
+
+        // POST: Offers/Delete/5
+     
+   
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var offer = await _context.Offers
-                .FirstOrDefaultAsync(m => m.OfferId == id);
-            if (offer == null)
-            {
-                return NotFound();
-            }
-
-            return View(offer);
-        }
-
-        // POST: Offers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
             var oldsubscriper = _context.Products.Where(e => e.OfferId == id);
             await oldsubscriper.ForEachAsync(a => a.OfferId = null);
             await _context.SaveChangesAsync();
             var offer = await _context.Offers.FindAsync(id);
+            
             _context.Offers.Remove(offer);
             await _context.SaveChangesAsync();
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddSeconds(10);
+            Response.Cookies.Append("OfferRemove", "true", option);
             return RedirectToAction(nameof(Index));
         }
 

@@ -13,7 +13,7 @@ namespace WebApplication3.Models
         public int Quantity { get; set; }
         [Column(TypeName ="money")]
         [Display(Name ="Price")]
-        public decimal UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
 
       
         public virtual Order Order { get; set; }

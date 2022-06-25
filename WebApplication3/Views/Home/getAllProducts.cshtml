@@ -1,5 +1,4 @@
-﻿
-@model List<Product>
+﻿@model List<Product>
 @{
     ViewData["Title"] = "Shop";
     var Allproducts = ViewBag.Allproducts as List<Product>;
@@ -7,7 +6,7 @@
     var categoryId = ViewBag.categoryId;
     var brandId = ViewBag.brandId;
     var categories = ViewBag.categories as List<Category>;
-    var brands = ViewBag.Brand as List<Brand>;
+    var brands = ViewBag.Brands as List<Brand>;
     var search = ViewBag.search;
     var order = ViewBag.order;
     var pageNumber = ViewBag.pageNumber;
@@ -21,13 +20,15 @@
             <div class="col-md-3">
                 <div class="sidebar slidebar-shop">
                     <div class="widget widget-search">
-                        <form role="search" method="get" data-ajax="true"  data-ajax-url="getAllproducts" data-ajax-update="#updated" data-ajax-method="get" class="search-form" action="#">
+                        <form role="search" method="get" data-ajax="true" data-ajax-url="getAllproducts" data-ajax-update="#updated" data-ajax-method="get" class="search-form" action="#">
                             <label>
-                                <input type="search" class="search-field" placeholder="Search …" value="@search" name="search">
+                                <input type="search" class="search-field" style="border-color: #0b0b0b" placeholder="Search …" value="@search" name="search">
                             </label>
-                            <input value="@categoryId" name="_categoryId" type="hidden" />
+                            <input value="@categoryId" name="_categoryId" type="hidden"/>
+                            <input value="@brandId" name="_brandId" type="hidden"/>
                             <input type="submit" class="search-submit" value="Search">
                         </form>
+
                     </div><!-- /.widget-search -->
 
                     <div class="widget widget-sort-by">
@@ -41,11 +42,11 @@
                                 <li><a href="#">Newness</a></li>*@
                             <li>
                                 @*<a href="#">Price: low to high</a>*@
-                                <a id="low" data-ajax-success="lowSuccess" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_categoryId="@ViewBag.categoryId" asp-route-pageNumber="1" asp-route-order="1">Price: low to high</a>
+                                <a id="low" data-ajax-success="lowSuccess" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_categoryId="@ViewBag.categoryId" asp-route-pageNumber="1" asp-route-order="1">Price: Low to high</a>
                             </li>
                             <li>
                                 @*<a href="#">Price: high to low</a>*@
-                                <a id="high" data-ajax-success="highSuccess" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_categoryId="@ViewBag.categoryId" asp-route-pageNumber="1" asp-route-order="2">Price: high to low</a>
+                                <a id="high" data-ajax-success="highSuccess" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_categoryId="@ViewBag.categoryId" asp-route-pageNumber="1" asp-route-order="2">Price: High to low</a>
 
                             </li>
                         </ul>
@@ -68,42 +69,39 @@
                         </h5>
 
                         <div class="tag-list">
-                              @if (categories != null)
-                              {
-                                  @foreach (var category in categories)
-                                  {
-
-                                      <a class="category" data-ajax-success="categorySuccess(this)" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_categoryId="@category.CategoryId" asp-route-pageNumber="1" asp-route-order="@order">@category.CategoryName</a>
-                                  }
-                              }
+                            @if (categories != null)
+                            {
+                                @foreach (var category in categories)
+                                {
+                                    <a class="category" data-ajax-success="categorySuccess(this)" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_categoryId="@category.CategoryId" asp-route-pageNumber="1" asp-route-order="@order">@category.CategoryName</a>
+                                }
+                            }
                         </div>
-                        
-                    </div><!-- /.widget -->
-                         <div class="widget widget_tag">
-                                            <h5 class="widget-title">
-                                                Brands
-                                            </h5>
-                    
-                             <div class="tag-list">
-                                 @if (brands != null)
-                                 {
-                                     @foreach (var brand in brands)
-                                     {
 
-                                         <a class="category" data-ajax-success="categorySuccess(this)" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_categoryId="@brand.BrandId" asp-route-pageNumber="1" asp-route-order="@order">@brand.BrandName</a>
-                                     }
-                                 }
-                             </div>
-                                            
-                                        </div>
+                    </div><!-- /.widget -->
+                    <div class="widget widget_tag">
+                        <h5 class="widget-title">
+                            Brands
+                        </h5>
+
+                        <div class="tag-list">
+                            @if (brands != null)
+                            {
+                                @foreach (var brand in brands)
+                                {
+                                    <a class="brand" data-ajax-success="categorySuccessThis(this)" asp-action="getAllProducts" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-_brandId="@brand.BrandId" asp-route-pageNumber="1" asp-route-order="@order">@brand.BrandName</a>
+                                }
+                            }
+                        </div>
+
+                    </div>
                 </div><!-- /.sidebar -->
             </div><!-- /.col-md-3 -->
 
 
-
             <div class="col-md-9">
                 <div class="filter-shop clearfix">
-                    <p class="showing-product float-right">
+                    <p class="showing-product float-right" style="color: #2E5090">
                         Showing @Model.Count of @Allproducts.Count Products
                     </p>
                 </div><!-- /.filte-shop -->
@@ -118,7 +116,7 @@
                                 <li class="product-item">
                                     <div class="product-thumb clearfix">
                                         <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.ProductId" class="product-thumb">
-                                            <img src="~/Product/images/@product.ProductImgUrl" style="height:300px;width:200px" alt="image">
+                                            <img src="~/Product/images/@product.ProductImgUrl" width="200" height="200" alt="image">
                                         </a>
                                         <span class="new sale">Sale</span>
                                     </div>
@@ -126,11 +124,11 @@
                                         <span class="product-title">@product.ProductName</span>
                                         <div class="price">
                                             <del>
-                                                <span class="regular">$@Math.Round(product.ProductUnitPrice, 2)</span>
+                                                <span class="regular">NPR @Math.Round(product.ProductUnitPrice, 2)</span>
                                             </del>
                                             <ins>
                                                 @{var price = Math.Round(product.ProductUnitPrice - (product.ProductUnitPrice * product.Offer.Sale / 100), 2);}
-                                                <span class="amount">$@price</span>
+                                                <span class="amount">NPR @price</span>
 
                                             </ins>
 
@@ -141,27 +139,27 @@
                                     <div class="add-to-cart text-center">
                                         <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
                                     </div>
-                                   
+
                                 </li>
                             }
                             else
-                          
+
                             {
                                 <li class="product-item">
                                     <div class="product-thumb clearfix ">
                                         <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.ProductId" class="product-thumb">
                                             <img src="~/Product/images/@product.ProductImgUrl" style="height:300px;width:200px" alt="image">
                                         </a>
-                                       
+
                                     </div>
                                     <div class="product-info clearfix mt-4">
                                         <span class="product-title">@product.ProductName</span>
                                         <div class="price">
                                             <ins>
-                                                <span class="amount">$@Math.Round(product.ProductUnitPrice, 2)</span>
+                                                <span class="amount">NPR @Math.Round(product.ProductUnitPrice, 2)</span>
                                             </ins>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="add-to-cart text-center">
                                         <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
@@ -176,21 +174,29 @@
                 <div class="product-pagination text-center clearfix">
 
                     <ul class="flat-pagination">
-                       @if (pageNumberPrev > 0) {
-
-                        <li class="prev"> <a data-ajax-success="pageSuccess(@pageNumberPrev)" asp-action="getAllProducts" asp-route-search="@search" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-pageNumber="@pageNumberPrev" asp-route-_categoryId="@categoryId" asp-route-order="@order"><i class="fa fa-angle-left"></i></a></li>
-                       }
+                        @if (pageNumberPrev > 0)
+                        {
+                            <li class="prev">
+                                <a data-ajax-success="pageSuccess(@pageNumberPrev)" asp-action="getAllProducts" asp-route-search="@search" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-pageNumber="@pageNumberPrev" asp-route-_categoryId="@categoryId" asp-route-order="@order">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </li>
+                        }
                         @for (int i = 1; i <= pagesCounter; i++)
                         {
-
-                            <li><a id="@i" data-ajax-success="pageSuccess(@i )" asp-action="getAllProducts" asp-route-search="@search" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-pageNumber="@i" asp-route-_categoryId="@categoryId" asp-route-order="@order"> @i </a></li>
+                            <li>
+                                <a id="@i" data-ajax-success="pageSuccess(@i )" asp-action="getAllProducts" asp-route-search="@search" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-pageNumber="@i" asp-route-_categoryId="@categoryId" asp-route-order="@order"> @i </a>
+                            </li>
                         }
 
-                    @if (pageNumberNext <= pagesCounter)
-                    {
-
-                        <li><a asp-action="getAllProducts" data-ajax-success="pageSuccess(@pageNumberNext)" asp-route-search="@search" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-pageNumber="@pageNumberNext" asp-route-_categoryId="@categoryId" asp-route-order="@order"><i class="fa fa-angle-right"></i></a></li>
-                    }
+                        @if (pageNumberNext <= pagesCounter)
+                        {
+                            <li>
+                                <a asp-action="getAllProducts" data-ajax-success="pageSuccess(@pageNumberNext)" asp-route-search="@search" data-ajax="true" data-ajax-method="GET" data-ajax-update="#updated" asp-route-pageNumber="@pageNumberNext" asp-route-_categoryId="@categoryId" asp-route-order="@order">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        }
                     </ul><!-- /.flat-pagination -->
                 </div>
             </div><!-- /.col-md-9 -->
@@ -215,7 +221,7 @@
     function pageSuccess(e) {
         $("#"+ e).css("background-color", "red");
     }
-
+    
 
     $(".ProductAddToCart").click(function () {
 

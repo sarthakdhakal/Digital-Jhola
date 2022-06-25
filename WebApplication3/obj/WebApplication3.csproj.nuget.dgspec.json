@@ -94,13 +94,29 @@
               "target": "Package",
               "version": "[6.0.1, )"
             },
+            "Rotativa.AspNetCore": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "Select.HtmlToPdf.NetCore": {
+              "target": "Package",
+              "version": "[22.1.0, )"
+            },
             "SendGrid": {
               "target": "Package",
               "version": "[9.27.0, )"
             },
+            "Syncfusion.Pdf.Net.Core": {
+              "target": "Package",
+              "version": "[20.1.0.61, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Wkhtmltopdf.NetCore": {
+              "target": "Package",
+              "version": "[5.0.2-preview, )"
             },
             "ZXing.Net": {
               "target": "Package",

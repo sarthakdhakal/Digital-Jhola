@@ -36,6 +36,8 @@ namespace WebApplication3.Models
         public string Province { get; set; }
 
         [Display(Name = "Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime OrderDate { get; set; }
 
 
@@ -43,14 +45,14 @@ namespace WebApplication3.Models
 
 
         [Column(TypeName ="money")]
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
 
         [Column(TypeName = "money")]
         public decimal Taxes { get; set; }
 
         [Display(Name = "Total Price")]
         [Column(TypeName = "money")]
-        public decimal TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
         [NotMapped]
         public decimal Sum { get; set; }
 

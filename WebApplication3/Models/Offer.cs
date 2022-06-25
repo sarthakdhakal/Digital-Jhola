@@ -16,12 +16,18 @@ namespace WebApplication3.Models
         [Required]
         [Range(1,99)]
         [Column(TypeName = "money")]
-        public decimal Sale { get; set; }
-        [Required]
-        public DateTime DateFrom { get; set; }
+        public double Sale { get; set; }
+        
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        
 
-        [Required]//remember to make validation between 2 dates 
-        public DateTime DateTo { get; set; }
+        public DateTime? DateFrom { get; set; }
+
+       
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? DateTo { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }

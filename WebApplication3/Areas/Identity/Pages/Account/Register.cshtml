@@ -2,168 +2,141 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "_LayoutDashboard";
 }
+<div class="row min-vh-100">
+   
+        <div class="d-table-cell align-middle">
+            <div class="text-left mt-4">
+                           <a asp-action="Index" asp-controller="Home"><h1 class="h4">Back to home</h1></a> 
+                           <p class="lead">
+           
+                           </p>
+                       </div>
 
-<h1>@ViewData["Title"]</h1>
 
-<div class="container" style="min-height:700px;position:relative;top:60px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="m-sm-4">
+                        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+                            <h2 class="text-center">Register as buyer</h2>
+                            <hr/>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.Firstname"></label>
 
 
-    <div class="row">
-        <div class="col-md-4 offset-2">
-            <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
-                <h4 class="text-center">Register</h4>
-                <hr/>
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.Firstname"></label>
+                                <input asp-for="Input.Firstname" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.Firstname" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.Lastname"></label>
+
+
+                                <input asp-for="Input.Lastname" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.Lastname" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.PhoneNumber"></label>
+
+
+                                <input asp-for="Input.PhoneNumber" type="tel" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.Email"></label>
+
+
+                                <input asp-for="Input.Email"  class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.Password"></label>
+
+
+                                <input asp-for="Input.Password" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.ConfirmPassword"></label>
+
+
+                                <input asp-for="Input.ConfirmPassword" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.Street"></label>
+
+
+                                <input asp-for="Input.Street" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.Street" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.City"></label>
+
+
+                                <input asp-for="Input.City" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.City" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.Province"></label>
+
+
+                                <input asp-for="Input.Province" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Input.Province" class="text-danger"></span>
+
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Input.image"></label>
+
+
+                                <input id="" onchange="loadFile(event)" type="file" class="form-control form-control-lg" asp-for="Input.image"/>
+                                <span asp-validation-for="Input.image" class="text-danger"></span>
+
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </form>
                     </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.Firstname" class="form-control"/>
-                            <span asp-validation-for="Input.Firstname" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.Lastname"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.Lastname" class="form-control"/>
-                            <span asp-validation-for="Input.Lastname" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                 <div class="row">
-                                    <div class="col-3">
-                                        <label asp-for="Input.PhoneNumber"></label>
-                                    </div>
-                
-                                    <div class="col-9">
-                                        <div class="form-group">
-                
-                                            <input type="tel" asp-for="Input.PhoneNumber" pattern="[0-9]{10}" class="form-control"/>
-                                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.Email"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.Email" class="form-control"/>
-                            <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.Password"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.Password" class="form-control"/>
-                            <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.ConfirmPassword"></label>
-                    </div>
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.ConfirmPassword" class="form-control"/>
-                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.Street"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.Street" class="form-control"/>
-                            <span asp-validation-for="Input.Street" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.City"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.City" class="form-control"/>
-                            <span asp-validation-for="Input.City" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.Province"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.Province" class="form-control"/>
-                            <span asp-validation-for="Input.Province" class="text-danger"></span>
-                        </div>
+                    <div class="col-md-4">
+                        <section>
+                            <br/>
+                            <img src="@Url.Content("~/img/defaultimg.png")" id="output" alt="" class="img-thumbnail mt-4" style="width:300px;height:300px; border-radius:40%"/>
+                        </section>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.image"></label>
-                    </div>
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input id="" onchange="loadFile(event)" type="file" asp-for="Input.image"/>
-                            <span asp-validation-for="Input.image" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <button type="submit" class="btn btn-danger btn-block mt-2">Register</button>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <section>
-                <br/>
-                <img src="@Url.Content("~/img/defaultimg.png")" id="output" alt="" class="img-thumbnail mt-4" style="width:300px;height:300px; border-radius:40%"/>
-            </section>
+            </div>
         </div>
     </div>
 
-</div>
-
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
+    <script>
+         var loadFile = function (event) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var output = document.getElementById('output');
+                    output.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            };
+            </script>
 }

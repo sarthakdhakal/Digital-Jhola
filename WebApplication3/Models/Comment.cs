@@ -15,7 +15,7 @@ namespace WebApplication3.Models
         public string Content { get; set; }
 
         public string UserId { get; set; }
-
+        public int ApprovalStatus { get; set; }
         public virtual User User { get; set; }
         
         public DateTime? CreatedOn { get; set; }

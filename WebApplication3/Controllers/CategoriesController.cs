@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -58,7 +60,7 @@ namespace WebApplication3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,ImageUrl")] Category category, IFormFile file)
+        public async Task<IActionResult> Create(Category category, IFormFile file)
         {
             try
             {
@@ -78,12 +80,16 @@ namespace WebApplication3.Controllers
                 category.ImageUrl = "";
                 _context.Categories.Add(category);
                 _context.SaveChanges();
+            
                 return RedirectToAction(nameof(Index));
             }
             if (ModelState.IsValid)
             {
                 _context.Categories.Add(category);
                 _context.SaveChanges();
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("AddCategory", "true", option);
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -110,7 +116,7 @@ namespace WebApplication3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,CategoryDescription,ImageUrl")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,CategoryDescription")] Category category)
         {
             if (id != category.CategoryId)
             {
@@ -123,6 +129,9 @@ namespace WebApplication3.Controllers
                 {
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    CookieOptions option = new CookieOptions();
+                    option.Expires = DateTime.Now.AddSeconds(10);
+                    Response.Cookies.Append("EditCategory", "true", option);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -141,6 +150,10 @@ namespace WebApplication3.Controllers
         }
 
         // GET: Categories/Delete/5
+    
+
+        // POST: Categories/Delete/5
+     
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,25 +161,28 @@ namespace WebApplication3.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
 
-            return View(category);
-        }
-
-        // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("DeleteCategory", "true", option);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(Exception e)
+            {
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("DeletionFailCategory", "true", option);
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool CategoryExists(int id)

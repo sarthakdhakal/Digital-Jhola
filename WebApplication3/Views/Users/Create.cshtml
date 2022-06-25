@@ -1,180 +1,148 @@
 ﻿@model AddSellerViewModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "_LayoutDashboard";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="row min-vh-100">
+    
+        <div class="d-table-cell align-middle">
+            <div class="text-left mt-4">
+                <a asp-action="Index" asp-controller="Home"><h1 class="h4">Back to home</h1></a> 
+                <p class="lead">
 
-<div class="container" style="min-height:700px;position:relative;top:60px;">
+                </p>
+            </div>
 
 
-    <div class="row">
-        <div class="col-md-4 offset-2">
-            <form method="post" enctype="multipart/form-data" asp-action="Create">
-                <h4 class="text-center">Register</h4>
-                <hr/>
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Firstname"></label>
+            <div class="card">
+                <div class="card-body">
+                    <div class="m-sm-4">
+                        <form method="post" asp-action="Create" enctype="multipart/form-data">
+                            <h2 class="text-center">Register as seller</h2>
+                            <hr/>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Firstname"></label>
+
+
+                                <input asp-for="Firstname" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Firstname" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Lastname"></label>
+
+
+                                <input asp-for="Lastname" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Lastname" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="PhoneNumber"></label>
+
+
+                                <input asp-for="PhoneNumber" class="form-control form-control-lg"/>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Email"></label>
+
+
+                                <input asp-for="Email" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Password"></label>
+
+
+                                <input asp-for="Password" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="ConfirmPassword"></label>
+
+
+                                <input asp-for="ConfirmPassword" class="form-control form-control-lg"/>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Street"></label>
+
+
+                                <input asp-for="Street" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Street" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="City"></label>
+
+
+                                <input asp-for="City" class="form-control form-control-lg"/>
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="Province"></label>
+
+
+                                <input asp-for="Province" class="form-control form-control-lg"/>
+                                <span asp-validation-for="Province" class="text-danger"></span>
+
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="image"></label>
+
+
+                                <input id="" onchange="loadFile(event)" type="file" class="form-control form-control-lg" asp-for="image"/>
+                                <span asp-validation-for="image" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="SellerDocument"></label>
+
+
+
+                                <input id="" onchange="loadFile(event)" type="file" class="form-control form-control-lg" asp-for="SellerDocument"/>
+                                <span asp-validation-for="SellerDocument" class="text-danger"></span>
+
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </form>
+                       
                     </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Firstname" class="form-control"/>
-                            <span asp-validation-for="Firstname" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Lastname"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Lastname" class="form-control"/>
-                            <span asp-validation-for="Lastname" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="PhoneNumber"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input type="tel" asp-for="PhoneNumber" pattern="[0-9]{10}" class="form-control"/>
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Email"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Email" class="form-control"/>
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Password"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Password" class="form-control"/>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="ConfirmPassword"></label>
-                    </div>
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="ConfirmPassword" class="form-control"/>
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Street"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Street" class="form-control"/>
-                            <span asp-validation-for="Street" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="City"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="City" class="form-control"/>
-                            <span asp-validation-for="City" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Province"></label>
-                    </div>
-
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Province" class="form-control"/>
-                            <span asp-validation-for="Province" class="text-danger"></span>
-                        </div>
+                 
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="image"></label>
-                    </div>
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input id="" onchange="loadFile(event)" type="file" asp-for="image"/>
-                            <span asp-validation-for="image" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="SellerDocument"></label>
-                    </div>
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input id="" onchange="loadFile(event)" type="file" asp-for="SellerDocument"/>
-                            <span asp-validation-for="SellerDocument" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <button type="submit" name="submit" class="btn btn-danger btn-block mt-2">Register</button>
-            </form>
+            </div>
         </div>
-        <div class="col-md-4">
-            <section>
-                <br/>
-                <img src="@Url.Content("~/img/defaultimg.png")" id="output" alt="" class="img-thumbnail mt-4" style="width:300px;height:300px; border-radius:40%"/>
-            </section>
-        </div>
-    </div>
+    
 
-</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
+    <script>
+         var loadFile = function (event) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var output = document.getElementById('output');
+                    output.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            };
+            </script>
 }

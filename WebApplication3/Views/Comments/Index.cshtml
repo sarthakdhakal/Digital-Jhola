@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebApplication3.Models.Comment>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_LayoutDashboard";
+}
+
+<div class="row min-vh-100">
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="row mb-2 mb-xl-3">
+
+            <div class="col-auto d-none d-sm-block">
+                <h3><strong>Comments</strong> unapproved</h3>
+
+            </div>
+
+            <div class="col-auto ms-auto text-end mt-n1">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+
+                        <li class="breadcrumb-item">
+                            <a asp-action="Create">
+                                Add New
+                                <p data-feather="plus-circle"></p>
+                            </a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+            <table class="table table-report -mt-2">
+                <thead>
+                <tr>
+                    <th style="background:#4578d4;color:#fff;">
+                        @Html.DisplayNameFor(model => model.Product.ProductName)
+                    </th>
+                    <th style="background:#4578d4;color:#fff;">
+                        Commenter
+                    </th>
+                    <th style="background:#4578d4;color:#fff;">
+                        @Html.DisplayNameFor(model => model.Content)
+                    </th>
+
+                    <th style="background:#4578d4;color:#fff;">ACTIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="intro-x">
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.Firstname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+
+                        <td class="table-report__action w-56">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center mr-3" asp-action="ApproveComment" asp-route-id="@item.CommentId" onclick="ajaxRender(event)"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Approve </a>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -66,22 +66,22 @@ namespace WebApplication3.Controllers
                 var cartProductCookie = Request.Cookies["CartProducts"];
                 int quantity = 0;
                 
-                var sale = 0m;
+                double sale = 0;
                 model.CartProductIDs = cartProductCookie.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = db.Products.Include(ww=>ww.Offer).Where(p => model.CartProductIDs.Contains(p.ProductId)).ToList();
                 if (cartProductCookie != null && cartProductCookie != "")
                 {
                     //decimal _totalPrice = Convert.ToDecimal(model.CartProducts.Sum(x => x.ProductUnitPrice * model.CartProductIDs.Count(p => x.ProductId == p)));
-                    decimal _totalPrice = 0m;
+                    double _totalPrice = 0;
                     foreach (var item in model.CartProducts)
                     {
                             quantity = model.CartProductIDs.Count(x => x == item.ProductId);
                         if (item.OfferId == null)
-                            _totalPrice += Convert.ToDecimal(item.ProductUnitPrice*quantity);
+                            _totalPrice += item.ProductUnitPrice*quantity;
                         else
                         {
-                            sale = item.ProductUnitPrice*(item.Offer.Sale / 100m);
-                            _totalPrice += Convert.ToDecimal((item.ProductUnitPrice-sale)* quantity);
+                            sale = item.ProductUnitPrice*(item.Offer.Sale / 100);
+                            _totalPrice += (item.ProductUnitPrice-sale)* quantity;
                         }
                     }
                     Order newOrder = new Order()
@@ -96,21 +96,21 @@ namespace WebApplication3.Controllers
                         BuyerId = _userManager.GetUserId(User),
                         OrderDate = DateTime.Now,
                         Status = Status.Preparing,
-                        Discount = 0.0m,
+                        Discount = 0.0,
                         TotalPrice = _totalPrice
                     };
                     db.Orders.Add(newOrder);
                     db.SaveChanges();
 
                     var latestOrder = db.Orders.Max(x => x.OrderId);
-                    decimal _UnitPrice = 0m;
+                    double _UnitPrice = 0;
                     foreach (var product in model.CartProducts)
                     {
                         quantity = model.CartProductIDs.Count(x => x == product.ProductId);
                         if (product.OfferId == null)
                             _UnitPrice = product.ProductUnitPrice;
                         else
-                            _UnitPrice = product.ProductUnitPrice - (product.ProductUnitPrice * (product.Offer.Sale / 100m));
+                            _UnitPrice = product.ProductUnitPrice - (product.ProductUnitPrice * (product.Offer.Sale / 100));
 
                         product.ProductUnitInStock = product.ProductUnitInStock - quantity;
 
@@ -122,6 +122,7 @@ namespace WebApplication3.Controllers
                             ProductId = product.ProductId,
                             Quantity = quantity,
                             UnitPrice = _UnitPrice
+                           
                         });
                         db.SaveChanges();
                     }

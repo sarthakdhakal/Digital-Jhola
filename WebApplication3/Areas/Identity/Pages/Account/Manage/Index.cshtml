@@ -1,31 +1,115 @@
 ﻿@page
 @model IndexModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
-    
-}
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Username" class="form-control" disabled />
-                <label asp-for="Username" class="form-label"></label>
+
+}
+<partial name="_StatusMessage" model="Model.StatusMessage"/>
+<div class="row min-vh-100">
+    
+    <div class="d-table-cell align-middle">
+        <div class="text-left mt-4">
+            <h1 class="h2">Profile Management</h1>
+            <p class="lead">
+
+            </p>
+        </div>
+
+
+        <div class="card">
+            <div class="card-body">
+                <div class="m-sm-4">
+                    <form id="profile-form" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label" asp-for="Username"></label>
+
+
+                            <input asp-for="Username" class="form-control form-control-lg" disabled/>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Input.FirstName"></label>
+
+
+                            <input asp-for="Input.FirstName" class="form-control form-control-lg"/>
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Input.Lastname"></label>
+
+
+                            <input asp-for="Input.Lastname" class="form-control form-control-lg"/>
+                            <span asp-validation-for="Input.Lastname" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Input.PhoneNumber"></label>
+
+
+                            <input asp-for="Input.PhoneNumber" class="form-control form-control-lg"/>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Input.Street"></label>
+
+
+                            <input asp-for="Input.Street" class="form-control form-control-lg"/>
+                            <span asp-validation-for="Input.Street" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Input.City"></label>
+
+
+                            <input asp-for="Input.City" class="form-control form-control-lg"/>
+                            <span asp-validation-for="Input.City" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Input.Province"></label>
+
+
+                            <input asp-for="Input.Province" class="form-control form-control-lg"/>
+                            <span asp-validation-for="Input.Province" class="text-danger"></span>
+
+                        </div>
+
+
+                       
+                        <button id="update-profile-button" type="submit" class="btn btn-primary btn-block">Save</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
+        </div>
     </div>
+
 </div>
 
+
+
+
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
+    <script>
+     var loadFile = function (event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('output');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+        </script>
 }

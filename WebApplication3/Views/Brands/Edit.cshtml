@@ -2,36 +2,52 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_LayoutDashboard";
 }
 
-<h1>Edit</h1>
+<div class="row vh-100">
+<div class="d-table-cell align-middle">
+    <div class="text-left mt-4">
+        <h1 class="h2">Edit brand</h1>
+        <p class="lead">
+            Please provide the following details to edit the brand.
+        </p>
+    </div>
 
-<h4>Brand</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="BrandId" />
-            <div class="form-group">
-                <label asp-for="BrandName" class="control-label"></label>
-                <input asp-for="BrandName" class="form-control" />
-                <span asp-validation-for="BrandName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="m-sm-4"></div>
+            <form id="CreatCat" class="validate-form" asp-action="Edit" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 <input type="hidden" asp-for="BrandId" >
+                <div>
+                    <label class="form-label" asp-for="BrandName"></label>
+                    <input asp-for="BrandName" type="text" class="form-control form-control-lg">
+                    <span asp-validation-for="BrandName" class="text-theme-6"></span>
+                </div>
+                <div>
+                    <label class="form-label" asp-for="BrandDescription"></label>
+                    <input asp-for="BrandDescription" type="text" class="form-control form-control-lg">
+                    <span asp-validation-for="BrandDescription" class="text-theme-6"></span>
+                </div>
+
+                
+                @*<div>
+            <label asp-for="File"></label>
+            <input asp-for="File" class="input w-full border mt-2" />
+        </div>*@
+
+                <div class="mb-3">
+                    <a asp-action="Index" class="button w-24 border text-gray-700 mr-1" onclick="ajaxRender(event)">Back to List</a>
+                    <button type="submit" class="btn btn-lg btn-primary">Create</button>
+
+                </div>
+
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

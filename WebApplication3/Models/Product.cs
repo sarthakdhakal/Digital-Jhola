@@ -12,17 +12,18 @@ namespace WebApplication3.Models
 
         [Display(Name = "Product")]
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string ProductName { get; set; }
 
         [Display(Name = "Description")]
         public string? ProductDescription { get; set; }
-
-        [Display(Name = "Unit In Stock")]
+        
+        [Display(Name = "Unit In Stock")]   
         public int ProductUnitInStock { get; set; }
 
         [Display(Name = "Price")]
         [Column(TypeName = "money")]
-        public decimal ProductUnitPrice { get; set; }
+        public double ProductUnitPrice { get; set; }
 
  
         public string? ProductImgUrl { get; set; }
@@ -36,7 +37,7 @@ namespace WebApplication3.Models
         public virtual Brand? Brand { get; set; }
         
         public int? OfferId { get; set; }
-        public virtual Offer Offer { get; set; }
+        public virtual Offer? Offer { get; set; }
         
 
     }

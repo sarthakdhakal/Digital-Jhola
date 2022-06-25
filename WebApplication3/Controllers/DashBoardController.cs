@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace WebApplication3.Controllers
            
         }
         // GET
+        [Authorize(Roles = "Admin")]
         public IActionResult AdminDashBoard()
         
         {
@@ -31,10 +33,16 @@ namespace WebApplication3.Controllers
             ViewBag.NewOrders = DbContext.Orders.Count(x=>x.Status==Status.Preparing);
             ViewBag.TotalOrdersSold = DbContext.Orders.Count(x=>x.Status==Status.Delivered);
             ViewBag.Users = DbContext.Users.Count();
-            ViewBag.TotalSales =decimal.ToDouble( DbContext.Orders.Sum(x => x.TotalPrice));
+            ViewBag.Admins = _userManager.GetUsersInRoleAsync("Admin").Result;
+            ViewBag.adminCount = ViewBag.Admins.Count;
+            ViewBag.Buyers = _userManager.GetUsersInRoleAsync("Buyer").Result;
+            ViewBag.buyerCount = ViewBag.Buyers.Count;
+            ViewBag.Seller = _userManager.GetUsersInRoleAsync("Seller").Result;
+            ViewBag.sellerCount = ViewBag.Seller.Count;
+            ViewBag.TotalSales = DbContext.Orders.Sum(x => x.TotalPrice);
             return View();
         }
-
+        [Authorize(Roles = "Buyer")]
         public IActionResult BuyerDashboard()
         {
             string userId = _userManager.GetUserId(HttpContext.User);
@@ -43,14 +51,14 @@ namespace WebApplication3.Controllers
            
             return View(orders);
         }
+        [Authorize(Roles = "Seller")]
         public IActionResult SellerDashboard()
         {
-            string userId = _userManager.GetUserId(HttpContext.User);
-            var orders = DbContext.OrderItems.Where(o => o.Product.UserId == userId).Include(p=>p.Product).Include(f=>f.Order).ThenInclude(p=>p.Buyer);
-            
-           
-            return View(orders);
+            return RedirectToAction("Index","Products");
+
+      
         }
+        [Authorize(Roles = "Buyer")]
         public IActionResult BuyerOrderItemsDashboard( int? id)
         {
 

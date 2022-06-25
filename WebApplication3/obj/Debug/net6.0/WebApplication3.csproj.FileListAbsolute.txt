@@ -572,3 +572,12 @@ D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\refs\WindowsBase.
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\ReflectionIT.Mvc.Paging.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Select.Html.dep
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Select.HtmlToPdf.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Syncfusion.Compression.Portable.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Syncfusion.Licensing.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Syncfusion.Pdf.Portable.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Wkhtmltopdf.NetCore.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\DotNetCore\WebApplication3\WebApplication3\bin\Debug\net6.0\Rotativa.AspNetCore.dll

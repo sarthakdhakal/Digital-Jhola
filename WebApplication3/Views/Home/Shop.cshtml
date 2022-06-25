@@ -6,7 +6,9 @@
     var Allproducts = ViewBag.Allproducts as List<Product>;
     var pagesCounter = Math.Ceiling(Allproducts.Count / 6d);
     var categoryId = ViewBag.categoryId;
+    var brandId = ViewBag.brandId;
     var categories = ViewBag.categories as List<Category>;
+    var brands = ViewBag.Brands as List<Brand>;
     var search = ViewBag.search;
     var order = ViewBag.order;
     var pageNumber = ViewBag.pageNumber;

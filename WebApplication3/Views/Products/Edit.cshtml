@@ -2,56 +2,87 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_LayoutDashboard";
 }
+<div class="row vh-100">
+    <div class="d-table-cell align-middle">
+        <div class="text-left mt-4">
+            <h1 class="h2">Edit Product</h1>
+            <p class="lead">
+                Please provide the following details to edit the product.
+            </p>
+        </div>
 
-<h1>Edit</h1>
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProductId" />
-            <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
-                <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
+        <div class="card">
+            <div class="card-body">
+                <div class="m-sm-4">
+                    <form id="EditProduct" class="validate-form" asp-action="Edit" enctype="multipart/form-data" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="ProductId">
+                        <div>
+                            <label class="form-label" asp-for="ProductName">
+                                @Html.DisplayNameFor(e => e.ProductName) <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">name Required, at least 2 characters</span>
+                            </label>
+                            <input type="text" asp-for="ProductName" class="form-control form-control-lg" minlength="2" required>
+                            <span asp-validation-for="ProductName" class="text-theme-6"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="flex flex-col sm:flex-row" asp-for="ProductDescription">
+                                @Html.DisplayNameFor(e => e.ProductDescription)
+                                <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 10 characters</span>
+                            </label>
+                            <textarea class="form-control form-control-lg"  asp-for="ProductDescription" minlength="10" required>  </textarea>
+                            <span asp-validation-for="ProductDescription" class="text-theme-6"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="flex flex-col sm:flex-row" asp-for="ProductUnitInStock">
+                                @Html.DisplayNameFor(e => e.ProductUnitInStock)
+                                <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, numbers only</span>
+                            </label>
+                            <input type="number" asp-for="ProductUnitInStock" class="form-control form-control-lg" required>
+                            <span asp-validation-for="ProductUnitInStock" class="text-theme-6"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="flex flex-col sm:flex-row" asp-for="ProductUnitPrice">
+                                @Html.DisplayNameFor(e => e.ProductUnitPrice)
+                                <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, numbers only</span>
+                            </label>
+                            <input type="number" step="0.01" asp-for="ProductUnitPrice" class="form-control form-control-lg" required>
+                            <span asp-validation-for="ProductUnitPrice" class="text-theme-6"></span>
+                        </div>
+
+                   
+
+                        <div class="mb-3">
+                            <label class="flex flex-col sm:flex-row" asp-for="CategoryId">
+                                @Html.DisplayNameFor(e => e.Category.CategoryName)
+                                <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600"></span>
+                            </label>
+                            <select asp-for="CategoryId" class="form-control form-control-lg" asp-items="ViewBag.CategoryId"></select>
+                            <span asp-validation-for="CategoryId" class="text-theme-6"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="flex flex-col sm:flex-row" asp-for="BrandId">
+                                @Html.DisplayNameFor(e => e.Brand.BrandName)
+                                <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600"></span>
+                            </label>
+                            <select asp-for="BrandId" class="form-control form-control-lg"
+                                    asp-items="ViewBag.BrandId">
+                            </select>
+                            <span asp-validation-for="BrandId" class="text-theme-6"></span>
+                        </div>
+                        <div class="mb-3">
+                            <a asp-action="Index" class="button w-24 border text-gray-700 mr-1" onclick="ajaxRender(event)">Back to List</a>
+                            <button type="submit" class="btn btn-lg btn-primary">Edit</button>
+
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ProductDescription" class="control-label"></label>
-                <input asp-for="ProductDescription" class="form-control" />
-                <span asp-validation-for="ProductDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductUnitInStock" class="control-label"></label>
-                <input asp-for="ProductUnitInStock" class="form-control" />
-                <span asp-validation-for="ProductUnitInStock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductUnitPrice" class="control-label"></label>
-                <input asp-for="ProductUnitPrice" class="form-control" />
-                <span asp-validation-for="ProductUnitPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductImgUrl" class="control-label"></label>
-                <input asp-for="ProductImgUrl" class="form-control" />
-                <span asp-validation-for="ProductImgUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

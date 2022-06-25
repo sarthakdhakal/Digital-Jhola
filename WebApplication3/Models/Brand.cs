@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication3.Models
 {
@@ -14,6 +15,7 @@ namespace WebApplication3.Models
         public string BrandDescription { get; set; }
 
         [Display(Name = "Image")]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
+        public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }
 }

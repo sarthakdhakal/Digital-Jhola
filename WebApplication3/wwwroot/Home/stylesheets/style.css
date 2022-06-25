@@ -2290,7 +2290,7 @@ article .more-link a:hover:after {
 }
 
 .widget ul li a {
-	color: #c5c5c5;
+	color: black;
 }
 
 .widget .widget-title {
@@ -2321,7 +2321,7 @@ article .more-link a:hover:after {
 }
 
 .widget.widget-search input[type="search"] {
-	color: #333333;
+	color: black;
 	font-weight: 300;
 	height: 40px;
 	line-height: 40px;
@@ -2329,7 +2329,7 @@ article .more-link a:hover:after {
 }
 
 .widget.widget-search .search-form .search-submit {
-	background-image: url(../images/blog/search_icon.png);
+	background-image: url(../images/blog/61088.png);
     background-color: transparent;
     background-size: 14px 15px;
     background-position: center right;

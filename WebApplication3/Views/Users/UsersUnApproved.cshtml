@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebApplication3.Models.User>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_LayoutDashboard";
+}
+
+<h2>title</h2>
+
+<div class="grid grid-cols-12 gap-6 mt-5">
+
+
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <table class="table table-report -mt-2">
+            <thead>
+            <tr>
+                <th style="background:#4578d4;color:#fff;">IMAGES</th>
+                <th style="background:#4578d4;color:#fff;"> Firstname</th>
+                <th style="background:#4578d4;color:#fff;">Lastname</th>
+                <th style="background:#4578d4;color:#fff;"> Phone Number</th>
+                <th style="background:#4578d4;color:#fff;"> Action</th>
+                
+
+            </tr>
+            </thead>
+            <tbody>
+            
+                @foreach (var item in Model)
+                {
+                    
+                        <tr class="intro-x">
+                            <td class="w-40">
+                                <div class="flex">
+                                    <div class="w-20 h-20 image-fit zoom-in -ml-5">
+                                        <img alt="@item.image" class="tooltip rounded-full" src="~/img/@item.image" width="50px" height="30px" title="Uploaded at 9 August 2021">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a asp-action="UserProfile" asp-route-id="@item.Id" class="font-medium whitespace-no-wrap">@item.Firstname</a>
+
+                            </td>
+                            <td class="flex items-center justify-center text-theme-9" class="w-40">@item.Lastname</td>
+                            <td class="w-40">
+                                <div class="flex items-center justify-center text-theme-9"> @item.PhoneNumber </div>
+                            </td>
+
+  <td class="table-report__action w-56">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center mr-3" asp-action="ApproveUser" asp-route-id="@item.Id" onclick="ajaxRender(event)"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Approve </a>
+                              
+                            </div>
+                        </td>
+                        </tr>
+                    
+                   
+                }
+           
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

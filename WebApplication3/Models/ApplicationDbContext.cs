@@ -26,6 +26,8 @@ namespace WebApplication3.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Reply> Replies { get; set; }
 
+       
     }
+                
    
 }

@@ -4,48 +4,57 @@
     ViewData["Title"] = "Manage Email";
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
+<div class="row min-vh-100">
+    
+<div class="d-table-cell align-middle">
+    <div class="text-left mt-4">
+        <h1 class="h2">Email Management</h1>
+        <p class="lead">
 
-<h3>@ViewData["Title"]</h3>
-<div class="container" style="min-height:600px; position:relative;top:0px;">
-    <div class="row">
-        <div class="col-md-6">
-            <form id="email-form" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
+        </p>
+    </div>
 
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Email"></label>
-                    </div>
-                    <div class="col-9">
-                        <div class="form-group">
-                            <input asp-for="Email" class="form-control" disabled />
-                            <div class="input-group-append">
-                                <span class="input-group-text text-success font-weight-bold">✓</span>
-                            </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="m-sm-4">
+
+                <form id="email-form" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="mb-3">
+                
+                        <label class="form-label" asp-for="Email"></label>
+                   
+                        <input asp-for="Email" class="form-control form-control-lg" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text text-success font-weight-bold form-control form-control-lg">✓</span>
                         </div>
+                      
+                    
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-3">
-                        <label asp-for="Input.NewEmail"></label>
+                    <div class="mb-3">
+                                
+                        <label class="form-label" asp-for="Input.NewEmail"></label>
+                  
+
+                        <input asp-for="Input.NewEmail" class="form-control form-control-lg"/>
+                        <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+                     
                     </div>
-                    <div class="col-9">
-                        <div class="form-group">
-
-                            <input asp-for="Input.NewEmail" class="form-control" />
-                            <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
 
 
 
-                <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary btn-block">Change email</button>
-            </form>
+                    <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary btn-block">Change email</button>
+                </form>
+            </div>
+        </div>
         </div>
     </div>
 </div>
+
+
 
 
 @section Scripts {

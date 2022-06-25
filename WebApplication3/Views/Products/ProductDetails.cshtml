@@ -5,22 +5,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pro = ViewBag.product as Product;
     ViewData["Title"] = "Product Details";
-
+    int counter = 0;
+    int counting = 0;
 
 
 }
 
 @section Styles{
     <style>
-        .product-thumb a img {
-            height: 250px;
-            width: 100%;
-        }
-
-        .flexslider .slides img {
-            display: inline-block;
-            height: 400px;
-        }
+             .product-thumb a img {
+                  height: 250px;
+                  width: 100%;
+              }
+      
+              .flexslider .slides img {
+                  display: inline-block;
+                  height: 400px;
+              }
         
         .card {
             position: relative;
@@ -92,6 +93,74 @@
         .rating > input:checked ~ label:hover ~ label {
             color: #FFED85;
         }
+     #slider-wrapper{
+     	max-width: 540px;
+       	width: auto;
+     	height: auto;
+     	margin: 50px auto;
+     	background-color: #10232b;
+     	padding: 15px;	
+     }
+     #image-slider{
+     	width: auto;
+     	height: auto;
+     	position: relative;
+     	overflow: hidden;
+     	margin: auto;
+     	display: block;
+     }
+     #image-slider ul{
+     	width: 100%;
+     	height: 359px;
+     	position: relative;
+     }
+     #image-slider ul li{
+     	display: inline-block;
+     	position: absolute;
+     	top: 0;
+     	left: 540px;
+       	width: 100%;
+       	height:100%; 
+     }
+     #image-slider ul li img {
+     	width: 100%;
+       	height:auto;
+     }
+     #image-slider ul li.active-img{
+     	left: 0;
+     }
+     .next-img{
+     	z-index: 9999;
+     }
+     #thumbnail {
+     	cursor: default;
+     	margin-top: 3px;
+     	height: auto;
+     	display: table;	
+     	width: 100%;
+     }
+     #thumbnail ul {
+     	width: 100%;
+     	height: 100%;
+     }
+     #thumbnail li{
+     	list-style: none;
+     	float: left;
+     	cursor: pointer;
+     	min-width: 1px;
+     }																
+     #thumbnail li img{
+     	padding: 0;
+     	float: left;
+     	margin: 0px 1.5px;
+     	max-height: 56px;
+     	height: 56px;
+     }
+     #thumbnail li:first-child img{
+     	margin-right:0px;
+       	margin-left:0px;
+     }	
+     	
     </style>
 
 }
@@ -126,22 +195,61 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="wrap-flexslider">
-                    <div class="inner">
-                        <div class="flexslider style-1 has-relative">
-                            <ul class="slides">
-                                <li data-thumb="~/images/luis-quintero-3qqiMT2LdR8-unsplash.jpg">
-                                    <img src="~/Product/images/@pro.ProductImgUrl" alt="@pro.ProductName" class="main-img">
-                                    <div class="flat-icon style-1">
-                                        <a href="~/Product/images/@pro.ProductImgUrl" class="zoom-popup">
-                                            <span class="fa fa-search-plus"></span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div><!-- /.flexslider -->
-                    </div>
-                </div>
+                
+            <div id="slider-wrapper">
+            
+            
+            		<div id="image-slider">
+                        <ul>
+                               @foreach (var image in ViewBag.images)
+                               {
+                                   
+                             
+                                   <li class="active-img">
+                                       <img src="~/Product/images/@image.ImagePath" alt=""/>
+                                   </li>
+                               }
+                         
+                        </ul>
+            
+            		</div>
+            
+            		<div id="thumbnail">
+                        <ul>
+                              @foreach (var image in ViewBag.images)
+                              {
+
+                                  <li class="active"><img src="~/Product/images/@image.ImagePath" alt=""/></li>
+                              }
+                                                             
+                        </ul>
+            		</div>
+            
+            
+            
+            	</div>
+                @* <div class="wrap-flexslider"> *@
+                @*     <div class="inner"> *@
+                @*         <div class="flexslider style-1 has-relative"> *@
+                @*             <ul class="slides"> *@
+                @*                 @if (ViewBag.images != null) *@
+                @*                 { *@
+                @*                     @foreach (var image in ViewBag.images) *@
+                @*                     { *@
+                @*                         <li data-thumb="~/Product/images/@image.ImagePath"> *@
+                @*                             <img src="~/Product/images/@image.ImagePath" alt="@pro.ProductName" class="main-img"> *@
+                @*                             <div class="flat-icon style-1"> *@
+                @*                                 <a href="~/Product/images/@image.ImagePath" class="zoom-popup"> *@
+                @*                                     <span class="fa fa-search-plus"></span> *@
+                @*                                 </a> *@
+                @*                             </div> *@
+                @*                         </li> *@
+                @*                     } *@
+                @*                 } *@
+                @*             </ul> *@
+                @*         </div><!-- /.flexslider --> *@
+                @*     </div> *@
+                @* </div> *@
             </div><!-- /.col-md-6 -->
 
             <div class="col-md-6">
@@ -152,53 +260,54 @@
                             <div>
                                 @for (int i = 0; i < ViewBag.Stars; i++)
                                 {
-                                   
-                                        <a style="color: #FFD700">
-                                            <i class="fa fa-star"></i>
-                                        </a>
-
-                                
-                                    
+                                    <a style="color: #FFD700">
+                                        <i class="fa fa-star"></i>
+                                    </a>
                                 }
-                                 @if (ViewBag.Stars > 0)
-                                                                    {
+                                @if (ViewBag.Stars > 0)
+                                {
+                                    <span>&nbsp; @ViewBag.Stars rating from @ViewBag.CountStars reviews</span>
+                                }
 
-                                <span>&nbsp; @ViewBag.Stars rating from @ViewBag.CountStars reviews</span>
-                                                                    }
-                                
                             </div>
+                            <p>Sold by: @pro.User.Firstname @pro.User.Lastname</p>
                             <p>@pro.ProductDescription</p>
-                            
+
                             <div class="price">
                                 @if (pro.OfferId == null)
                                 {
                                     var priceInt = Math.Round(pro.ProductUnitPrice, 0);
                                     <ins>
-                                        <span class="amount">NRs. @priceInt</span>
+                                        <span class="amount">NPR @priceInt</span>
                                     </ins>
                                 }
                                 else
                                 {
-                                    var sale = pro.ProductUnitPrice * (pro.Offer.Sale / 100m);
+                                    var sale = pro.ProductUnitPrice * (pro.Offer.Sale / 100);
                                     <del>
-                                        <span class="regular">NRs. @Html.DisplayFor(p => pro.ProductUnitPrice)</span>
+                                        <span class="regular">NPR @Html.DisplayFor(p => pro.ProductUnitPrice)</span>
                                     </del>
                                     <ins>
-                                        <span class="amount">NRs. @(Math.Round(pro.ProductUnitPrice - sale, 2))</span>
+                                        <span class="amount">NPR @(Math.Round(pro.ProductUnitPrice - sale, 2))</span>
                                     </ins>
                                 }
                             </div>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Seller"))
+                            {
+                            }
+                            else
+                            {
+                                <div class="product-quantity">
 
-                            <div class="product-quantity">
+                                    <div class="add-to-cart">
 
-                                <div class="add-to-cart">
+                                        <a class="ProductAddToCart" data-id="@pro.ProductId" data-name="@pro.ProductName">ADD TO CART</a>
 
-                                    <a class="ProductAddToCart" data-id="@pro.ProductId" data-name="@pro.ProductName">ADD TO CART</a>
+                                    </div>
 
                                 </div>
-
-                            </div>
-                            <div class="product-categories">
+                            }
+                            <div class="price">
                                 <span>Category: </span>
                                 <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId">
                                     @if (pro.Category != null)
@@ -207,15 +316,24 @@
                                     }
                                 </a>
                             </div>
-                             <button id="toggle">QR Code to share</button>
-                            <div class="qrcode" id="qrcode" style="display: none">
-@if (ViewBag.QrCodeUri != null)
-    {
-        <img src="@ViewBag.QrCodeUri" class="img-thumbnail" width="200px" height="200px" />
-    }
-
-</div>
+                            <div class="price">
+                                <span>Brand: </span>
+                                <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.BrandId">
+                                    @if (pro.Brand != null)
+                                    {
+                                        @pro.Brand.BrandName
+                                    }
+                                </a>
                             </div>
+                            <button id="toggle">QR Code to share</button>
+                            <div class="qrcode" id="qrcode" style="display: none">
+                                @if (ViewBag.QrCodeUri != null)
+                                {
+                                    <img src="@ViewBag.QrCodeUri" class="img-thumbnail" width="200px" height="200px"/>
+                                }
+
+                            </div>
+                        </div>
                     </div><!-- /.product-detail -->
                 </div>
             </div><!-- /.row -->
@@ -228,9 +346,9 @@
         <div class="card">
             <div class="row">
                 <div class="col-md-12">
-                          <div class="title-section margin-bottom-10">
-                                                            <h2 class="title">Comments</h2>
-                                                        </div>
+                    <div class="title-section margin-bottom-10">
+                        <h2 class="title">Comments</h2>
+                    </div>
                     <div class="row">
 
                         <div class="col-md-12">
@@ -259,7 +377,7 @@
                                                 <div class="media-body">
                                                     <div class="row">
                                                         <div class="col-12 d-flex">
-                                                            <h5>@reply.User.Firstname @reply.User.Lastname </h5><span>&nbsp;the seller.</span>  <span>- @reply.CreatedOn.ToString("MM/dd/yyyy")</span>
+                                                            <h5>@reply.User.Firstname @reply.User.Lastname </h5><span>&nbsp;the seller.</span> <span>- @reply.CreatedOn.ToString("MM/dd/yyyy")</span>
                                                         </div>
                                                     </div> @reply.Content
                                                 </div>
@@ -297,9 +415,9 @@
                             else
                             {
                                 <div class="card pt-3 mt-3">
-                                <h5>Please <a href="/Identity/Account/Register">Register</a> or   <a href="/Identity/Account/Login">Login</a> to add a comment.</h5>
-                                   </div> 
-                                    }
+                                    <h5>Please <a href="/Identity/Account/Register">Register</a> or <a href="/Identity/Account/Login">Login</a> to add a comment.</h5>
+                                </div>
+                            }
                         </div>
                     </div>
 
@@ -314,8 +432,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="title-section margin-bottom-10">
-                                        <h2 class="title">Reviews</h2>
-                                    </div>
+                        <h2 class="title">Reviews</h2>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             @foreach (var review in ViewBag.Reviews)
@@ -330,63 +448,71 @@
                                             <div class="col-12 d-flex">
                                                 <h5>@review.User.Firstname @review.User.Lastname</h5> <span>- @review.CreatedOn.ToString("MM/dd/yyyy")</span>
                                             </div>
-                                               <div class="col-12 d-flex">
-                                            @for (int i = 0; i < review.Rating; i++)
-                                            {
-                                                @if (review.Rating > 0)
+                                            <div class="col-12 d-flex">
+                                                @for (int i = 0; i < review.Rating; i++)
                                                 {
-                                                 
-                                            <a style="color: #FFD700">
-                                                <i class="fa fa-star"></i>
-                                            </a>
-                                       
+                                                    @if (review.Rating > 0)
+                                                    {
+                                                        <a style="color: #FFD700">
+                                                            <i class="fa fa-star"></i>
+                                                        </a>
+                                                    }
                                                 }
-                                            }
                                             </div>
                                         </div> @review.Review
                                     </div>
                                 </div>
                             }
-                            <form id="CreateReview" class="validate-form mt-5" asp-action="Create" asp-controller="Review" enctype="multipart/form-data" method="post">
-                                <div class="card p-3">
-                                    <input type="hidden" name="productId" value="@pro.ProductId"/>
-                                    <h5>Add Review</h5>
-                                    <div style="rating">
-                                        <fieldset class="rating" style="float: left">
-                                            <input type="radio" id="star5" name="rating" value="5"/>
-                                            <label class="full" for="star5"
-                                                   title="Awesome - 5 stars">
-                                            </label>
+                            @if (ViewBag.reviewgiver)
+                            {
+                                <form id="CreateReview" class="validate-form mt-5" asp-action="Create" asp-controller="Review" enctype="multipart/form-data" method="post">
+                                    <div class="card p-3">
+                                        <input type="hidden" name="productId" value="@pro.ProductId"/>
+                                        <h5>Add Review</h5>
+                                        <div style="rating">
+                                            <fieldset class="rating" style="float: left">
+                                                <input type="radio" id="star5" name="rating" value="5"/>
+                                                <label class="full" for="star5"
+                                                       title="Awesome - 5 stars">
+                                                </label>
 
-                                            <input type="radio" id="star4" name="rating" value="4"/>
-                                            <label class="full" for="star4"
-                                                   title="Pretty good - 4 stars">
-                                            </label>
+                                                <input type="radio" id="star4" name="rating" value="4"/>
+                                                <label class="full" for="star4"
+                                                       title="Pretty good - 4 stars">
+                                                </label>
 
-                                            <input type="radio" id="star3" name="rating" value="3"/>
-                                            <label class="full" for="star3"
-                                                   title="Satisfactory - 3 stars">
-                                            </label>
+                                                <input type="radio" id="star3" name="rating" value="3"/>
+                                                <label class="full" for="star3"
+                                                       title="Satisfactory - 3 stars">
+                                                </label>
 
-                                            <input type="radio" id="star2" name="rating" value="2"/>
-                                            <label class="full" for="star2"
-                                                   title="Pretty bad- 2 stars">
-                                            </label>
+                                                <input type="radio" id="star2" name="rating" value="2"/>
+                                                <label class="full" for="star2"
+                                                       title="Pretty bad- 2 stars">
+                                                </label>
 
-                                            <input type="radio" id="star1" name="rating" value="1" checked/>
-                                            <label class="full" for="star1"
-                                                   title="Very bad - 1 star">
-                                            </label>
+                                                <input type="radio" id="star1" name="rating" value="1" checked/>
+                                                <label class="full" for="star1"
+                                                       title="Very bad - 1 star">
+                                                </label>
 
-                                        </fieldset>
+                                            </fieldset>
 
-                                         <textarea id="textarea" name="content" class="form-control"> </textarea>
+                                            <textarea id="textarea" name="content" class="form-control"> </textarea>
+                                        </div>
+                                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                                            <button type="submit" name="submit" class="add-to-cart">Add review</button>
+                                        </div>
                                     </div>
-                                    <div class="mt-3 d-flex justify-content-between align-items-center">
-                                        <button type="submit" name="submit" class="add-to-cart">Add review</button>
-                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="card pt-3 mt-3">
+                                    <h5>Please buy the product to add a review.</h5>
                                 </div>
-                            </form>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -411,7 +537,7 @@
                             <li class="product-item">
                                 <div class="product-thumb clearfix">
                                     <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@item.ProductId">
-                                        <img src="~/Product/images/@item.ProductImgUrl" alt="image">
+                                        <img src="~/Product/images/@item.ProductImgUrl" width="200" height="200" alt="image">
                                     </a>
                                     @if (item.OfferId == null)
                                     {
@@ -438,12 +564,12 @@
                                         {
                                             if (item != null)
                                             {
-                                                var sale2 = item.ProductUnitPrice * (item.Offer.Sale / 100m);
+                                                var sale2 = item.ProductUnitPrice * (item.Offer.Sale / 100);
                                                 <del>
-                                                    <span class="regular">NRs. @Html.DisplayFor(p => item.ProductUnitPrice)</span>
+                                                    <span class="regular">NPR @Html.DisplayFor(p => item.ProductUnitPrice)</span>
                                                 </del>
                                                 <ins>
-                                                    <span class="amount">NRs. @(Math.Round(item.ProductUnitPrice - sale2, 2))</span>
+                                                    <span class="amount">NPR @(Math.Round(item.ProductUnitPrice - sale2, 2))</span>
                                                 </ins>
                                             }
                                         }
@@ -489,7 +615,38 @@
             swal("Out of Stock!", "This product does not have more available stock.")
 
         }
+        
     })
+    $(window).on('load', function () {
+           
+    if ($.cookie('CommentAdd') === "true") {
+            
+    swal("The comment has been sent for being moderated.");
+    }
+            
+            
+    
+    });
+        $(window).on('load', function () {
+               
+        if ($.cookie('ReplyAdded') === "true") {
+                
+        swal("The reply has been added.");
+        }
+                
+                
+        
+        });
+            $(window).on('load', function () {
+                       
+                if ($.cookie('ReviewAdded') === "true") {
+                        
+                swal("The review has been added.");
+                }
+                        
+                        
+                
+                });
 </script>
 <script>
     const targetDiv = document.getElementById("qrcode");
@@ -501,4 +658,39 @@
         targetDiv.style.display = "none";
       }
     };
+  $(function(){
+  		
+  	$('#thumbnail li').click(function(){
+  		var thisIndex = $(this).index()
+  			
+  		if(thisIndex < $('#thumbnail li.active').index()){
+  			prevImage(thisIndex, $(this).parents("#thumbnail").prev("#image-slider"));
+  		}else if(thisIndex > $('#thumbnail li.active').index()){
+  			nextImage(thisIndex, $(this).parents("#thumbnail").prev("#image-slider"));
+  		}
+  			
+  		$('#thumbnail li.active').removeClass('active');
+  		$(this).addClass('active');
+  
+  		});
+  	});
+  
+  var width = $('#image-slider').width();
+  
+  function nextImage(newIndex, parent){
+  	parent.find('li').eq(newIndex).addClass('next-img').css('left', width).animate({left: 0},600);
+  	parent.find('li.active-img').removeClass('active-img').css('left', '0').animate({left: -width},600);
+  	parent.find('li.next-img').attr('class', 'active-img');
+  }
+  function prevImage(newIndex, parent){
+  	parent.find('li').eq(newIndex).addClass('next-img').css('left', -width).animate({left: 0},600);
+  	parent.find('li.active-img').removeClass('active-img').css('left', '0').animate({left: width},600);
+  	parent.find('li.next-img').attr('class', 'active-img');
+  }
+  
+  /* Thumbails */
+  var ThumbailsWidth = ($('#image-slider').width() - 18.5)/7;
+  $('#thumbnail li').find('img').css('width', ThumbailsWidth);
+  
+
   </script>

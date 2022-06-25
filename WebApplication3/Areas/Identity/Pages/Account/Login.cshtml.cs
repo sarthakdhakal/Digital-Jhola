@@ -131,6 +131,14 @@ namespace WebApplication3.Areas.Identity.Pages.Account
 
                     if (result.Succeeded)
                     {
+                        if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            return LocalRedirect("/DashBoard/AdminDashboard");//remember to change this to redirct to dashboard
+                        }
+                        else if (await _userManager.IsInRoleAsync(user, "Seller"))
+                        {
+                            return LocalRedirect("/DashBoard/SellerDashboard");
+                        }
                         _logger.LogInformation("User logged in.");
                         return LocalRedirect(returnUrl);
                     }

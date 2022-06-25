@@ -1,8 +1,191 @@
-﻿@model IEnumerable<WebApplication3.Models.User>
-
-@{
+﻿@{
     ViewBag.Title = "title";
     Layout = "_LayoutDashboard";
 }
 
-<h2>title</h2>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<div class="row min-vh-100">
+<div class="grid grid-cols-12 gap-6 mt-5">
+
+    <h3 class="text-center"> Admins</h3>
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <table class="table table-report -mt-2">
+            <thead>
+            <tr>
+                <th style="background:#4578d4;color:#fff;">IMAGES</th>
+                <th style="background:#4578d4;color:#fff;"> Firstname</th>
+                <th style="background:#4578d4;color:#fff;">Lastname</th>
+                <th style="background:#4578d4;color:#fff;"> Phone Number</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            @if (ViewBag.Admins != null)
+            {
+                @foreach (var item in ViewBag.Admins)
+                {
+                    if (item.ApprovalStatus == 1)
+                    {
+                        <tr class="intro-x">
+                            <td class="w-40">
+                                <div class="flex">
+                                    <div class="w-20 h-20 image-fit zoom-in -ml-5">
+                                        <img alt="@item.image" class="tooltip rounded-full" src="~/img/@item.image" width="50px" height="30px" title="Uploaded at 9 August 2021">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" class="font-medium whitespace-no-wrap">@item.Firstname</a>
+
+                            </td>
+                            <td class="flex items-center justify-center text-theme-9" class="w-40">@item.Lastname</td>
+                            <td class="w-40">
+                                <div class="flex items-center justify-center text-theme-9"> @item.PhoneNumber </div>
+                            </td>
+
+
+                        </tr>
+                    }
+                   
+                }
+            }
+            else
+            {
+                <tr class="intro-x">
+                    <td class="w-40">
+
+                        No admin in the system
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+      <h3 class="text-center"> Seller</h3>
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <table class="table table-report -mt-2">
+            <thead>
+            <tr>
+                <th style="background:#4578d4;color:#fff;">IMAGES</th>
+                <th style="background:#4578d4;color:#fff;"> Firstname</th>
+                <th style="background:#4578d4;color:#fff;">Lastname</th>
+                <th style="background:#4578d4;color:#fff;"> Phone Number</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            @if (ViewBag.Seller != null)
+            {
+                @foreach (var item in ViewBag.Seller)
+                {
+                    if (item.ApprovalStatus == 1)
+                    {
+                        <tr class="intro-x">
+                            <td class="w-40">
+                                <div class="flex">
+                                    <div class="w-20 h-20 image-fit zoom-in -ml-5">
+                                        <img alt="@item.image" class="tooltip rounded-full" src="~/img/@item.image" width="50px" height="30px" title="Uploaded at 9 August 2021">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" class="font-medium whitespace-no-wrap">@item.Firstname</a>
+
+                            </td>
+                            <td class="flex items-center justify-center text-theme-9" class="w-40">@item.Lastname</td>
+                            <td class="w-40">
+                                <div class="flex items-center justify-center text-theme-9"> @item.PhoneNumber </div>
+                            </td>
+
+
+                        </tr>
+                    }
+                   
+                    
+                }
+            }
+            else
+            {
+                <tr class="intro-x">
+                    <td class="w-40">
+
+                        No seller in the system
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+      <h3 class="text-center"> Buyers</h3>
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <table class="table table-report -mt-2">
+            <thead>
+            <tr>
+                <th style="background:#4578d4;color:#fff;">IMAGES</th>
+                <th style="background:#4578d4;color:#fff;"> Firstname</th>
+                <th style="background:#4578d4;color:#fff;">Lastname</th>
+                <th style="background:#4578d4;color:#fff;"> Phone Number</th>
+ 
+            </tr>
+            </thead>
+            <tbody>
+            @if (ViewBag.Buyers != null)
+            {
+                @foreach (var item in ViewBag.Buyers)
+                {
+                    if (item.ApprovalStatus==1)
+                    {
+                        
+                 
+                        <tr class="intro-x">
+                            <td class="w-40">
+                                <div class="flex">
+                                    <div class="w-20 h-20 image-fit zoom-in -ml-5">
+                                        <img alt="@item.image" class="tooltip rounded-full" src="~/img/@item.image" width="50px" height="30px" title="Uploaded at 9 August 2021">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" class="font-medium whitespace-no-wrap">@item.Firstname</a>
+
+                            </td>
+                            <td class="flex items-center justify-center text-theme-9" class="w-40">@item.Lastname</td>
+                            <td class="w-40">
+                                <div class="flex items-center justify-center text-theme-9"> @item.PhoneNumber </div>
+                            </td>
+
+
+                        </tr>
+                    }
+
+                }
+            }
+            else
+            {
+                <tr class="intro-x">
+                    <td class="w-40">
+
+                        No buyer in the system
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</div>
+<script>
+
+    $(window).on('load', function () {
+       
+        if ($.cookie('UserApprove') === "true") {
+        
+            swal("User has been approved");
+        }
+        
+
+    });
+</script>

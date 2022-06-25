@@ -4,19 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NuGet.Common;
 using WebApplication3.Models;
 
 
-namespace WebApplication3.Controllers
-{
+namespace WebApplication3.Controllers{
+
     public class UsersController : Controller
     {
         private ApplicationDbContext _context;
@@ -38,12 +41,17 @@ namespace WebApplication3.Controllers
 
         public ActionResult Create()
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddSellerViewModel addSellerViewModel)
         {
+            
             var returnUrl = Url.Content("~/");
             if (ModelState.IsValid)
             {
@@ -118,10 +126,12 @@ namespace WebApplication3.Controllers
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = addSellerViewModel.Email, returnUrl = returnUrl });
-                    }
+                    } 
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        CookieOptions option = new CookieOptions();
+                        option.Expires = DateTime.Now.AddSeconds(10);
+                        Response.Cookies.Append("SellerRegister", "true", option);
                         return LocalRedirect(returnUrl);
                     }
                 }
@@ -132,11 +142,41 @@ namespace WebApplication3.Controllers
             }
             return View(addSellerViewModel);
         }
-        // public IActionResult UsersView()
-        // {
-        //     var users = _userManager.GetUsersInRoleAsync("Admin");
-        //     var user
-        //     return View(users);
-        // }
+        [Authorize(Roles = "Admin")]
+        public IActionResult UsersView()
+        {
+            ViewBag.Admins = _userManager.GetUsersInRoleAsync("Admin").Result;
+            ViewBag.Buyers = _userManager.GetUsersInRoleAsync("Buyer").Result;
+            ViewBag.Seller = _userManager.GetUsersInRoleAsync("Seller").Result;
+            return View();
+         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult UsersUnApproved()
+        {
+            var users = _context.Users.Where(u => u.ApprovalStatus != 1).ToList();
+            return View(users);
+        }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ApproveUser(string id)
+        {
+            var user = _context.Users.SingleOrDefault(u=>u.Id== id);
+            user.ApprovalStatus = 1;
+            _context.Update(user);
+            
+            await _context.SaveChangesAsync();
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddSeconds(10);
+            Response.Cookies.Append("UserApprove", "true", option);
+            return RedirectToAction(nameof(UsersView));
+        }
+        [Authorize(Roles = "Admin")]
+        public  IActionResult UserProfile(string id)
+        {
+            ViewBag.user = _context.Users.SingleOrDefault(u => u.Id == id);
+            ViewBag.Document = _context.ImageSellerVerifies.SingleOrDefault(u => u.SellerId == id);
+            
+            return View();
+        }
     }
 }

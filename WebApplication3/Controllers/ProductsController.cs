@@ -15,6 +15,7 @@ using QRCoder;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using WebApplication3.Models;
 using ZXing.QrCode;
@@ -55,6 +56,7 @@ namespace WebApplication3.Controllers
         }
 
         // GET: Products
+        [Authorize(Roles = "Admin, Seller")]
         public async Task<IActionResult> Index(int page = 1, string s = "")
         {
             page--;
@@ -69,39 +71,26 @@ namespace WebApplication3.Controllers
             return View(await result.ToListAsync());
         }
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
 
         // GET: Products/Create
+        [Authorize(Roles = "Admin, Seller")]
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductDescription,ProductUnitInStock,ProductUnitPrice,CategoryId")] Product product)
+        [Authorize(Roles = "Admin, Seller")]
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductDescription,ProductUnitInStock,ProductUnitPrice,CategoryId,BrandId")] Product product)
         {
-            // var files = HttpContext.Request.Form.Files;
+            var files = HttpContext.Request.Form.Files;
             if (ModelState.IsValid)
             {
                 int counter = 1;
-                var files = HttpContext.Request.Form.Files;
+                
                 foreach (var image in files)
                 {
                     
@@ -152,14 +141,20 @@ namespace WebApplication3.Controllers
                     }
                     counter++;
                 }
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("ProductAdd", "true", option);
+                return RedirectToAction(nameof(Index));
                 return RedirectToAction(nameof(Index));
             }
 
-           
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View(product);
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin, Seller")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -172,13 +167,16 @@ namespace WebApplication3.Controllers
             {
                 return NotFound();
             }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View(product);
         }
 
    
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductDescrition,ProductUnitInStock,ProductUnitPrice,ProductImgUrl,SellerId")] Product product)
+        [Authorize(Roles = "Admin, Seller")]
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductDescription,ProductUnitInStock,ProductUnitPrice,ProductImgUrl,SellerId,CategoryId")] Product product)
         {   
             if (id != product.ProductId)
             {
@@ -203,38 +201,53 @@ namespace WebApplication3.Controllers
                         throw;
                     }
                 }
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("ProductEdit", "true", option);
+                return RedirectToAction(nameof(Index));
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View(product);
         }
 
-        // GET: Products/Delete/5
+       
+
+        [Authorize(Roles = "Admin, Seller")]
+    
+   
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+            var product = await _context.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
 
-            return View(product);
-        }
+            try
+            {
 
- 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddSeconds(10);
+            Response.Cookies.Append("ProductDelete", "true", option);
             return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
+            
+            }
+            catch (Exception e)
+            {
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddSeconds(10);
+                Response.Cookies.Append("DeletionFail", "true", option);
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         public IActionResult ProductDetails(int? id)
@@ -252,9 +265,12 @@ namespace WebApplication3.Controllers
             byte[] BitmapArray = QrBitmap.BitmapToByteArray();
             string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
             ViewBag.QrCodeUri = QrUri;
-            var product = _context.Products.Include(p => p.Category).Include(ww => ww.Offer).FirstOrDefault(p => p.ProductId == id);
-           ViewBag.Comments = _context.Comments.Where(c=>c.ProductId==id).Include(u => u.User).Include(u=>u.Replies).ThenInclude(r=>r.User).ToList();
+            var productUserId = _userManager.GetUserId(HttpContext.User);
+            var product = _context.Products.Include(p => p.Category).Include(p => p.Brand).Include(ww => ww.Offer).Include(u=>u.User).FirstOrDefault(p => p.ProductId == id);
+           ViewBag.Comments = _context.Comments.Where(c=>c.ProductId==id&& c.ApprovalStatus==1).Include(u => u.User).Include(u=>u.Replies).ThenInclude(r=>r.User).ToList();
            ViewBag.Reviews = _context.StarRatings.Where(c=>c.ProductId==id).Include(u => u.User).ToList();
+           ViewBag.reviewgiver = _context.OrderItems.Any(u => u.Product.ProductId == id && u.Order.BuyerId==productUserId );
+           ViewBag.images = _context.Images.Where(i => i.ProductId == id);
            if (_context.StarRatings.Any(c => c.ProductId == id))
            {
 

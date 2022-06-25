@@ -7,7 +7,7 @@
 @inject SignInManager<User> SignInManager
 @model WebApplication3.Models.CheckoutViewModel
 @{
-    decimal sum = 0m;
+    double sum = 0;
 }
 <div class="container-fluid my-cart-container">
 <div class="container">
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center align-items-center">
                                     <p class="price-col-style">
-                                        <span>NRs. </span>@Math.Round(item.ProductUnitPrice, 2)
+                                        <span>NPR </span>@Math.Round(item.ProductUnitPrice, 2)
                                     </p>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center align-items-center">
@@ -93,13 +93,13 @@
                                         @if (item.OfferId == null)
                                         {
                                             var priceInt = Math.Round(item.ProductUnitPrice, 2);
-                                            <span>EGP @(priceInt * quantity)</span>
+                                            <span>NPR @(priceInt * quantity)</span>
                                             sum += (priceInt * quantity);
                                         }
                                         else
                                         {
-                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100m);
-                                            <span>EGP @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity)</span>
+                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100);
+                                            <span>NPR @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity)</span>
                                             sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
                                         }
                                     </p>
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center align-items-center">
                                     <p class="price-col-style">
-                                        <span>EGP </span>@Math.Round(item.ProductUnitPrice, 2)
+                                        <span>NPR </span>@Math.Round(item.ProductUnitPrice, 2)
                                     </p>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center align-items-center">
@@ -138,13 +138,14 @@
                                         @if (item.OfferId == null)
                                         {
                                             var priceInt = Math.Round(item.ProductUnitPrice, 2);
-                                            <span>NRs. @(priceInt * quantity)</span>
+                                            <span>NPR @(priceInt * quantity)</span>
                                             sum += (priceInt * quantity);
                                         }
                                         else
                                         {
-                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100m);
-                                            <span>EGP @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity)</span>
+                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100);
+                                            <span>NPR @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity)</span>
+                                            <span>NPR @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity)</span>
                                             sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
                                         }
                                     </p>

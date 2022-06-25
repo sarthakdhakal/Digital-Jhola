@@ -2,43 +2,48 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_LayoutDashboard";
 }
+<div class="row vh-100">
+    <div class="d-table-cell align-middle">
+        <div class="text-left mt-4">
+            <h1 class="h2">Edit category</h1>
+            <p class="lead">
+                Please provide the following details to edit the category.
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="m-sm-4">
+                    <form id="CreatCat" class="validate-form" asp-action="Edit" enctype="multipart/form-data" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                         <input type="hidden" asp-for="CategoryId" >
+                        <div>
+                            <label class="form-label" asp-for="CategoryName"></label>
+                            <input asp-for="CategoryName" type="text" class="form-control form-control-lg">
+                            <span asp-validation-for="CategoryName" class="text-theme-6"></span>
+                        </div>
+                        <div>
+                            <label class="form-label" asp-for="CategoryDescription"></label>
+                            <input asp-for="CategoryDescription" type="text" class="form-control form-control-lg">
+                            <span asp-validation-for="CategoryDescription" class="text-theme-6"></span>
+                        </div>
 
-<h1>Edit</h1>
+                        
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CategoryId" />
-            <div class="form-group">
-                <label asp-for="CategoryName" class="control-label"></label>
-                <input asp-for="CategoryName" class="form-control" />
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
+
+                        <div class="mb-3">
+                            <a asp-action="Index" class="button w-24 border text-gray-700 mr-1" onclick="ajaxRender(event)">Back to List</a>
+                            <button type="submit" class="btn btn-lg btn-primary">Create</button>
+
+                        </div>
+
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoryDescription" class="control-label"></label>
-                <input asp-for="CategoryDescription" class="form-control" />
-                <span asp-validation-for="CategoryDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

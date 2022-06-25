@@ -6,94 +6,99 @@
     Layout = "_LayoutDashboard";
 }
 
-<h2>title</h2>
-<div class="grid grid-cols-12 gap-6 mt-5">
+<div class="row min-vh-100">
+    <div class="grid grid-cols-12 gap-6 mt-5">
 
-    <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-   
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
 
-        @* <div class="hidden md:block mx-auto text-gray-600">Showing @((ViewBag.page-1) * ViewBag.countPerPage+1) to @(((ViewBag.page - 1) * ViewBag.countPerPage)+ViewBag.pagecount) of @(ViewBag.count) entries</div> *@
-        <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-            <div class="w-56 relative text-gray-700">
-                <input type="text" class="input w-56 box pr-10 placeholder-theme-13" onchange="searchProducts(this.value)" placeholder="Search...">
-                <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
-            </div>
+
+            @* <div class="hidden md:block mx-auto text-gray-600">Showing @((ViewBag.page-1) * ViewBag.countPerPage+1) to @(((ViewBag.page - 1) * ViewBag.countPerPage)+ViewBag.pagecount) of @(ViewBag.count) entries</div> *@
+
         </div>
-    </div>
 
-    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-        <table class="table table-report -mt-2">
-            <thead>
+        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+            <table class="table table-report -mt-2">
+                <thead>
                 <tr>
-                    
-                    <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.FirstName)</th>
-                    <th  style="background:#4578d4;color:#fff;">@Html.DisplayNameFor(model => model.LastName)</th>
-                    <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.OrderDate)</th>
-                    <th  style="background:#4578d4;color:#fff;" > @Html.DisplayNameFor(model => model.TotalPrice)</th>
-                    <th  style="background:#4578d4;color:#fff;">Status</th>
-                    <th style="background:#4578d4;color:#fff;">ACTIONS</th>
+
+                    <th style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.FirstName)</th>
+                    <th style="background:#4578d4;color:#fff;">@Html.DisplayNameFor(model => model.LastName)</th>
+                    <th style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.OrderDate)</th>
+                    <th style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.TotalPrice)</th>
+                    <th style="background:#4578d4;color:#fff;">Status</th>
+                    <th style="background:#4578d4;color:#fff;">Actions</th>
+                    <th style="background:#4578d4;color:#fff;"></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 @foreach (var item in Model)
                 {
-
                     <tr class="intro-x">
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9">  @Html.DisplayFor(modelItem => item.FirstName) </div>
+                            <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.FirstName) </div>
                         </td>
-                          <td class="w-40">
-                              <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.LastName) </div>
-                              
-                                                </td>
                         <td class="w-40">
-                                                    <div class="flex items-center justify-center text-theme-9">  @Html.DisplayFor(modelItem => item.OrderDate) </div>
-                                                </td>
-                        <td class="w-40">
-                                                    <div class="flex items-center justify-center text-theme-9">  @Html.DisplayFor(modelItem => item.TotalPrice) </div>
-                                                </td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9">   @Html.DisplayFor(modelItem => item.Status) </div>
-                        </td>
-                       @if(item.Status!= Status.Delivered){
-                           <td class="table-report__action w-56">
-                               <div class="flex justify-center items-center">
-                                
-                                   <form id="OrderStatus" class="validate-form" asp-action="Edit" enctype="multipart/form-data" method="post">
-                                       <input type="hidden" name="Id" value="@item.OrderId"/>
-                                       <input type="hidden" name="status" value="@item.Status"/>
-                                       <div class="form-group">
-                                           <input type="submit" value="Change status" class="btn btn-primary" />
-                                       </div>
-                                   </form>
-                               
+                            <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.LastName) </div>
 
-                               </div>
-                           </td>
-                       }
-                       else
-                       {
-                           <td class="w-40">
-                               <div class="flex items-center justify-center text-theme-9">Cannot change </div>
-                           </td>
-                       }
+                        </td>
+                        <td class="w-40">
+                            <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.OrderDate) </div>
+                        </td>
+                        <td class="w-40">
+                            <div class="flex items-center justify-center text-theme-9">NPR @Html.DisplayFor(modelItem => item.TotalPrice) </div>
+                        </td>
+                        <td class="w-40">
+                            <div class="flex items-center justify-center text-theme-9">
+                                @if (item.Status == Status.Delivered)
+                                {<span class="badge bg-success"> @Html.DisplayFor(modelItem => item.Status) </span>}
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">@Html.DisplayFor(modelItem => item.Status)</span>}
+                            </div>
+                        </td>
+                        @if (item.Status != Status.Delivered)
+                        {
+                            <td class="table-report__action w-56">
+                                <div class="flex justify-center items-center">
+
+                                    <form id="OrderStatus" class="validate-form" asp-action="Edit" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="Id" value="@item.OrderId"/>
+                                        <input type="hidden" name="status" value="@item.Status"/>
+                                        <div class="form-group">
+                                            <input type="submit" value="Change status" class="btn btn-primary"/>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="w-40">
+                                <div class="flex items-center justify-center text-theme-9">Cannot change </div>
+                            </td>
+                        }
+                        <td class="table-report__action w-56">
+                            <div class="flex justify-center items-center">
+
+                                <form id="OrderStatus" class="validate-form" asp-action="DemoViewAsPdf" asp-controller="Pdf" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="id" value="@item.OrderId"/>
+                                    <div class="form-group">
+                                        <input type="submit" value="View Bill" class="btn btn-danger"/>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </td>
                     </tr>
                 }
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-    </div>
-    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-no-wrap items-center">
-        <ul id="PaginationContainer" class="pagination">
-            Pages:
-            @Html.Raw(ViewBag.pagination)
-        </ul>
-        <select class="w-20 input box mt-3 sm:mt-0">
-            <option>10</option>
-            <option>25</option>
-            <option>35</option>
-            <option>50</option>
-        </select>
+        </div>
+        
     </div>
 </div>

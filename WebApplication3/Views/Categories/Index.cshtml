@@ -2,46 +2,120 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_LayoutDashboard";
 }
+<div class="row min-vh-100">
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="row mb-2 mb-xl-3">
 
-<h1>Index</h1>
+            <div class="col-auto d-none d-sm-block">
+                <h3><strong>Categories</strong> Available</h3>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
-            </td>
-        </tr>
+            </div>
+
+            <div class="col-auto ms-auto text-end mt-n1">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+
+                        <li class="breadcrumb-item">
+                            <a asp-action="Create">
+                                Add New
+                                <p data-feather="plus-circle"></p>
+                            </a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+            <table class="table table-report -mt-2">
+                <thead>
+                <tr>
+                    <th style="background:#4578d4;color:#fff;">
+                        Image
+                    </th>
+                    <th style="background:#4578d4;color:#fff;">
+                        Name
+                    </th>
+                    <th style="background:#4578d4;color:#fff;">
+                        @Html.DisplayNameFor(model => model.CategoryDescription)
+                    </th>
+              
+                    <th style="background:#4578d4;color:#fff;">ACTIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="intro-x">
+                        <td class="w-40">
+                            <div class="flex">
+                                <div class="w-20 h-20 image-fit zoom-in -ml-5">
+                                    <img alt="@item.CategoryName" class="tooltip rounded-full" src="~/Category/images/@item.ImageUrl" width="50px" height="30px" title="Uploaded at 9 August 2021">
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryDescription)
+                        </td>
+                   
+                        <td class="table-report__action w-56">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center mr-3" asp-action="Edit" asp-route-id="@item.CategoryId" onclick="ajaxRender(event)"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                <a class="flex items-center text-theme-6" asp-action="Delete" onclick="return confirm('Are you sure?') ? ajaxRender(event):false" asp-route-id="@item.CategoryId"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+$(window).on('load', function () {
+       
+if ($.cookie('DeletionFailCategory') === "true") {
+        
+swal("Category can't be deleted as it has multiple relations");
 }
-    </tbody>
-</table>
+        
+
+});
+$(window).on('load', function () {
+       
+if ($.cookie('AddCategory') === "true") {
+        
+swal("A category has been added.");
+}
+        
+        
+
+});
+$(window).on('load', function () {
+       
+if ($.cookie('EditCategory') === "true") {
+        
+swal("The category has been edited.");
+}
+        
+        
+
+});
+$(window).on('load', function () {
+       
+if ($.cookie('DeleteCategory') === "true") {
+        
+swal("The category has been deleted.");
+}
+        
+        
+
+});
+</script>

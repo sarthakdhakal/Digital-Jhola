@@ -1,5 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.UI.V5.Pages.Account.Manage.Internal
 @inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var imgurl = "";
+    @if (SignInManager.IsSignedIn(User))
+    {
+        imgurl = user.image == null ? "defaultimg.png" : user.image;
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,373 +22,218 @@
     <meta name="keywords" content="">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="shortcut icon" href="~/dashboard/img/icons/icon-48x48.png"/>
+    <link rel="shortcut icon" href="~/dashboard/img/icons/favicon-32x32.png"/>
 
-    <title>Woodland University Backend</title>
+    <title>Digital Jhola</title>
 
     <link href="~/dashboard/css/app.css" rel="stylesheet">
     <link href="~/dashboard/css/styles.css" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
- 
+
 </head>
 
 <body>
+
 <div class="wrapper">
-<nav id="sidebar" class="sidebar">
-    <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="index.html">
-            <span class="align-middle">AdminKit</span>
-        </a>
-
-        <ul class="sidebar-nav">
-            <li class="sidebar-header">
-                Pages
-            </li>
-
-                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin")){
-	        <li class="sidebar-item">
-		        <a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
-			        <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
-		        </a>
-		        <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-			        <li class="sidebar-item">
-				        <a class="sidebar-link" asp-action="AssignUserToRole" asp-controller="Role">Assign roles</a>
-			        </li>
-			        <li class="sidebar-item">
-				        <a class="sidebar-link" asp-action="Create" asp-controller="Role">Create Role</a>
-			        </li>
-			        <li class="sidebar-item">
-				        <a class="sidebar-link" asp-action="Index" asp-controller="Role">All roles</a>
-			        </li>
-		        </ul>
-	        </li>
-	        <li class="sidebar-item">
-		        <a class="sidebar-link" asp-action="Index" asp-controller="Products">
-			        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Products</span>
-		        </a>
-	        </li>
-	        <li class="sidebar-item">
-		        <a class="sidebar-link" asp-action="Index" asp-controller="Categories">
-			        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Categories</span>
-		        </a>
-	        </li>
-	        <li class="sidebar-item">
-		        <a class="sidebar-link" asp-action="Index" asp-controller="Brands">
-			        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Brands</span>
-		        </a>
-	        </li>
-	        <li class="sidebar-item">
-		        <a class="sidebar-link" asp-action="Index" asp-controller="Offers">
-			        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Offers</span>
-		        </a>
-	        </li>
-	        }
-
-
-        </ul>
-
-
-    </div>
-</nav>
-
-
-<div class="main">
-<nav class="navbar navbar-expand navbar-light navbar-bg">
-    <a class="sidebar-toggle d-flex">
-        <i class="hamburger align-self-center"></i>
-    </a>
-
-    <form class="d-none d-sm-inline-block">
-        <div class="input-group input-group-navbar">
-            <input type="text" class="form-control" placeholder="Search…" aria-label="Search">
-            <button class="btn" type="button">
-                <i class="align-middle" data-feather="search"></i>
-            </button>
-        </div>
-    </form>
-
-    <div class="navbar-collapse collapse">
-        <ul class="navbar-nav navbar-align">
-            
-            <li class="nav-item dropdown">
-                <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
-                    <div class="position-relative">
-                        <i class="align-middle" data-feather="message-square"></i>
-                    </div>
-                </a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand">
                 
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-                    <i class="align-middle" data-feather="settings"></i>
+                        <span class="align-middle">Digital Jhola</span>
+                  
                 </a>
 
-                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                    <img src="~/dashboard/img/avatars/avatar-2.jpg" class="avatar img-fluid rounded me-1" alt="Prajwol Khadka"/> <span class="text-dark">Prajwol Khadka</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="pages-settings.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log out</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Pages
+                    </li>
+
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="AdminDashBoard" asp-controller="Dashboard">
+                                <i class="align-middle" data-feather="code"></i> <span class="align-middle">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                                <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
+                            </a>
+                            <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" asp-action="UsersView" asp-controller="Users">View Users</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" asp-action="UsersUnApproved" asp-controller="Users">UnApprovedUsers</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" asp-action="Index" asp-controller="Role">All roles</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Products">
+                                <i class="align-middle" data-feather="code"></i> <span class="align-middle">Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Categories">
+                                <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Brands">
+                                <i class="align-middle" data-feather="globe"></i> <span class="align-middle">Brands</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Offers">
+                                <i class="align-middle" data-feather="gift"></i> <span class="align-middle">Offers</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Orders">
+                                <i class="align-middle" data-feather="truck"></i> <span class="align-middle">Orders</span>
+                            </a>
+                        </li>
+                    }
+                    else if (SignInManager.IsSignedIn(User) && User.IsInRole("Seller"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="SellerDashboard" asp-controller="Dashboard">
+                                <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Products">
+                                <i class="align-middle" data-feather="user"></i> <span class="align-middle">Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Offers">
+                                <i class="align-middle" data-feather="gift"></i> <span class="align-middle">Offers</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="Comments">
+                                <i class="align-middle" data-feather="message-circle"></i> <span class="align-middle">Comments</span>
+                            </a>
+                        </li>
+                    }
+                    else if (SignInManager.IsSignedIn(User) && User.IsInRole("Buyer"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="BuyerDashboard" asp-controller="Dashboard">
+                                <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+                            </a>
+                        </li>
+                    }
+                    <li class="sidebar-item">
+                        <a href="#profile" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                        </a>
+                        <ul id="profile" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" id="profile" href="/Identity/Account/Manage/Index">Main</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" id="profile" id="profile" href="/Identity/Account/Manage/Email">Email Change</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" id="profile" id="profile" href="/Identity/Account/Manage/ChangePassword">Password Change</a>
+                            </li>
+                        </ul>
+                    </li>
 
 
-@RenderBody()
-
-
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row text-muted">
-            <div class="col-6 text-start">
-                <p class="mb-0">
-                    <a href="index.html" class="text-muted">
-                        <strong>AdminKit Demo</strong>
-                    </a> &copy;
-                </p>
-            </div>
-            <div class="col-6 text-end">
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <a class="text-muted" href="#">Support</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="text-muted" href="#">Help Center</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="text-muted" href="#">Privacy</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="text-muted" href="#">Terms</a>
-                    </li>
                 </ul>
+
+
             </div>
-        </div>
+        </nav>
+    }
+
+    <div class="main">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle d-flex">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="navbar-nav navbar-align">
+                            <li class="nav-item dropdown">
+                                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                    <i class="align-middle" data-feather="settings"></i>
+                                </a>
+
+                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                    <img src="~/img/@user.image" class="avatar img-fluid rounded me-1" alt="ProfileImage"/> <span class="text-dark">@user.Firstname @user.Lastname</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="p-2">
+                                        <a class="dropdown-item" href="/Identity/Account/Manage/Index"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+                                    </div>
+
+                                    <form class="" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+                                        <button type="submit" class="items-center block p-2 ">Logout</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </nav>
+        }
+        @RenderBody()
+
+
+
     </div>
-</footer>
-</div>
 </div>
 
 <script src="~/dashboard/js/app.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
-			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-			gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-			// Line chart
-			new Chart(document.getElementById("chartjs-dashboard-line"), {
-				type: "line",
-				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					datasets: [{
-						label: "Sales ($)",
-						fill: true,
-						backgroundColor: gradient,
-						borderColor: window.theme.primary,
-						data: [
-							2115,
-							1562,
-							1584,
-							1892,
-							1587,
-							1923,
-							2566,
-							2448,
-							2805,
-							3438,
-							2917,
-							3327
-						]
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					tooltips: {
-						intersect: false
-					},
-					hover: {
-						intersect: true
-					},
-					plugins: {
-						filler: {
-							propagate: false
-						}
-					},
-					scales: {
-						xAxes: [{
-							reverse: true,
-							gridLines: {
-								color: "rgba(0,0,0,0.0)"
-							}
-						}],
-						yAxes: [{
-							ticks: {
-								stepSize: 1000
-							},
-							display: true,
-							borderDash: [3, 3],
-							gridLines: {
-								color: "rgba(0,0,0,0.0)"
-							}
-						}]
-					}
-				}
-			});
-		});
-	</script>
-<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Pie chart
-			new Chart(document.getElementById("chartjs-dashboard-pie"), {
-				type: "pie",
-				data: {
-					labels: ["Chrome", "Firefox", "IE"],
-					datasets: [{
-						data: [4306, 3801, 1689],
-						backgroundColor: [
-							window.theme.primary,
-							window.theme.warning,
-							window.theme.danger
-						],
-						borderWidth: 5
-					}]
-				},
-				options: {
-					responsive: !window.MSInputMethodContext,
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					cutoutPercentage: 75
-				}
-			});
-		});
-	</script>
-<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Bar chart
-			new Chart(document.getElementById("chartjs-dashboard-bar"), {
-				type: "bar",
-				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					datasets: [{
-						label: "This year",
-						backgroundColor: window.theme.primary,
-						borderColor: window.theme.primary,
-						hoverBackgroundColor: window.theme.primary,
-						hoverBorderColor: window.theme.primary,
-						data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-						barPercentage: .75,
-						categoryPercentage: .5
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					scales: {
-						yAxes: [{
-							gridLines: {
-								display: false
-							},
-							stacked: false,
-							ticks: {
-								stepSize: 20
-							}
-						}],
-						xAxes: [{
-							stacked: false,
-							gridLines: {
-								color: "transparent"
-							}
-						}]
-					}
-				}
-			});
-		});
-	</script>
-<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var markers = [{
-					coords: [31.230391, 121.473701],
-					name: "Shanghai"
-				},
-				{
-					coords: [28.704060, 77.102493],
-					name: "Delhi"
-				},
-				{
-					coords: [6.524379, 3.379206],
-					name: "Lagos"
-				},
-				{
-					coords: [35.689487, 139.691711],
-					name: "Tokyo"
-				},
-				{
-					coords: [23.129110, 113.264381],
-					name: "Guangzhou"
-				},
-				{
-					coords: [40.7127837, -74.0059413],
-					name: "New York"
-				},
-				{
-					coords: [34.052235, -118.243683],
-					name: "Los Angeles"
-				},
-				{
-					coords: [41.878113, -87.629799],
-					name: "Chicago"
-				},
-				{
-					coords: [51.507351, -0.127758],
-					name: "London"
-				},
-				{
-					coords: [40.416775, -3.703790],
-					name: "Madrid "
-				}
-			];
-			var map = new jsVectorMap({
-				map: "world",
-				selector: "#world_map",
-				zoomButtons: true,
-				markers: markers,
-				markerStyle: {
-					initial: {
-						r: 9,
-						strokeWidth: 7,
-						stokeOpacity: .4,
-						fill: window.theme.primary
-					},
-					hover: {
-						fill: window.theme.primary,
-						stroke: window.theme.primary
-					}
-				}
-			});
-			window.addEventListener("resize", () => {
-				map.updateSize();
-			});
-		});
-	</script>
+
+<script src="~/Home/javascript/tether.min.js"></script>
+<script src="~/Home/javascript/bootstrap.min.js"></script>
+<script src="~/Home/javascript/jquery.easing.js"></script>
+<script src="~/Home/javascript/parallax.js"></script>
+<script src="~/Home/javascript/jquery-waypoints.js"></script>
+<script src="~/Home/javascript/jquery-countTo.js"></script>
+<script src="~/Home/javascript/jquery.countdown.js"></script>
+<script src="~/Home/javascript/jquery.flexslider-min.js"></script>
+<script src="~/Home/javascript/images-loaded.js"></script>
+<script src="~/Home/javascript/jquery.isotope.min.js"></script>
+<script src="~/Home/javascript/magnific.popup.min.js"></script>
+<script src="~/Home/javascript/jquery.hoverdir.js"></script>
+<script src="~/Home/javascript/owl.carousel.min.js"></script>
+<script src="~/Home/javascript/equalize.min.js"></script>
+<script src="~/Home/javascript/gmap3.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIEU6OT3xqCksCetQeNLIPps6-AYrhq-s&region=GB"></script>
+<script src="~/Home/javascript/jquery-ui.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/dist/js/markerclusterer.js"></script>
+<script src="~/dist/js/js.JS"></script>
+<script src="~/dist/js/app.js"></script>
+
+<script src="~/feather-icons/feather.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="~/Home/javascript/jquery.cookie.js"></script>
 <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			document.getElementById("datetimepicker-dashboard").flatpickr({
@@ -387,8 +242,9 @@
 				nextArrow: "<span title=\"Next month\">&raquo;</span>",
 			});
 		});
+	
 	</script>
-     
+@RenderSection("scripts", required: false)
 </body>
 
 </html>
