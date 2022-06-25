@@ -188,7 +188,7 @@ namespace Ecommerce.Controllers
 
 
             } 
-            if (_brandId != 0)
+            else if (_brandId != 0)
             {
                 ViewBag.brandId = _brandId;
                 products = db.Products.Where(product => product.BrandId == _brandId).Include(ww => ww.Offer).ToList();

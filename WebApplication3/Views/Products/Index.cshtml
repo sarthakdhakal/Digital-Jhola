@@ -44,6 +44,7 @@
                 <th  style="background:#4578d4;color:#fff;">@Html.DisplayNameFor(model => model.ProductUnitInStock)</th>
                 <th  style="background:#4578d4;color:#fff;"> @Html.DisplayNameFor(model => model.ProductUnitPrice)</th>
                 <th  style="background:#4578d4;color:#fff;" > @Html.DisplayNameFor(model => model.Category)</th>
+                    <th  style="background:#4578d4;color:#fff;" > @Html.DisplayNameFor(model => model.Brand)</th>
                 <th  style="background:#4578d4;color:#fff;">Has Offer</th>
                 <th style="background:#4578d4;color:#fff;">ACTIONS</th>
             </tr>
@@ -72,6 +73,9 @@
                         <td class="w-40">
                             <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.Category.CategoryName) </div>
                         </td>
+                          <td class="w-40">
+                                                    <div class="flex items-center justify-center text-theme-9"> @Html.DisplayFor(modelItem => item.Brand.BrandName) </div>
+                                                </td>
                         <td class="w-40">
                             <div class="flex items-center justify-center text-theme-9"> @((item.Offer == null) ? "No" : $"Yes {item.Offer.OfferName}") </div>
                         </td>

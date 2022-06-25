@@ -27,7 +27,8 @@ namespace WebApplication3.Controllers
                     ProductId = productId,
                     UserId = _userManager.GetUserId(User),
                     Review = content,
-                    Rating = rating
+                    Rating = rating,
+                    CreatedOn = DateTime.Now
                 };
                 _context.StarRatings.Add(starRating);
                 await _context.SaveChangesAsync();

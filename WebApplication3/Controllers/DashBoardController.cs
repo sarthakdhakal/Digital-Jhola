@@ -39,7 +39,7 @@ namespace WebApplication3.Controllers
             ViewBag.buyerCount = ViewBag.Buyers.Count;
             ViewBag.Seller = _userManager.GetUsersInRoleAsync("Seller").Result;
             ViewBag.sellerCount = ViewBag.Seller.Count;
-            ViewBag.TotalSales = DbContext.Orders.Sum(x => x.TotalPrice);
+            ViewBag.TotalSales = DbContext.Orders.Where(o=>o.Status==Status.Delivered).Sum(x => x.TotalPrice);
             return View();
         }
         [Authorize(Roles = "Buyer")]

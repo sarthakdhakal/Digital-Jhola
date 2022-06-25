@@ -60,7 +60,7 @@ namespace WebApplication3.Controllers
         public async Task<IActionResult> Index(int page = 1, string s = "")
         {
             page--;
-            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Offer).Where(e => e.ProductName.ToLower().Contains(s.ToLower()) || e.ProductDescription.ToLower().Contains(s.ToLower()));
+            var applicationDbContext = _context.Products.Include(p => p.Category).Include(b=>b.Brand).Include(p => p.Offer).Where(e => e.ProductName.ToLower().Contains(s.ToLower()) || e.ProductDescription.ToLower().Contains(s.ToLower()));
             ViewBag.count = applicationDbContext.Count();
             ViewBag.countPerPage = CountPerPage;
             var result = applicationDbContext.Skip(page * CountPerPage).Take(CountPerPage);
