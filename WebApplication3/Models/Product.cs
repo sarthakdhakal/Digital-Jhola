@@ -12,7 +12,7 @@ namespace WebApplication3.Models
 
         [Display(Name = "Product")]
         [Required]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        
         public string ProductName { get; set; }
 
         [Display(Name = "Description")]

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "q/LdmwU3PLu5Tk8Zt8YQBwSxVMK9f7pEmLlD8/lPJ7k=",
+  "Hash": "KyPYl06saCPUbKydBWvjKUu+7JTbjqCk2lNm2DTeQUM=",
   "Source": "WebApplication3",
   "BasePath": "_content/WebApplication3",
   "Mode": "Default",
@@ -1392,6 +1392,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Category\\images\\983f96ac3bcf41b19fa139662014111e.png"
+    },
+    {
+      "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\Category\\images\\c0b8dbd5de4b42f59dd200160218b616.png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "Category/images/c0b8dbd5de4b42f59dd200160218b616.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Category\\images\\c0b8dbd5de4b42f59dd200160218b616.png"
     },
     {
       "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\Category\\images\\c520cfce9ce54e4db6ca91c8b1a0dbd6.png",
@@ -12597,6 +12614,23 @@
       "OriginalItemSpec": "wwwroot\\Product\\images\\061bfd1a258a467dace98bfc326fe599.png"
     },
     {
+      "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\Product\\images\\15201e2e4b714146a5340f69d267bacd.png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "Product/images/15201e2e4b714146a5340f69d267bacd.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Product\\images\\15201e2e4b714146a5340f69d267bacd.png"
+    },
+    {
       "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\Product\\images\\2c1148940fa84ae0a8e555eb35ad9547.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
@@ -12680,6 +12714,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Product\\images\\603d996f55664de29a2ce5fad4163754.png"
+    },
+    {
+      "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\Product\\images\\62e0176d2f9c4298b1988bbd6b5da4f9.png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "Product/images/62e0176d2f9c4298b1988bbd6b5da4f9.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Product\\images\\62e0176d2f9c4298b1988bbd6b5da4f9.png"
     },
     {
       "Identity": "D:\\DotNetCore\\WebApplication3\\WebApplication3\\wwwroot\\Product\\images\\78b7ed75406e48abb79fccfc53200506.png",

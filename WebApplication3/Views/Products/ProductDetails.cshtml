@@ -309,7 +309,7 @@
                             }
                             <div class="price">
                                 <span>Category: </span>
-                                <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId">
+                                <a asp-action="Shop" asp-controller="Home" asp-route-_categoryId="@pro.CategoryId">
                                     @if (pro.Category != null)
                                     {
                                         @pro.Category.CategoryName
@@ -318,7 +318,7 @@
                             </div>
                             <div class="price">
                                 <span>Brand: </span>
-                                <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.BrandId">
+                                <a asp-action="Shop" asp-controller="Home" asp-route-_brandId="@pro.BrandId">
                                     @if (pro.Brand != null)
                                     {
                                         @pro.Brand.BrandName
