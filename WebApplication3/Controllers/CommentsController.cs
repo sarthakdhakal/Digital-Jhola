@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +52,7 @@ namespace WebApplication3.Controllers
             return RedirectToAction("ProductDetails", "Products", new {id = productId});
         }
 
-
+    [Authorize(Roles = "Seller")]
         public async Task<IActionResult> ApproveComment(int? id)
         {
             var comment = await _context.Comments.FindAsync(id);
@@ -60,6 +61,18 @@ namespace WebApplication3.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> DeleteComment(int? id)
+        {
+            var comment = await _context.Comments.FindAsync(id);
 
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            _context.Comments.Remove(comment);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -41,11 +41,7 @@ namespace WebApplication3.Models
         [Display(Name = "Province")]
         public string Province { get; set; }
 
-        [Display(Name = "Image")]
-        public IFormFile image { get; set; }
-        [Display(Name = "Document")]
-        public IFormFile SellerDocument { get; set; }
-
+        
 
     }
 }

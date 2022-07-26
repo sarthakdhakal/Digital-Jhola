@@ -51,7 +51,7 @@ namespace WebApplication3.Controllers{
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddSellerViewModel addSellerViewModel)
         {
-            
+            var files = HttpContext.Request.Form.Files;
             var returnUrl = Url.Content("~/");
             if (ModelState.IsValid)
             {
@@ -60,14 +60,14 @@ namespace WebApplication3.Controllers{
                 string filePath = "";
                 try
                 {
-                    if (addSellerViewModel.image.Length > 0)
+                    if (files[0].Length > 0)
                     {
 
                         uploadFolder = Path.Combine(_environment.WebRootPath, "img");
                         uniqueFileName = Guid.NewGuid().ToString() + "_" +
-                                         addSellerViewModel.image.FileName.Replace(' ', '_');
+                                         files[0].FileName.Replace(' ', '_');
                         filePath = Path.Combine(uploadFolder, uniqueFileName);
-                        addSellerViewModel.image.CopyTo(new FileStream(filePath, FileMode.Create));
+                        files[0].CopyTo(new FileStream(filePath, FileMode.Create));
                     }
                 }
                 catch (Exception e)
@@ -94,14 +94,14 @@ namespace WebApplication3.Controllers{
                     string newFileName = "";
                     string pathofFile = "";
                   
-                        if (addSellerViewModel.SellerDocument.Length > 0)
+                        if (files[1].Length > 0)
                         {
 
                             folderPath = Path.Combine(_environment.WebRootPath, "UserDocument/images");
                             newFileName = Guid.NewGuid().ToString() + "_" +
-                                          addSellerViewModel.SellerDocument.FileName.Replace(' ', '_');
+                                          files[1].FileName.Replace(' ', '_');
                             pathofFile = Path.Combine(folderPath, newFileName);
-                            addSellerViewModel.image.CopyTo(new FileStream(pathofFile, FileMode.Create));
+                            files[1].CopyTo(new FileStream(pathofFile, FileMode.Create));
                         }
                     var imageSellerVerify = new ImageSellerVerify()
                     {
@@ -168,6 +168,16 @@ namespace WebApplication3.Controllers{
             CookieOptions option = new CookieOptions();
             option.Expires = DateTime.Now.AddSeconds(10);
             Response.Cookies.Append("UserApprove", "true", option);
+            return RedirectToAction(nameof(UsersView));
+        }
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = _context.Users.SingleOrDefault(u=>u.Id== id);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddSeconds(10);
+            Response.Cookies.Append("UserRemove", "true", option);
             return RedirectToAction(nameof(UsersView));
         }
         [Authorize(Roles = "Admin")]

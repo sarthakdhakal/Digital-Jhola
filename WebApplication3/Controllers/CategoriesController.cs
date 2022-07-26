@@ -25,13 +25,13 @@ namespace WebApplication3.Controllers
             this.environment = environment;
         }
 
-        // GET: Categories
+      
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
         }
 
-        // GET: Categories/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,15 +49,12 @@ namespace WebApplication3.Controllers
             return View(category);
         }
 
-        // GET: Categories/Create
+   
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Category category, IFormFile file)
@@ -111,12 +108,9 @@ namespace WebApplication3.Controllers
             return View(category);
         }
 
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,CategoryDescription")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,ImageUrl,CategoryDescription")] Category category)
         {
             if (id != category.CategoryId)
             {
@@ -127,6 +121,7 @@ namespace WebApplication3.Controllers
             {
                 try
                 {
+                    
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                     CookieOptions option = new CookieOptions();
@@ -148,13 +143,7 @@ namespace WebApplication3.Controllers
             }
             return View(category);
         }
-
-        // GET: Categories/Delete/5
-    
-
-        // POST: Categories/Delete/5
-     
-        public async Task<IActionResult> Delete(int? id)
+         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {

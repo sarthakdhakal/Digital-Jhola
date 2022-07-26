@@ -82,7 +82,7 @@
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
 
-                                <form id="OrderStatus" class="validate-form" asp-action="DemoViewAsPdf" asp-controller="Pdf" enctype="multipart/form-data" method="post">
+                                <form id="OrderStatus" class="validate-form" asp-action="ViewBillAsPdf" asp-controller="Pdf" enctype="multipart/form-data" method="post">
                                     <input type="hidden" name="id" value="@item.OrderId"/>
                                     <div class="form-group">
                                         <input type="submit" value="View Bill" class="btn btn-danger"/>

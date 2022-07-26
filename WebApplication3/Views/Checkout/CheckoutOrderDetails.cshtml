@@ -5,7 +5,7 @@
     double sum = 0;
 }
 
-  <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
 
 
@@ -14,48 +14,55 @@
 
         <div class="row">
             <div class="col-lg-6 col-md-6">
-                @using (Html.BeginForm("Checkout", "Checkout", FormMethod.Post, new {id = "OrderForm"}))
+                @using (Html.BeginForm("Checkout", "Checkout", FormMethod.Post, new { id = "OrderForm" }))
                 {
                     <div class="col-lg-12">
                         <h5 class="form-head">Personal Details</h5>
                     </div>
                     <div class="form_group col-12 ">
                         <label asp-for="@Model.OrderData.FirstName" class="form-label"> </label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.FirstName" value="@ViewBag.userData.Firstname"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.FirstName"
+                        value="@ViewBag.userData.Firstname" />
                         <span asp-validation-for="@Model.OrderData.FirstName" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12 ">
                         <label asp-for="@Model.OrderData.LastName" class="form-label"> </label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.LastName" value="@ViewBag.userData.Lastname"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.LastName"
+                        value="@ViewBag.userData.Lastname" />
                         <span asp-validation-for="@Model.OrderData.LastName" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Telephone" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Telephone" value="@ViewBag.userData.PhoneNumber"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Telephone"
+                        value="@ViewBag.userData.PhoneNumber" />
                         <span asp-validation-for="@Model.OrderData.Telephone" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.UserEmail" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.UserEmail" value="@ViewBag.userData.Email"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.UserEmail"
+                        value="@ViewBag.userData.Email" />
                         <span asp-validation-for="@Model.OrderData.UserEmail" class="text-danger"></span>
                     </div>
 
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Street" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Street" value="@ViewBag.userData.Street"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Street"
+                        value="@ViewBag.userData.Street" />
                         <span asp-validation-for="@Model.OrderData.Street" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.City" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.City" value="@ViewBag.userData.City"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.City"
+                        value="@ViewBag.userData.City" />
                         <span asp-validation-for="@Model.OrderData.City" class="text-danger"></span>
                     </div>
                     <div class="form_group col-12">
                         <label asp-for="@Model.OrderData.Province" class="form-label"></label>
-                        <input class="input-form form-control" asp-for="@Model.OrderData.Province" value="@ViewBag.userData.Province"/>
+                        <input class="input-form form-control" asp-for="@Model.OrderData.Province"
+                        value="@ViewBag.userData.Province" />
                         <span asp-validation-for="@Model.OrderData.Province" class="text-danger"></span>
                     </div>
-                    
+
                 }
             </div>
 
@@ -68,52 +75,54 @@
                         <div class="order_table table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Total</th>
-                                </tr>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Total</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach (var item in Model.CartProducts)
-                                {
+                                    @foreach (var item in Model.CartProducts)
+                                    {
 
-                                    var quantity = Model.CartProductIDs.Count(x => x == item.ProductId);
-                                    <tr>
-                                        <td>@item.ProductName<strong>× @quantity</strong></td>
-                                        @if (item.OfferId == null)
-                                        {
-                                            <td>NPR @(Convert.ToDouble(item.ProductUnitPrice*quantity))</td>
-                                            sum += (item.ProductUnitPrice * quantity);
-                                        }
-                                        else
-                                        {
-                                            var sale = item.ProductUnitPrice * (item.Offer.Sale / 100);
-                                            <td>NPR @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity) </td>
-                                            sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
+                                        var quantity = Model.CartProductIDs.Count(x => x == item.ProductId);
+                                        <tr>
+                                            <td>@item.ProductName<strong>× @quantity</strong></td>
+                                            @if (item.OfferId == null)
+                                            {
+                                                <td>NPR @(Convert.ToDouble(item.ProductUnitPrice*quantity))</td>
+                                                sum += (item.ProductUnitPrice * quantity);
+                                            }
+                                            else
+                                            {
+                                                var sale = item.ProductUnitPrice * (item.Offer.Sale / 100);
+                                                <td>NPR @(Math.Round(item.ProductUnitPrice - sale, 2) * quantity) </td>
+                                                sum += (Math.Round(item.ProductUnitPrice - sale, 2) * quantity);
 
-                                        }
-                                    </tr>
-                                }
+                                            }
+                                        </tr>
+                                    }
                                 </tbody>
                                 <tfoot>
 
-                                <tr class="order_total">
-                                    <th><strong>Order Total</strong></th>
-                                    <td><strong id="Total"> NPR @Math.Round(sum,2)</strong></td>
-                                </tr>
+                                    <tr class="order_total">
+                                        <th><strong>Order Total</strong></th>
+                                        <td><strong id="Total"> NPR @Math.Round(sum,2)</strong></td>
+                                    </tr>
                                 </tfoot>
                             </table>
 
                         </div>
                     </div>
-        
+
                     <div class="col-lg-6 mx-auto">
-                        <button type="submit" form="OrderForm" id="pay" class="btn btn-success form-control">Cash On Delivery</button>
+                        <button type="submit" form="OrderForm" id="pay" class="btn btn-success form-control">Cash On
+                            Delivery</button>
                     </div>
-                        <div class="col-lg-6  mx-auto">
-                            <button type="submit"  id="payment-button" class="btn btn-secondary form-control">Pay with Khalti</button>
-                        </div>
-                       
+                    <div class="col-lg-6  mx-auto">
+                        <button type="submit" id="payment-button" class="btn btn-secondary form-control">Pay with
+                            Khalti</button>
+                    </div>
+
                 </div>
 
 
@@ -129,7 +138,6 @@
         var ans = confirm('Are you sure to cancel your order?')
         if (ans == true)
             window.location.href = "/Shoppingcart/Editshoppingcart";
-        console.log(';l;j;')
     };
 </script>
 
@@ -143,57 +151,57 @@
 
 
 
- var config = {
-            // replace the publicKey with yours
-            "publicKey": "test_public_key_2cc8422cbabb47598dfaf8ee6b81a7ab",
-            "productIdentity": "1",
-            "productName": "OrderDigitalJhola",
-            "productUrl": "https://localhost:7191/ShoppingCart/EditShoppingCart",
-            "paymentPreference": [
-                "KHALTI",
-                "EBANKING",
-                "MOBILE_BANKING",
-                "CONNECT_IPS",
-                "SCT",
-                ],
-            "eventHandler": {
-                onSuccess (payload) {
+    var config = {
+        // replace the publicKey with yours
+        "publicKey": "test_public_key_2cc8422cbabb47598dfaf8ee6b81a7ab",
+        "productIdentity": "1",
+        "productName": "OrderDigitalJhola",
+        "productUrl": "https://localhost:7191/ShoppingCart/EditShoppingCart",
+        "paymentPreference": [
+            "KHALTI",
+            "EBANKING",
+            "MOBILE_BANKING",
+            "CONNECT_IPS",
+            "SCT",
+        ],
+        "eventHandler": {
+            onSuccess(payload) {
 
                 let data = {
-                                                         "token": payload.token,
-                                                         "amount": {amount: document.querySelector('#Total').innerText *100}
-                                                     };
-                                                     let afterpay = {
-                                                           headers: {'Authorization': 'test_secret_key_e00165deeae04f29b04a749bfae1bcd7'}
-                                                       };
-                         
-                                                       axios.post("https://khalti.com/api/v2/payment/verify/", data, afterpay)
-                                                           .then(response => {
-                                                               console.log(response.data);
-                                                               $("#pay").click()
-                                                           })
-                                                           .catch(error => {
-                                                               console.log(error);
-                                                                 $("#pay").click()
-                                                           });
-                },
-                onError (error) {
-                    console.log(error);
-                },
-                onClose () {
-                    console.log('widget is closing');
-                }
-            }
-        };
-     
-        var checkout = new KhaltiCheckout(config);
-         
-        var btn = document.getElementById("payment-button");
-        btn.onclick = function () {
-            // minimum transaction amount must be 10, i.e 1000 in paisa.
-            checkout.show({amount: document.querySelector('#Total').innerText *100});
-        }
-        
+                    "token": payload.token,
+                    "amount": { amount: document.querySelector('#Total').innerText * 100 }
+                };
+                let afterpay = {
+                    headers: { 'Authorization': 'test_secret_key_e00165deeae04f29b04a749bfae1bcd7' }
+                };
 
-        
-    </script>
+                axios.post("https://khalti.com/api/v2/payment/verify/", data, afterpay)
+                    .then(response => {
+                        console.log(response.data);
+                        $("#pay").click()
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        $("#pay").click()
+                    });
+            },
+            onError(error) {
+                console.log(error);
+            },
+            onClose() {
+                console.log('widget is closing');
+            }
+        }
+    };
+
+    var checkout = new KhaltiCheckout(config);
+
+    var btn = document.getElementById("payment-button");
+    btn.onclick = function () {
+        // minimum transaction amount must be 10, i.e 1000 in paisa.
+        checkout.show({ amount: @sum * 100 });
+    }
+
+
+
+</script>

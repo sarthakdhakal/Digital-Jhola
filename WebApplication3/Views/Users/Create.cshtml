@@ -103,20 +103,17 @@
 
 
                             <div class="mb-3">
-                                <label class="form-label" asp-for="image"></label>
-
-
-                                <input id="" onchange="loadFile(event)" type="file" class="form-control form-control-lg" asp-for="image"/>
-                                <span asp-validation-for="image" class="text-danger"></span>
-
+                                <label class="form-label" >Image</label>
+                                
+                                <input id="" onchange="loadFile(event)" type="file" class="form-control form-control-lg"  name="file[]" />
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" asp-for="SellerDocument"></label>
+                                <label class="form-label" >Seller Document</label>
 
 
 
-                                <input id="" onchange="loadFile(event)" type="file" class="form-control form-control-lg" asp-for="SellerDocument"/>
-                                <span asp-validation-for="SellerDocument" class="text-danger"></span>
+                                <input id="" onchange="loadFile(event)" type="file"  class="form-control form-control-lg" name="file[]" />
+                              
 
                             </div>
 

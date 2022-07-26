@@ -55,9 +55,7 @@ namespace WebApplication3.Controllers
             return View();
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BrandId,BrandName,BrandDescription,ImageUrl")] Brand brand, IFormFile file)
@@ -114,9 +112,7 @@ namespace WebApplication3.Controllers
             return View(brand);
         }
 
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BrandId,BrandName,BrandDescription")] Brand brand)

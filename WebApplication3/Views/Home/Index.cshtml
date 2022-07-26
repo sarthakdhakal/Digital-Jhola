@@ -353,7 +353,7 @@
                                 <li class="product-item">
                                     <div class="product-thumb clearfix">
                                         <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.ProductId" class="product-thumb">
-                                            <img src="~/Home/images/@product.ProductImgUrl" width="300" height="200" alt="image">
+                                            <img src="~/Product/images/@product.ProductImgUrl" width="300" height="200" alt="image">
                                         </a>
                                         <span class="new sale">Sale</span>
                                     </div>
@@ -402,10 +402,15 @@
                                         </div>
 
                                     </div>
-                                    <div class="add-to-cart text-center">
-                                        <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
-                                    </div>
-
+                                      @if (User.IsInRole("Admin") || User.IsInRole("Seller"))
+                                                                                                {
+                                                                                                }
+                                      else
+                                      {
+                                          <div class="add-to-cart text-center">
+                                              <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
+                                          </div>
+                                      }
                                 </li>
                             }
                         }

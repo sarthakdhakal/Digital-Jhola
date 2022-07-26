@@ -35,7 +35,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="#" class="font-medium whitespace-no-wrap">@item.Firstname</a>
+                                <a asp-action="UserProfile" asp-route-id="@item.Id" class="font-medium whitespace-no-wrap">@item.Firstname</a>
 
                             </td>
                             <td class="flex items-center justify-center text-theme-9" class="w-40">@item.Lastname</td>
@@ -90,7 +90,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="#" class="font-medium whitespace-no-wrap">@item.Firstname</a>
+                                <a asp-action="UserProfile" asp-route-id="@item.Id" class="font-medium whitespace-no-wrap">@item.Firstname</a>
 
                             </td>
                             <td class="flex items-center justify-center text-theme-9" class="w-40">@item.Lastname</td>
@@ -150,7 +150,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="#" class="font-medium whitespace-no-wrap">@item.Firstname</a>
+                                 <a asp-action="UserProfile" asp-route-id="@item.Id" class="font-medium whitespace-no-wrap">@item.Firstname</a>
 
                             </td>
                             <td class="flex items-center justify-center text-theme-9" class="w-40">@item.Lastname</td>
@@ -190,4 +190,13 @@
         
 
     });
+        $(window).on('load', function () {
+           
+            if ($.cookie('UserRemove') === "true") {
+            
+                swal("User has not been approved and is removed");
+            }
+            
+    
+        });
 </script>

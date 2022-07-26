@@ -52,7 +52,7 @@ namespace WebApplication3.Controllers
             
         }
 
-        // GET: Offers
+     
         public async Task<IActionResult> Index(int page = 1, string s = "")
         {
             page--;
@@ -67,7 +67,7 @@ namespace WebApplication3.Controllers
             return View(await result.ToListAsync());
         }
 
-        // GET: Offers/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -85,7 +85,7 @@ namespace WebApplication3.Controllers
             return View(offer);
         }
 
-        // GET: Offers/Create
+
         public IActionResult Create()
         {
             ViewBag.UserId = _userManager.GetUserId(HttpContext.User);
@@ -94,9 +94,7 @@ namespace WebApplication3.Controllers
             return View();
         }
 
-        // POST: Offers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OfferId,OfferName,Sale,DateFrom,DateTo")] Offer offer,
@@ -118,7 +116,7 @@ namespace WebApplication3.Controllers
             return View(offer);
         }
 
-         // GET: Offers/Edit/5
+
          public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -136,11 +134,8 @@ namespace WebApplication3.Controllers
             return View(offer);
         }
 
-        // POST: Offers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+      
         public async Task<IActionResult> Edit(int id, [Bind("OfferId,OfferName,Sale,DateFrom,DateTo")] Offer offer,
             ICollection<int> MyProducts)
         {
@@ -153,12 +148,11 @@ namespace WebApplication3.Controllers
             {
                 try
                 {
-                    ////
-                    ///
+              
                     var oldOffers = _context.Products.Where(e => e.OfferId == id);
                     await oldOffers.ForEachAsync(a => a.OfferId = null);
                     await _context.SaveChangesAsync();
-                    ///////
+              
                     _context.Update(offer);
                     await _context.SaveChangesAsync();
                     var prods = _context.Products.Where(p => MyProducts.Contains(p.ProductId)).ToList();
@@ -186,10 +180,6 @@ namespace WebApplication3.Controllers
             return View(offer);
         }
 
-        // GET: Offers/Delete/5
-       
-
-        // POST: Offers/Delete/5
      
    
         public async Task<IActionResult> Delete(int? id)

@@ -178,18 +178,16 @@
                         <li>
                             <a asp-action="Index" asp-controller="Home">Home</a>
                         </li>
-                        @* <li> *@
-                        @*     <a asp-action="Shop" asp-controller="Home" asp-route-id="@pro.CategoryId">Shop</a> *@
-                        @* </li> *@
+                      
                         <li>
                             <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@pro.ProductId">Product Details</a>
                         </li>
                     </ul>
-                </div><!-- /.breadcrumbs -->
-            </div><!-- /.col-md-12 -->
-        </div><!-- /.row -->
-    </div><!-- /.container -->
-</div><!-- /.page-title -->
+                </div>
+            </div>
+        </div><
+    </div>
+</div>
 
 <section class="flat-row main-shop shop-detail">
     <div class="container">
@@ -228,28 +226,7 @@
             
             
             	</div>
-                @* <div class="wrap-flexslider"> *@
-                @*     <div class="inner"> *@
-                @*         <div class="flexslider style-1 has-relative"> *@
-                @*             <ul class="slides"> *@
-                @*                 @if (ViewBag.images != null) *@
-                @*                 { *@
-                @*                     @foreach (var image in ViewBag.images) *@
-                @*                     { *@
-                @*                         <li data-thumb="~/Product/images/@image.ImagePath"> *@
-                @*                             <img src="~/Product/images/@image.ImagePath" alt="@pro.ProductName" class="main-img"> *@
-                @*                             <div class="flat-icon style-1"> *@
-                @*                                 <a href="~/Product/images/@image.ImagePath" class="zoom-popup"> *@
-                @*                                     <span class="fa fa-search-plus"></span> *@
-                @*                                 </a> *@
-                @*                             </div> *@
-                @*                         </li> *@
-                @*                     } *@
-                @*                 } *@
-                @*             </ul> *@
-                @*         </div><!-- /.flexslider --> *@
-                @*     </div> *@
-                @* </div> *@
+ 
             </div><!-- /.col-md-6 -->
 
             <div class="col-md-6">
@@ -576,9 +553,15 @@
                                     </div>
 
                                 </div>
-                                <div class="add-to-cart text-center">
-                                    <a class="ProductAddToCart" data-id="@item.ProductId" data-name="@item.ProductName">ADD TO CART</a>
-                                </div>
+                                  @if (User.IsInRole("Admin") || User.IsInRole("Seller"))
+                                                            {
+                                                            }
+                                  else
+                                  {
+                                      <div class="add-to-cart text-center">
+                                          <a class="ProductAddToCart" data-id="@item.ProductId" data-name="@item.ProductName">ADD TO CART</a>
+                                      </div>
+                                  }
                             </li>
                         }
                     </ul><!-- /.product -->

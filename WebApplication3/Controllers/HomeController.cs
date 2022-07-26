@@ -32,10 +32,10 @@ namespace Ecommerce.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.categories = db.Categories.ToList();
-            ViewBag.brands = db.Brands.ToList();
+            ViewBag.categories = db.Categories.ToList();//categories are stored in the viewbag 
+            ViewBag.brands = db.Brands.ToList();//brands are stored in viewbad
             ViewBag.products = db.Products.Include(ww => ww.Offer).OrderByDescending(ww => ww.ProductId).Take(10)
-                .ToList();
+                .ToList();//details of products including all the derails 
             ViewBag.sliders = db.Images.ToList();
             return View();
         }

@@ -27,12 +27,13 @@ namespace WebApplication3.Controllers
            
         }
 
-        public IActionResult DemoViewAsPDF(int id)
+        public IActionResult ViewBillAsPdf(int id)
         {
            
-            var items = DbContext.OrderItems.Where(a => a.OrderId == id).Include(p=>p.Product).Include(o=>o.Order).ThenInclude(o=>o.Buyer);
+            var items = DbContext.OrderItems.Where(a => a.OrderId == id).Include(p=>p.Product).Include(o=>o.Order).
+            ThenInclude(o=>o.Buyer);
             
-            return new ViewAsPdf("DemoViewAsPDF", items);  
+            return new ViewAsPdf("ViewBillAsPdf", items);  
         }  
 
     }

@@ -14,7 +14,7 @@ namespace WebApplication3.Models
         public string? City { get; set; }
         public string? Province { get; set; }
         [Display(Name = "Image")]
-        public string image { get; set; }
+        public string? image { get; set; }
         public int? ApprovalStatus { get; set; }
 
     }

@@ -17,6 +17,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
+using WebApplication3.Enums;
 using WebApplication3.Models;
 using ZXing.QrCode;
 using Image = WebApplication3.Models.Image;
@@ -70,9 +71,7 @@ namespace WebApplication3.Controllers
             ViewBag.pagination = pagination(applicationDbContext.Count(), page + 1, CountPerPage, s);
             return View(await result.ToListAsync());
         }
-        // GET: Products/Details/5
-
-        // GET: Products/Create
+ 
         [Authorize(Roles = "Admin, Seller")]
         public IActionResult Create()
         {
@@ -238,7 +237,7 @@ namespace WebApplication3.Controllers
             option.Expires = DateTime.Now.AddSeconds(10);
             Response.Cookies.Append("ProductDelete", "true", option);
             return RedirectToAction(nameof(Index));
-            return RedirectToAction(nameof(Index));
+      
             
             }
             catch (Exception e)
@@ -269,7 +268,7 @@ namespace WebApplication3.Controllers
             var product = _context.Products.Include(p => p.Category).Include(p => p.Brand).Include(ww => ww.Offer).Include(u=>u.User).FirstOrDefault(p => p.ProductId == id);
            ViewBag.Comments = _context.Comments.Where(c=>c.ProductId==id&& c.ApprovalStatus==1).Include(u => u.User).Include(u=>u.Replies).ThenInclude(r=>r.User).ToList();
            ViewBag.Reviews = _context.StarRatings.Where(c=>c.ProductId==id).Include(u => u.User).ToList();
-           ViewBag.reviewgiver = _context.OrderItems.Any(u => u.Product.ProductId == id && u.Order.BuyerId==productUserId );
+           ViewBag.reviewgiver = _context.OrderItems.Any(u => u.Product.ProductId == id && u.Order.BuyerId==productUserId && u.Order.Status==Status.Delivered );
            ViewBag.images = _context.Images.Where(i => i.ProductId == id);
            if (_context.StarRatings.Any(c => c.ProductId == id))
            {
@@ -286,8 +285,8 @@ namespace WebApplication3.Controllers
             }
             else
             {
-                var relatedProducts = _context.Products.Include(ww => ww.Offer).OrderByDescending(p => p.ProductId).Take(4)
-                    .Where(p => p.CategoryId == product.CategoryId && p.ProductId!= id ) ;
+                var relatedProducts = _context.Products.Include(ww => ww.Offer)
+                    .Where(p => p.CategoryId == product.CategoryId && p.ProductId!= id).OrderByDescending(p=>p.ProductId).Take(4) ;
                 ViewBag.product = product;
                 int size = relatedProducts.Count();
                 if (size < numOfRelated)

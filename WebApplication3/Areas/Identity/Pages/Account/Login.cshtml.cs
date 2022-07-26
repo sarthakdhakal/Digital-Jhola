@@ -113,8 +113,6 @@ namespace WebApplication3.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 
                 var user = DbContext.Users.FirstOrDefault(x=>x.Email==Input.Email);
@@ -133,7 +131,7 @@ namespace WebApplication3.Areas.Identity.Pages.Account
                     {
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                         {
-                            return LocalRedirect("/DashBoard/AdminDashboard");//remember to change this to redirct to dashboard
+                            return LocalRedirect("/DashBoard/AdminDashboard");
                         }
                         else if (await _userManager.IsInRoleAsync(user, "Seller"))
                         {

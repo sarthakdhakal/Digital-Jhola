@@ -39,9 +39,16 @@
                                 <input type="submit" value="Approve" class="btn btn-primary"/>
                             </div>
                         </form>
+                        <form id="OrderStatus" class="validate-form" asp-action="DeleteUser" enctype="multipart/form-data" method="post">
+                            <input type="hidden" name="id" value="@ViewBag.user.Id"/>
 
+                            <div class="form-group">
+                                <input type="submit" value="Delete" class="btn btn-danger"/>
+                            </div>
+                        </form>
 
                     }
+                    
 
                 </div>
                 <hr class="my-0"/>
@@ -57,12 +64,15 @@
                         <li class="mb-1"><span data-feather="mail" class="feather-sm me-1"></span> Email : @ViewBag.user.Email<a href="#"></a></li>
                     </ul>
                 </div>
-                <div class="card-body">
-                    <h2 class="card-title">Seller Document</h2>
+                @if (ViewBag.Document != null)
+                {
                     
-                    <img src="~/UserDocument/images/@ViewBag.Document.ImagePath" id="output" alt="" class="img-thumbnail mt-2" style="width:300px;height:300px;"/>
-                </div>
-                
+                    <div class="card-body">
+                        <h2 class="card-title">Seller Document</h2>
+
+                        <img src="~/UserDocument/images/@ViewBag.Document.ImagePath" id="output" alt="" class="img-thumbnail mt-2" style="width:300px;height:300px;"/>
+                    </div>
+                }
             </div>
 
         </div>

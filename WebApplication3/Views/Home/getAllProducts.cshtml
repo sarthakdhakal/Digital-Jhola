@@ -135,11 +135,15 @@
                                         </div>
 
                                     </div>
-
-                                    <div class="add-to-cart text-center">
-                                        <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
-                                    </div>
-
+  @if (User.IsInRole("Admin") || User.IsInRole("Seller"))
+                                                            {
+                                                            }
+  else
+  {
+      <div class="add-to-cart text-center">
+          <a class="ProductAddToCart" data-id="@product.ProductId" data-name="@product.ProductName">ADD TO CART</a>
+      </div>
+  }
                                 </li>
                             }
                             else

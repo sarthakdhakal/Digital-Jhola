@@ -284,8 +284,7 @@ else
             products = [];
         }
         var productID = $(e).attr('data-id');
-        //products.push(productID);
-        //////new
+ 
         products = $.grep(products, function (value) {
             return value != productID;
         });
@@ -312,14 +311,13 @@ else
         }
         var productID = $(e).attr('data-id');
         var size = $(e).val();
-        //$('body').css('opacity', 0.5)
-        //document.querySelector('.container').style.filter = 'blur(1px)';
+  
         var cartContainer = document.querySelector('.my-cart-container');
         cartContainer.classList.add('cart-Container-effect');
         var el = document.createElement("div");
         el.className += "loader";
         cartContainer.appendChild(el);
-        //////*************************************************
+  
         var handler = setTimeout(function () {
 
             products = $.grep(products, function (value) {
@@ -361,11 +359,11 @@ else
             //remove from cookies
             //alert(dbQ + ","+crtQ)
             if (crtQ > dbQ) {
-                //console.log(productID)
+               
                 products = $.grep(products, function (value) {
                     return value != productID;
                 });
-                //add duplication to cookies
+             
                 for (var i = 0; i < dbQ; i++) {
                     products.push(productID);
                 }
